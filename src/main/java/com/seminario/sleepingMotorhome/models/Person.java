@@ -11,7 +11,7 @@ import java.util.Date;
 public class Person {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(length = 30)
@@ -41,6 +41,8 @@ public class Person {
     private Date dateOfAdmission;
 
     private Date dateOfEgress;
+
+    //relations
 
     @ManyToOne //(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "person_type_id")

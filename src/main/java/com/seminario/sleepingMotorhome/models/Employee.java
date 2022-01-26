@@ -8,9 +8,7 @@ import java.util.Set;
 @PrimaryKeyJoinColumn(name = "employee_id")
 public class Employee extends Person {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    // los ids heredan de person
 
     private String specialty;
 

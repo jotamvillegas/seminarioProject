@@ -8,9 +8,9 @@ import java.util.Set;
 @PrimaryKeyJoinColumn(name = "user_id")
 public class User extends Person {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    // los ids heredan de person
+
+    //relations
 
     @OneToMany(mappedBy = "id", fetch = FetchType.LAZY)
     private Set<Motorhome> motorhome;
@@ -23,8 +23,7 @@ public class User extends Person {
 
     // setter and getters
 
-
-    @Override
+    /*@Override
     public Long getId() {
         return id;
     }
@@ -32,7 +31,7 @@ public class User extends Person {
     @Override
     public void setId(Long id) {
         this.id = id;
-    }
+    }*/
 
     public Set<Motorhome> getMotorhome() {
         return motorhome;
