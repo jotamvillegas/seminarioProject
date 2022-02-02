@@ -8,10 +8,6 @@ import java.util.Set;
 @PrimaryKeyJoinColumn(name = "user_id")
 public class User extends Person {
 
-    // los ids heredan de person
-
-    //relations
-
     @OneToMany(mappedBy = "id", fetch = FetchType.LAZY)
     private Set<Motorhome> motorhome;
 

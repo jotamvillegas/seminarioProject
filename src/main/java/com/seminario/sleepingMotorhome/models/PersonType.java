@@ -42,7 +42,7 @@ public class PersonType {
     }
 
     public void setType(String type) {
-        Type = type;
+        this.Type = type;
     }
 
     public  Set<Person> getPerson() {

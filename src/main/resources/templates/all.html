@@ -14,6 +14,9 @@
 <body>
     <div class="container">
         <h2 class="font-weight-bold text-center py-3">Lista de usuarios</h2>
+        <br><br>
+        <a th:href="@{add}" class="btn btn-primary btn-sm mx-1" role="button" data-bs-toggle="button">Crear Usuario</a>
+        <br><br>
         <table class="table table-hover text-center">
             <thead>
                 <tr>
@@ -46,15 +49,15 @@
                             <a th:href="@{index}" class="btn btn-primary btn-sm mx-1" role="button" data-bs-toggle="button">
                                 Editar</a>
                             <a th:href="@{index}" class="btn btn-primary btn-sm mx-1" role="button" data-bs-toggle="button">
-                                Más info</a>
+                                Eliminar</a>
                         </div>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <script th:src="@{/assets/jquery/jquery.min.js}"></script>
+        <!--<script th:src="@{/assets/jquery/jquery.min.js}"></script>
         <script th:src="@{/assets/popper.js/popper.min.js}"></script>
-        <script th:src="@{/assets/bootstrap/js/bootstrap.min.js}"></script>
+        <script th:src="@{/assets/bootstrap/js/bootstrap.min.js}"></script>-->
     </div>
 </body>
 </html>

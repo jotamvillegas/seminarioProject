@@ -175,6 +175,23 @@ public class Person {
         this.statusRol = statusRol;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", documentNumber=" + documentNumber +
+                ", addressName='" + addressName + '\'' +
+                ", addressNumber=" + addressNumber +
+                ", floor='" + floor + '\'' +
+                ", phone=" + phone +
+                ", dateOfAdmission=" + dateOfAdmission +
+                ", dateOfEgress=" + dateOfEgress +
+                ", personType=" + personType +
+                ", statusRol=" + statusRol +
+                '}';
+    }
 }

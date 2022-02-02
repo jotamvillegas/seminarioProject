@@ -8,7 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PersonRepository extends CrudRepository <Person, Long> {
 
-    @Query(value = "SELECT * FROM person p WHERE p.name = ?1", nativeQuery = true)
-    Person getPersonByName(String userName);
 
 }
