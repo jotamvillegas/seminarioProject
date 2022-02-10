@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -18,9 +19,20 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User saveUser(User user) {
-        return userRepository.save(user);
+    public List<User> listUsers (){
+        return (List<User>) userRepository.findAll();
     }
 
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
+
+    public void deleteUser(User user){
+        userRepository.delete(user);
+    }
+
+    public User searchUser(User user){
+        return userRepository.findById(user.getId()).orElse(null);
+    }
 
 }

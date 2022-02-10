@@ -14,12 +14,21 @@ public class PersonTypeService {
     @Autowired
     private PersonTypeRepository personTypeRepository;
 
-    public PersonType savePersonType(PersonType personType){
-        return personTypeRepository.save(personType);
-    }
 
     public List<PersonType> getPersonTypes(){
         return (List<PersonType>) personTypeRepository.findAll();
+    }
+
+    public void savePersonType(PersonType personType){
+        personTypeRepository.save(personType);
+    }
+
+    public void deletePersonType(PersonType personType){
+        personTypeRepository.delete(personType);
+    }
+
+    public PersonType searchPersonType(PersonType personType){
+        return personTypeRepository.findById(personType.getId()).orElse(null);
     }
 
 

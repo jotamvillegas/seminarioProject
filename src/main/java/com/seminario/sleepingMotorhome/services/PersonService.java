@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PersonService {
@@ -15,16 +14,23 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
 
-    public Optional<Person> getPersonById(Long id) {
-        return personRepository.findById(id);
-    }
 
-    @Transactional
-    public Person savePerson(Person person){
-        return personRepository.save(person);
-    }
-
-    public List<Person> allPerson (){
+    public List<Person> listPerson(){
         return (List<Person>) personRepository.findAll();
     }
+
+    //@Transactional
+    public void savePerson(Person person){
+        personRepository.save(person);
+    }
+
+    public void deletePerson(Person person){
+        personRepository.delete(person);
+    }
+
+    public Person searchPerson(Person person) {
+        return personRepository.findById(person.getId()).orElse(null);
+    }
+
+
 }
