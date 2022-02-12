@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -18,47 +19,20 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PersonService personService;
+    public List<User> listUsers (){
+        return (List<User>) userRepository.findAll();
+    }
 
-    @Autowired
-    private PersonTypeService personTypeService;
-
-    @Autowired
-    private StatusRolService statusRolService;
-
-    public User addUser(String userName, String password, String fullName, String surname, Integer document
-                        , String addressName , Integer addressNumber, String floor, Integer phone, String personType){
-        User user = new User();
-        user.setUserName(userName);
-        user.setPassword(password);
-        user.setName(fullName);
-        user.setSurname(surname);
-        user.setDocumentNumber(document);
-        user.setAddressName(addressName);
-        user.setAddressNumber(addressNumber);
-        user.setFloor(floor);
-        user.setPhone(phone);
-        user.setDateOfAdmission(Date.from(Instant.now()));
-        user.setDateOfEgress(Date.from(Instant.now()));
-        user.setPersonType(getPersonsTypes(personType));
-        user.setStatusRol(getStatusRol("Activo"));
+    public void saveUser(User user) {
         userRepository.save(user);
-        return user;
     }
 
-    private PersonType getPersonsTypes (String personType){
-        return personTypeService.getPersonTypes(personType);
+    public void deleteUser(User user){
+        userRepository.delete(user);
     }
 
-    private StatusRol getStatusRol (String statusRol){
-        return statusRolService.getStatusRol(statusRol);
+    public User searchUser(User user){
+        return userRepository.findById(user.getId()).orElse(null);
     }
-
-
-    public Iterable<User> getAllUser() {
-        return userRepository.findAll();
-    }
-
 
 }
