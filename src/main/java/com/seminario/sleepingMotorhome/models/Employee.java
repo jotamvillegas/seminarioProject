@@ -24,6 +24,19 @@ public class Employee extends Person {
     // setter and getters
 
 
+    public String getSpecialty() {
+        return specialty;
+    }
 
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
+    }
 
+    public Set<Zone> getZones() {
+        return zones;
+    }
+
+    public void setZones(Set<Zone> zones) {
+        this.zones = zones;
+    }
 }
