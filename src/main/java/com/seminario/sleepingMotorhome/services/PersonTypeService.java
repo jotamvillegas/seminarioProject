@@ -4,7 +4,6 @@ import com.seminario.sleepingMotorhome.models.PersonType;
 import com.seminario.sleepingMotorhome.repositories.PersonTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class PersonTypeService {
         personTypeRepository.delete(personType);
     }
 
-    public PersonType searchPersonType(PersonType personType){
+    public PersonType getPersonTypeById(PersonType personType){
         return personTypeRepository.findById(personType.getId()).orElse(null);
     }
 
