@@ -44,27 +44,36 @@ public class StartController {
         return "all";
     }
 
-    @GetMapping(path = "/edit")
+    @GetMapping(path = "/add")
     public String add (Person person, PersonType personType, Model model){
         model.addAttribute("listPersonTypes", personTypeService.getPersonTypes());
-        return "edit";
+        return "add";
     }
 
     @PostMapping(path = "/savePerson")
-    public String savePerson (@RequestParam(value = "perType") PersonType type,  User user){
-        user.setDateOfAdmission(new Date());
-        user.setPersonType(type);
-        userService.saveUser(user);
+    public String savePerson (@RequestParam(value = "perType") PersonType type,  Person person){
+        person.setDateOfAdmission(new Date());
+        person.setPersonType(type);
+        personService.savePerson(person);
         return "redirect:all";
     }
 
     @GetMapping(path = "/edit/{id}")
-    public String editUser(Person person, PersonType personType, Model model){
-        person = personService.searchPerson(person);
-        model.addAttribute("person", person);
-        //model.addAttribute("listPersonTypes", personTypeService.searchPersonType(person.getPersonType()));
-        return "edit";
+    public String editUser (Person person, PersonType personType, Model model){
+        Person personToEdit = personService.getPersonById(person.getId());
+        PersonType personTypeToEdit = personToEdit.getPersonType();
+        model.addAttribute("person", personToEdit);
+        model.addAttribute("listPersonTypes", personTypeService.getPersonTypes());
+        model.addAttribute("editMode","true");
+        return "add";
     }
+
+    @GetMapping (path = "/delete/{id}")
+    public String deleteUser (@PathVariable ("id") Long id, Model model){
+        personService.deletePerson(id);
+        return "redirect:/sleepingMotorhome/all";
+    }
+
 
 
 

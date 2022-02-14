@@ -15,7 +15,7 @@
     <div class="container">
         <h2 class="font-weight-bold text-center py-3">Lista de usuarios</h2>
         <br><br>
-        <a th:href="@{edit}" class="btn btn-primary btn-sm mx-1" role="button" data-bs-toggle="button">Crear Usuario</a>
+        <a th:href="@{add}" class="btn btn-primary btn-sm mx-1" role="button" data-bs-toggle="button">Crear Usuario</a>
         <br><br>
         <table class="table table-hover text-center">
             <thead>
@@ -48,7 +48,7 @@
                         <div class="d-grid d-inline-flex px-3">
                             <a th:href="@{edit/{id} (id = ${user.id})}"  class="btn btn-primary btn-sm mx-1"
                                role="button" data-bs-toggle="button">Editar</a>
-                            <a th:href="@{index}" class="btn btn-primary btn-sm mx-1" role="button"
+                            <a th:href="@{delete/{id} (id = ${user.id})}" class="btn btn-primary btn-sm mx-1" role="button"
                                data-bs-toggle="button">Eliminar</a>
                         </div>
                     </td>
