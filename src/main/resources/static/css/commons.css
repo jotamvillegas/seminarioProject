@@ -1,5 +1,12 @@
 body{
-    background: lightgrey;
+    background: #EDEDED;
+    /*background: #EBEDEF;*/
+    /*background: #ffe259;*/
+    /*background: linear-gradient(to bottom, #025794, #EBEDEF);*/
+}
+.bg{
+    background-image: url(../img/motorhome.jpg);
+    background-position: center;
 }
 h2 {
     font-family: sans-serif;

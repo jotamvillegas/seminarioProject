@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" href="../static/css/commons.css" th:href="@{/css/commons.css}"/>
     <title>Usuarios</title>
-    <style>
+    <!--style>
         body{
             background: #EDEDED;
             //background: linear-gradient(to bottom, #025794, #EBEDEF);
         }
-    </style>
+    </style-->
 </head>
 <body>
     <div class="container">
@@ -55,9 +57,16 @@
                 </tr>
             </tbody>
         </table>
-        <!--<script th:src="@{/assets/jquery/jquery.min.js}"></script>
-        <script th:src="@{/assets/popper.js/popper.min.js}"></script>
-        <script th:src="@{/assets/bootstrap/js/bootstrap.min.js}"></script>-->
+
+        <div>
+            <form th:action="@{/logout}" method="post">
+                <!--b>User:</b> <span sec:authentication="name">Usuario que hizo login</span> |
+                <b>Roles:</b> <span sec:authentication="principal.authorities">Roles</span> |
+                <br-->
+                <input type="submit" class="btn btn-primary btn-sm mx-1" name="logout" value="Cerrar Sesión">
+            </form>
+        </div>
+
     </div>
 </body>
 </html>

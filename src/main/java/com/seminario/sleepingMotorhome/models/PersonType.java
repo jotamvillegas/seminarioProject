@@ -2,6 +2,7 @@ package com.seminario.sleepingMotorhome.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -11,9 +12,11 @@ import java.util.Set;
 public class PersonType {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     private Long id;
 
+    @Column(length = 50)
     private String Type;
 
     @OneToMany(mappedBy = "personType")
