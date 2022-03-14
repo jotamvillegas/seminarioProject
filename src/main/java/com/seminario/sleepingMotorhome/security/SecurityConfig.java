@@ -33,11 +33,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    public void configure (WebSecurity web){
+        web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**");
+    }
+
+    @Override
     protected void configure (HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/sleepingMotorhome/all")
-                .hasAuthority("ADMIN")
+                .hasAnyAuthority("ADMIN","USER", "EMPLOYEE")
                 .and()
                 .formLogin()
                 .loginPage("/sleepingMotorhome/login")
@@ -47,41 +52,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         ;
     }
 
-
-    // de aca para abajo anda todo
-
-
-    //@Override
-    //protected void configure (AuthenticationManagerBuilder auth) throws Exception {
-    //    auth.inMemoryAuthentication()
-    //            .withUser("admin")
-    //            .password("{noop}12345")
-    //            .roles("ADMIN", "USER")
-    //            .and()
-    //            .withUser("user")
-    //            .password("{noop}12345")
-    //            .roles("USER")
-    //    ;
-    //}
-
-    //@Override
-    //protected void configure (HttpSecurity http) throws Exception {
-    //    http.csrf().disable()
-    //            .authorizeRequests()
-    //            .antMatchers("/sleepingMotorhome/all")
-    //            .hasRole("ADMIN")
-    //            .and()
-    //            .formLogin()
-    //            .loginPage("/sleepingMotorhome/login")
-    //            .permitAll()
-    //            .defaultSuccessUrl("/sleepingMotorhome/all")
-    //            .failureUrl("/sleepingMotorhome/login?error=true")
-    //    ;
-    //}
-
-    @Override
-    public void configure (WebSecurity web){
-        web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**");
-    }
 
 }

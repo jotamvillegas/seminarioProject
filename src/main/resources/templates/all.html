@@ -6,19 +6,28 @@
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
     <link rel="stylesheet" href="../static/css/commons.css" th:href="@{/css/commons.css}"/>
     <title>Usuarios</title>
-    <!--style>
-        body{
-            background: #EDEDED;
-            //background: linear-gradient(to bottom, #025794, #EBEDEF);
-        }
-    </style-->
 </head>
 <body>
-    <div class="container">
+    <div class="container" sec:authorize="isAuthenticated()">
+        <br><br>
+        <div class="justify-content-around">
+            <div sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')" class="float-left">
+                <a th:href="@{add}" class="btn btn-primary btn-sm mx-1 navbar-btn" role="button" data-bs-toggle="button">Crear Usuario</a>
+            </div>
+
+            <div sec:authorize="isAuthenticated()" class="float-right">
+                <form th:action="@{/logout}" method="post" class="navbar-text">
+                    <b>| User:</b> <span sec:authentication="name">Usuario</span>
+                    <b> | Roles:</b> <span sec:authentication="principal.authorities">Roles</span> <b> |</b>
+                    <input type="submit" class="btn btn-primary btn-sm mx-1" name="logout" value="Cerrar Sesión">
+                </form>
+            </div>
+        </div>
+        <br><br>
+
         <h2 class="font-weight-bold text-center py-3">Lista de usuarios</h2>
         <br><br>
-        <a th:href="@{add}" class="btn btn-primary btn-sm mx-1" role="button" data-bs-toggle="button">Crear Usuario</a>
-        <br><br>
+
         <table class="table table-hover text-center">
             <thead>
                 <tr>
@@ -32,7 +41,7 @@
                     <th>Piso/Dpto</th>
                     <th>Teléfono</th>
                     <th>Tipo</th>
-                    <th>Acciones</th>
+                    <th sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -49,24 +58,19 @@
                     <td>
                         <div class="d-grid d-inline-flex px-3">
                             <a th:href="@{edit/{id} (id = ${user.id})}"  class="btn btn-primary btn-sm mx-1"
-                               role="button" data-bs-toggle="button">Editar</a>
+                               role="button" data-bs-toggle="button" sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">
+                                Editar
+                            </a>
                             <a th:href="@{delete/{id} (id = ${user.id})}" class="btn btn-primary btn-sm mx-1" role="button"
-                               data-bs-toggle="button">Eliminar</a>
+                               data-bs-toggle="button" sec:authorize="hasAuthority('ADMIN')">
+                                Eliminar
+                            </a>
                         </div>
                     </td>
                 </tr>
             </tbody>
         </table>
-
-        <div>
-            <form th:action="@{/logout}" method="post">
-                <!--b>User:</b> <span sec:authentication="name">Usuario que hizo login</span> |
-                <b>Roles:</b> <span sec:authentication="principal.authorities">Roles</span> |
-                <br-->
-                <input type="submit" class="btn btn-primary btn-sm mx-1" name="logout" value="Cerrar Sesión">
-            </form>
-        </div>
-
+        <br>
     </div>
 </body>
 </html>
