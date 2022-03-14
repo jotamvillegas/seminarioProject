@@ -2,7 +2,6 @@ package com.seminario.sleepingMotorhome.controllers;
 
 import com.seminario.sleepingMotorhome.models.Person;
 import com.seminario.sleepingMotorhome.models.PersonType;
-import com.seminario.sleepingMotorhome.models.User;
 import com.seminario.sleepingMotorhome.services.PersonService;
 import com.seminario.sleepingMotorhome.services.PersonTypeService;
 import com.seminario.sleepingMotorhome.services.UserService;
@@ -27,11 +26,8 @@ public class StartController {
     private UserService userService;
 
 
-
-    @GetMapping ("/index")
-    public String start (Model model){
-        var person = personService.listPerson();
-        model.addAttribute("person", person);
+    @GetMapping (value = {"/login","/"})
+    public String start (){
         return "index";
     }
 

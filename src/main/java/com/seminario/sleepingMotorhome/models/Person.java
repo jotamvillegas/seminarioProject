@@ -2,6 +2,7 @@ package com.seminario.sleepingMotorhome.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -15,29 +16,30 @@ import java.util.Date;
 public class Person {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     private Long id;
 
-    @Column(length = 30)
+    @Column(length = 70)
     private String userName;
 
-    @Column(length = 30)
+    @Column(nullable = false, length = 255)
     private String password;
 
-    @Column(length = 30)
+    @Column(length = 50)
     private String name;
 
-    @Column(length = 30)
+    @Column(length = 50)
     private String surname;
 
     private Integer documentNumber;
 
-    @Column(length = 30)
+    @Column(length = 70)
     private String addressName;
 
     private Integer addressNumber;
 
-    @Column(length = 30)
+    @Column(length = 10)
     private String floor;
 
     private Integer phone;
@@ -45,17 +47,17 @@ public class Person {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss Z", timezone="UTC")
     private Date dateOfAdmission;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss Z", timezone="UTC")
     private Date dateOfEgress;
 
     //relations
 
-    @ManyToOne //(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "person_type_id")
     @JsonIgnoreProperties("person")
     private PersonType personType;
 
-    @ManyToOne //(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne //(fetch = FetchType.LAZY)
     @JoinColumn(name = "status_rol_id")
     @JsonIgnoreProperties("person")
     private StatusRol statusRol;
@@ -72,6 +74,7 @@ public class Person {
     public Long getId() {
         return id;
     }
+
 
     public void setId(Long id) {
         this.id = id;

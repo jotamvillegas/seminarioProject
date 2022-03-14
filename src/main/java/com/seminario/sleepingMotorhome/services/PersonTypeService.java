@@ -30,5 +30,4 @@ public class PersonTypeService {
         return personTypeRepository.findById(personType.getId()).orElse(null);
     }
 
-
 }

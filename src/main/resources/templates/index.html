@@ -2,18 +2,9 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" type="text/css" href="../static/css/commons.css" th:href="@{/css/commons.css}"/>
     <title>Login</title>
-    <style>
-        body{
-            background: #ffe259;
-            background: linear-gradient(to bottom, #025794, #EBEDEF);
-        }
-        .bg{
-            background-image: url(../img/motorhome.jpg);
-            background-position: center;
-        }
-    </style>
 </head>
 <body>
     <div class="container w-75 bg-primary my-5 rounded shadow-lg">
@@ -24,35 +15,27 @@
                 <div class="text-center">
                     <img th:src="@{/img/logo.jpeg}" width="90" height="90" alt="">
                 </div>
-                <h2 class="font-weight-bold text-center py-3">Bienvenido</h2>
-                <form action="#">
-                    <div class="mb-4">
-                        <label class="form-check-label">Usuario/Mail</label>
-                        <input type="text" class="form-control" name="usuario">
-                    </div>
-                    <div class="mb-4">
-                        <label class="form-check-label">Contraseña</label>
-                        <input type="password" class="form-control" name="contrasena">
-                    </div>
-                    <!--div class="mb-4 form-check">
-                        <input type="checkbox" name="conected" class="form-check-input">
-                        <label class="form-check-label">Mantenerme conectado</label>
-                    </div-->
-                    <div class="d-grid">
-                        <!--button type="submit" class="btn btn-primary">Iniciar Sesión</button-->
-                        <a th:href="@{all}" class="btn btn-primary btn-sm m-1" role="button" data-bs-toggle="button">Iniciar Sesión</a>
-                    </div>
+                <h2 class="font-weight-bold text-center py-3">Bienvenido a <br> Sleeping Motorhome</h2>
 
-                    <div class="my-3">
-                        <span>No tienes cuenta? <a href="#">Registrate</a></span> <br>
-                        <span><a href="#">Recuperar contraseña</a></span>
+                <form method="post" th:action="@{/sleepingMotorhome/login}">
+                    <div class="mb-4">
+                        <label for="username" class="form-check-label">Usuario</label>
+                        <input type="text" id="username" name="username" class="form-control">
                     </div>
+                    <br>
+                    <div class="mb-4">
+                        <label for="password" class="form-check-label">Contraseña</label>
+                        <input type="password" id="password" name="password" class="form-control">
+                    </div>
+                    <br>
+                    <div class="d-grid">
+                        <input type="submit" class="btn btn-primary btn-sm m-1" value="Ingresar">
+                    </div>
+                    <br>
                 </form>
             </div>
         </div>
     </div>
-    <!--script th:src="@{/assets/jquery/jquery.min.js}"></script>
-    <script th:src="@{/assets/popper.js/popper.min.js}"></script>
-    <script th:src="@{/assets/bootstrap/js/bootstrap.min.js}"></script-->
+
 </body>
 </html>
