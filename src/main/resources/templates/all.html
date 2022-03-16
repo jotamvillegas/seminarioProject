@@ -11,7 +11,7 @@
     <div class="container" sec:authorize="isAuthenticated()">
         <br><br>
         <div class="justify-content-around">
-            <div sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')" class="float-left">
+            <div sec:authorize="hasAuthority('ADMIN')" class="float-left">
                 <a th:href="@{add}" class="btn btn-primary btn-sm mx-1 navbar-btn" role="button" data-bs-toggle="button">Crear Usuario</a>
             </div>
 
