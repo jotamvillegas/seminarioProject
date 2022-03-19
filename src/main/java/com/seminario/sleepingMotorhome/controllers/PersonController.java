@@ -33,6 +33,11 @@ public class PersonController {
         return "index";
     }
 
+    @GetMapping (path = "/home")
+    public String home (){
+        return "home";
+    }
+
     // person controller
 
     @GetMapping(path = "/all")

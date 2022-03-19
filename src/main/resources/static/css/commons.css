@@ -1,5 +1,11 @@
+html {
+    min-height: 100%;
+    position: relative;
+}
 body{
     background: #EDEDED;
+    margin: 0;
+    margin-bottom: 40px;
     /*background: #EBEDEF;*/
     /*background: #ffe259;*/
     /*background: linear-gradient(to bottom, #025794, #EBEDEF);*/
@@ -8,7 +14,7 @@ body{
     background-image: url(../img/motorhome.jpg);
     background-position: center;
 }
-h2 {
+h2{
     font-family: sans-serif;
     font-size: 1.5em;
     text-transform: uppercase;
@@ -17,10 +23,19 @@ h2 {
 table{
     background: darkgrey;
 }
-th {
+th{
     font-palette: white;
 }
-
-td {
+td{
     font-palette: white;
+}
+.imgMenu{
+    width: 30%;
+    height:30%;
+}
+footer{
+    position: absolute;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
 }
