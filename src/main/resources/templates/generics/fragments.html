@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" href="../static/css/commons.css" th:href="@{/css/commons.css}"/>
+    <title>Usuarios</title>
+</head>
+<body>
+
+    <div th:fragment="header" >
+        <header class="pb-1 bg-dark">
+            <nav class="navbar navbar-default text-white" role="navigation">
+                <div class="navbar-header">
+                    <a class="navbar-brand" th:href="@{/sleepingMotorhome/all}">
+                        <img th:src="@{/img/logo.jpeg}" width="60" height="60" alt="" >
+                    </a>
+                </div>
+                <div class="navbar-header">
+                    <a class="navbar-brand" th:href="@{/sleepingMotorhome/home}">
+                       Menú
+                    </a>
+                </div>
+                <div class="justify-content-around">
+                    <div sec:authorize="isAuthenticated()" class="float-right">
+                        <form th:action="@{/logout}" method="post" class="navbar-text">
+                            <b>| User:</b> <span sec:authentication="name">Usuario</span>
+                            <b> | Roles:</b> <span sec:authentication="principal.authorities">Roles</span> <b> |</b>
+                            <input type="submit" class="btn btn-primary btn-sm mx-1" name="logout" value="Cerrar Sesión">
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    </div>
+
+    <div th:fragment="footer">
+        <footer class="py-2 bg-dark">
+            <div class="container">
+                <p class="m-0 text-center text-white">Copyright &copy; Sleeping Motorhome</p>
+            </div>
+        </footer>
+    </div>
+
+</body>
+</html>

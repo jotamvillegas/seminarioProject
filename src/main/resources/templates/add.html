@@ -5,21 +5,19 @@
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
     <link rel="stylesheet" href="../static/css/commons.css" th:href="@{/css/commons.css}"/>
     <title>Usuarios</title>
-    <!--style>
-        body{
-            background: #EDEDED;
-            //background: linear-gradient(to bottom, #025794, #EBEDEF);
-        }
-    </style-->
 </head>
 <body>
+
+    <div th:insert="generics/fragments::header"></div>
+
     <div class="container">
         <h1 class="font-weight-bold text-center py-3">Datos de la persona</h1>
-        <br><br>
-        <a th:href="@{/sleepingMotorhome/all}" class="btn btn-secondary btn-sm mx-1" role="button" data-bs-toggle="button">Regresar</a>
-        <br><br>
+        <br>
+        <div>
+            <a th:href="@{/sleepingMotorhome/all}" class="btn btn-secondary btn-sm mx-1" role="button" data-bs-toggle="button">Regresar</a>
+        </div>
+        <br>
         <div></div>
-            <!--form th:action="${editMode} ? @{add} : @{savePerson}" method="post" th:object="${person}"-->
             <form th:action="@{/sleepingMotorhome/savePerson}" method="POST" th:object="${person}">
 
                 <input type="hidden" th:field="*{id}" th:if="${editMode}">
@@ -61,7 +59,7 @@
                     <label>Nombre de contraseña:</label>
                     <input type="password" th:field="*{password}">
                 </div>
-                <div class="form-group blu-margin" th:objetct="${person_type}">
+                <div class="form-group" th:objetct="${person_type}">
                     <label>Tipo de usuario:</label>
                     <select class="form-control" name="perType">
                         <option value="">Selecciona una opción</option>
@@ -73,14 +71,16 @@
                         </option>
                     </select>
                 </div>
-
-                <input type="submit" class="btn btn-primary btn-sm mx-1" name="savePerson"
-                       th:value="${editMode}?'Editar':'Guardar'"
-                       value="Guardar">
-                <br><br><br>
-
+                <div>
+                    <input type="submit" class="btn btn-primary btn-sm mx-1" name="savePerson"
+                           th:value="${editMode}?'Editar':'Guardar'"
+                           value="Guardar">
+                </div>
             </form>
         </div>
+        <br><br>
+        <div th:insert="generics/fragments::footer"></div>
+
     </div>
 </body>
 </html>
