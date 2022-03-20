@@ -38,19 +38,17 @@ public class PersonController {
         return "home";
     }
 
-    // person controller
-
     @GetMapping(path = "/all")
     public String getAllUser (Model model){
         model.addAttribute("users", personService.listPerson());
         model.addAttribute("listPersonTypes", personTypeService.getPersonTypes());
-        return "all";
+        return "person/all";
     }
 
     @GetMapping(path = "/add")
     public String add (Person person, PersonType personType, Model model){
         model.addAttribute("listPersonTypes", personTypeService.getPersonTypes());
-        return "add";
+        return "person/add";
     }
 
     @PostMapping(path = "/savePerson")
@@ -63,7 +61,7 @@ public class PersonController {
         person.setDateOfAdmission(new Date());
         person.setPersonType(type);
         personService.savePerson(person);
-        return "redirect:all";
+        return "redirect:/sleepingMotorhome/all";
     }
 
     @GetMapping(path = "/edit/{id}")
@@ -73,7 +71,7 @@ public class PersonController {
         model.addAttribute("person", personToEdit);
         model.addAttribute("listPersonTypes", personTypeService.getPersonTypes());
         model.addAttribute("editMode","true");
-        return "add";
+        return "person/add";
     }
 
     @GetMapping (path = "/delete/{id}")
@@ -81,9 +79,6 @@ public class PersonController {
         personService.deletePerson(id);
         return "redirect:/sleepingMotorhome/all";
     }
-
-
-
 
 
 }
