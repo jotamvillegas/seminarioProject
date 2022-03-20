@@ -41,13 +41,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure (HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/sleepingMotorhome/all")
+                .antMatchers("/sleepingMotorhome/home")
                 .hasAnyAuthority("ADMIN","USER", "EMPLOYEE")
                 .and()
                 .formLogin()
                 .loginPage("/sleepingMotorhome/login")
                 .permitAll()
-                .defaultSuccessUrl("/sleepingMotorhome/all")
+                .defaultSuccessUrl("/sleepingMotorhome/home")
                 .failureUrl("/sleepingMotorhome/login?error=true")
         ;
     }

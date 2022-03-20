@@ -13,14 +13,10 @@
         <header class="pb-1 bg-dark">
             <nav class="navbar navbar-default text-white" role="navigation">
                 <div class="navbar-header">
-                    <a class="navbar-brand" th:href="@{/sleepingMotorhome/all}">
-                        <img th:src="@{/img/logo.jpeg}" width="60" height="60" alt="" >
+                    <a class="navbar-brand float-left" th:href="@{/sleepingMotorhome/home}">
+                        <img th:src="@{/img/logo.jpeg}" width="55" height="55" alt="">
                     </a>
-                </div>
-                <div class="navbar-header">
-                    <a class="navbar-brand" th:href="@{/sleepingMotorhome/home}">
-                       Menú
-                    </a>
+                    <p class="followeb-by-logo float-right">Sleeping Motorhome</p>
                 </div>
                 <div class="justify-content-around">
                     <div sec:authorize="isAuthenticated()" class="float-right">
