@@ -40,7 +40,10 @@ footer{
     width: 100%;
 }
 .followeb-by-logo{
-    font-family: Garamond;
-    font-size: 2em;
-    padding-top: 3%;
+    font-family: "Arial Narrow";
+    font-size: 1.5em;
  }
+.jv-top-bottom{
+    padding-top: 6%;
+    padding-bottom: -6%;
+}

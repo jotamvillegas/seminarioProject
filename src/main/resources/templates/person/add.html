@@ -61,12 +61,12 @@
                 </div>
                 <div class="form-group" th:objetct="${person_type}">
                     <label>Tipo de usuario:</label>
-                    <select class="form-control" name="perType">
+                    <select class="form-control-sm" name="perType">
                         <option value="">Selecciona una opción</option>
-                        <option th:each="personType : ${listPersonTypes}"
-                                th:value="${personType.id}"
-                                th:text="${personType.id} + ' - ' + ${personType.type}"
-                                th:selected="${editMode} ? true : false"
+                        <option th:each="temp : ${listPersonTypes}"
+                                th:value="${temp.id}"
+                                th:text="${temp.type}"
+                                th:field="*{personType}"
                                 >
                         </option>
                     </select>
