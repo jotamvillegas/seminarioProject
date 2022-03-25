@@ -22,46 +22,51 @@
 
                 <input type="hidden" th:field="*{id}" th:if="${editMode}">
                 <input type="hidden" th:field="*{password}" th:if="${editMode}">
-
                 <div class="form-group">
-                    <label>Nombres:</label>
-                    <input type="text" th:field="*{name}">
+                    <label>Nombres (*)</label>
+                    <input class="form-control" type="text" th:field="*{name}">
+                    <div class="alert-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
                 </div>
                 <div class="form-group">
-                    <label>Apellidos:</label>
-                    <input type="text" th:field="*{surname}">
+                    <label>Apellidos (*)</label>
+                    <input class="form-control" type="text" th:field="*{surname}">
+                    <div class="alert-danger" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
                 </div>
                 <div class="form-group">
-                    <label>Número de documento:</label>
-                    <input type="number" th:field="*{documentNumber}">
+                    <label>Número de documento</label>
+                    <input class="form-control" type="number" th:field="*{documentNumber}">
                 </div>
                 <div class="form-group">
-                    <label>Nombre de calle:</label>
-                    <input type="text" th:field="*{addressName}">
+                    <label>Nombre de calle</label>
+                    <input class="form-control" type="text" th:field="*{addressName}">
                 </div>
                 <div class="form-group">
-                    <label>Número de casa:</label>
-                    <input type="number" th:field="*{addressNumber}">
+                    <label>Número de casa</label>
+                    <input class="form-control" type="number" th:field="*{addressNumber}">
                 </div>
                 <div class="form-group">
-                    <label>Número de piso y departamento:</label>
-                    <input type="text" th:field="*{floor}">
+                    <label>Número de piso y departamento</label>
+                    <input class="form-control" type="text" th:field="*{floor}">
                 </div>
                 <div class="form-group">
-                    <label>Teléfono de contacto:</label>
-                    <input type="number" th:field="*{phone}">
+                    <label>Teléfono de contacto  (*)</label>
+                    <input class="form-control" type="number" th:field="*{phone}">
+                    <div class='alert-danger' th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
                 </div>
                 <div class="form-group">
-                    <label>Nombre de usuario:</label>
-                    <input type="text" th:field="*{userName}">
+                    <label>Nombre de usuario (*)</label>
+                    <input class="form-control" type="text" th:field="*{userName}">
+                    <div class="alert-danger" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></div>
+                    <div class="alert-danger" th:text="${msgErrorUsernameExisting}"></div>
                 </div>
                 <div class="form-group" th:if="${editMode} == null or ${editMode} == false">
-                    <label>Nombre de contraseña:</label>
-                    <input type="password" th:field="*{password}">
+                    <label>Nombre de contraseña (*)</label>
+                    <input class="form-control" type="password" th:field="*{password}">
+                    <div class="alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                 </div>
                 <div class="form-group" th:objetct="${person_type}">
-                    <label>Tipo de usuario:</label>
-                    <select class="form-control-sm" name="perType">
+                    <label>Tipo de usuario (*)</label>
+                    <select class="form-control" name="perType">
                         <option value="">Selecciona una opción</option>
                         <option th:each="temp : ${listPersonTypes}"
                                 th:value="${temp.id}"
@@ -70,6 +75,7 @@
                                 >
                         </option>
                     </select>
+                    <div class='alert-danger' th:if="${#fields.hasErrors('personType')}" th:errors="*{personType}"></div>
                 </div>
                 <div>
                     <input type="submit" class="btn btn-primary btn-sm mx-1" name="savePerson"

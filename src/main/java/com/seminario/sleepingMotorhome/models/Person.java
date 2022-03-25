@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -18,15 +20,19 @@ public class Person {
     private Long id;
 
     @Column(length = 70)
+    @NotBlank(message = "Campo obligatorio!... Por favor, ingrese un nombre de usuario.")
     private String userName;
 
     @Column(nullable = false, length = 255)
+    @NotBlank(message = "Campo obligatorio!... Por favor, ingrese una contraseña.")
     private String password;
 
     @Column(length = 50)
+    @NotBlank(message = "Campo obligatorio!... Por favor, ingrese un nombre.")
     private String name;
 
     @Column(length = 50)
+    @NotBlank(message = "Campo obligatorio!... Por favor, ingrese un apellido.")
     private String surname;
 
     private Integer documentNumber;
@@ -39,6 +45,7 @@ public class Person {
     @Column(length = 10)
     private String floor;
 
+    @NotNull(message = "Campo obligatorio!... Por favor, ingrese un número de contacto.")
     private Integer phone;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss Z", timezone="UTC")
