@@ -40,6 +40,8 @@ public class PersonService {
         return personRepository.findById(person.getId()).orElse(null);
     }
 
-
+    public boolean existsUsername (String username){
+        return personRepository.existsPersonByUserName(username);
+    }
 
 }

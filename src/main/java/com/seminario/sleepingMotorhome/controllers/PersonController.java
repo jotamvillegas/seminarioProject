@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Date;
 
 @Controller
@@ -52,16 +54,35 @@ public class PersonController {
     }
 
     @PostMapping(path = "/savePerson")
-    public String savePerson (@RequestParam(value = "perType") PersonType type,  Person person){
-        if (person.getPassword().length() < 30) {
-            String pass = person.getPassword();
-            String passEncode = person.setPassword(bCryptPasswordEncoder.encode(pass));
-            person.setPassword(passEncode);
+    public String savePerson (@Valid Person person,
+                              Errors errors,
+                              @RequestParam (value = "perType") PersonType type,
+                              Model model){
+
+        if (person.getId() == null){
+            if (errors.hasErrors()) {
+                model.addAttribute("listPersonTypes", personTypeService.getPersonTypes());
+                return "person/add";
+            }
+            if (personService.existsUsername(person.getUserName())){
+                model.addAttribute("listPersonTypes", personTypeService.getPersonTypes());
+                model.addAttribute("msgErrorUsernameExisting",
+                        "Ya existe un usuario con el mismo nombre. Por favor, ingresa un nombre de usuario distinto.");
+                return "person/add";
+            }
+            if (person.getPassword().length() < 30) {
+                String pass = person.getPassword();
+                String passEncode = person.setPassword(bCryptPasswordEncoder.encode(pass));
+                person.setPassword(passEncode);
+            }
+
         }
+
         person.setDateOfAdmission(new Date());
         person.setPersonType(type);
         personService.savePerson(person);
         return "redirect:/sleepingMotorhome/all";
+
     }
 
     @GetMapping(path = "/edit/{id}")
