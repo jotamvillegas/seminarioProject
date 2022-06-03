@@ -2,12 +2,10 @@ package com.seminario.sleepingMotorhome.services;
 
 import com.seminario.sleepingMotorhome.models.Person;
 import com.seminario.sleepingMotorhome.repositories.PersonRepository;
-import com.seminario.sleepingMotorhome.repositories.PersonTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PersonService {
@@ -40,7 +38,7 @@ public class PersonService {
         return personRepository.findById(person.getId()).orElse(null);
     }
 
-    public boolean existsUsername (String username){
+    public boolean existUsername(String username){
         return personRepository.existsPersonByUserName(username);
     }
 

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" href="../../static/css/commons.css" th:href="@{/css/commons.css}"/>
+    <title>Motorhomes</title>
+</head>
+<body>
+    <div th:insert="generics/fragments::header"></div>
+
+    <div class="container">
+        <h1 class="font-weight-bold text-center py-3">Ingreso de Vehículo</h1>
+        <br>
+        <div>
+            <a th:href="@{/sleepingMotorhome/motorhome/all}" class="btn btn-secondary btn-sm mx-1" role="button" data-bs-toggle="button">Regresar</a>
+        </div>
+        <br>
+        <form th:action="@{/sleepingMotorhome/motorhome/save}" method="POST" th:object="${motorhome}">
+
+            <input type="hidden" th:field="*{id}" th:if="${editMode}">
+            <div class="form-group">
+                <label>Patente de motorhome (*)</label>
+                <input class="form-control" style="text-transform: uppercase" type="text" th:field="*{enrollment}">
+                <div class="alert-danger" th:if="${#fields.hasErrors('enrollment')}" th:errors="*{enrollment}"></div>
+            </div>
+            <div class="form-group">
+                <label>Largo de motorhome</label>
+                <input class="form-control" type="text" th:field="*{lengthMotorhome}">
+            </div>
+            <div class="form-group">
+                <label>Ancho de motorhome</label>
+                <input class="form-control" type="text" th:field="*{widthMotorhome}">
+            </div>
+            <div class="form-group" th:objetct="${motorhome_type}">
+                <label>Tipo de motorhome (*)</label>
+                <select class="form-control" name="mhType">
+                    <option value="">Selecciona una opción</option>
+                    <option th:each="temp : ${motorhomeTypeList}"
+                            th:value="${temp.id}"
+                            th:text="${temp.motorhomeType}"
+                            th:field="*{motorhomeType}"
+                    >
+                    </option>
+                </select>
+                <div class='alert-danger' th:if="${#fields.hasErrors('motorhomeType')}" th:errors="*{motorhomeType}"></div>
+            </div>
+            <div class="form-group" th:objetct="${garage}">
+                <label>Seleccionar Garage (*)</label>
+                <select class="form-control" name="gara">
+                    <option value="">Selecciona una opción</option>
+                    <option th:each="temp : ${garageFreeList}"
+                            th:value="${temp.id}"
+                            th:text="${temp.id}"
+                            th:field="*{garage.id}"
+                    >
+                    </option>
+                </select>
+
+            </div>
+            <div class="form-group">
+                <label>Dueño</label>
+                <input class="form-control" type="text" th:field="*{user}">
+            </div>
+            <div>
+                <input type="submit" class="btn btn-primary btn-sm mx-1" name="saveMotorhome"
+                       th:value="${editMode}?'Editar':'Guardar'"
+                       value="Guardar">
+            </div>
+        </form>
+    </div>
+    <br><br>
+    <div th:insert="generics/fragments::footer"></div>
+
+</body>
+</html>

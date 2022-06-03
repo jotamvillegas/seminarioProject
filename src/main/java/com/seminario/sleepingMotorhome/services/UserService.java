@@ -19,7 +19,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<User> listUsers (){
+    public List<User> userList (){
         return (List<User>) userRepository.findAll();
     }
 
@@ -31,8 +31,11 @@ public class UserService {
         userRepository.delete(user);
     }
 
-    public User searchUser(User user){
-        return userRepository.findById(user.getId()).orElse(null);
+    public User getUser(Long id){
+        return userRepository.findById(id).orElse(null);
     }
 
+    public boolean existUser (Long id){
+        return userRepository.existsById(id);
+    }
 }
