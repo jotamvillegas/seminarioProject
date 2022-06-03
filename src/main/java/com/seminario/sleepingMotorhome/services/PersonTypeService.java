@@ -30,4 +30,7 @@ public class PersonTypeService {
         return personTypeRepository.findById(personType.getId()).orElse(null);
     }
 
+    public boolean existPersonType (Long id){
+        return personTypeRepository.existsById(id);
+    }
 }

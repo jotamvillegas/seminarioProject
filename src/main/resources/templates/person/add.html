@@ -7,87 +7,84 @@
     <title>Usuarios</title>
 </head>
 <body>
-
     <div th:insert="generics/fragments::header"></div>
 
     <div class="container">
-        <h1 class="font-weight-bold text-center py-3">Datos de la persona</h1>
+        <h1 class="font-weight-bold text-center py-3">Ingreso de persona</h1>
         <br>
         <div>
             <a th:href="@{/sleepingMotorhome/all}" class="btn btn-secondary btn-sm mx-1" role="button" data-bs-toggle="button">Regresar</a>
         </div>
         <br>
-        <div></div>
-            <form th:action="@{/sleepingMotorhome/savePerson}" method="POST" th:object="${person}">
+        <form th:action="@{/sleepingMotorhome/savePerson}" method="POST" th:object="${person}">
 
-                <input type="hidden" th:field="*{id}" th:if="${editMode}">
-                <input type="hidden" th:field="*{password}" th:if="${editMode}">
-                <div class="form-group">
-                    <label>Nombres (*)</label>
-                    <input class="form-control" type="text" th:field="*{name}">
-                    <div class="alert-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
-                </div>
-                <div class="form-group">
-                    <label>Apellidos (*)</label>
-                    <input class="form-control" type="text" th:field="*{surname}">
-                    <div class="alert-danger" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
-                </div>
-                <div class="form-group">
-                    <label>Número de documento</label>
-                    <input class="form-control" type="number" th:field="*{documentNumber}">
-                </div>
-                <div class="form-group">
-                    <label>Nombre de calle</label>
-                    <input class="form-control" type="text" th:field="*{addressName}">
-                </div>
-                <div class="form-group">
-                    <label>Número de casa</label>
-                    <input class="form-control" type="number" th:field="*{addressNumber}">
-                </div>
-                <div class="form-group">
-                    <label>Número de piso y departamento</label>
-                    <input class="form-control" type="text" th:field="*{floor}">
-                </div>
-                <div class="form-group">
-                    <label>Teléfono de contacto  (*)</label>
-                    <input class="form-control" type="number" th:field="*{phone}">
-                    <div class='alert-danger' th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
-                </div>
-                <div class="form-group">
-                    <label>Nombre de usuario (*)</label>
-                    <input class="form-control" type="text" th:field="*{userName}">
-                    <div class="alert-danger" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></div>
-                    <div class="alert-danger" th:text="${msgErrorUsernameExisting}"></div>
-                </div>
-                <div class="form-group" th:if="${editMode} == null or ${editMode} == false">
-                    <label>Nombre de contraseña (*)</label>
-                    <input class="form-control" type="password" th:field="*{password}">
-                    <div class="alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-                </div>
-                <div class="form-group" th:objetct="${person_type}">
-                    <label>Tipo de usuario (*)</label>
-                    <select class="form-control" name="perType">
-                        <option value="">Selecciona una opción</option>
-                        <option th:each="temp : ${listPersonTypes}"
-                                th:value="${temp.id}"
-                                th:text="${temp.type}"
-                                th:field="*{personType}"
-                                >
-                        </option>
-                    </select>
-                    <div class='alert-danger' th:if="${#fields.hasErrors('personType')}" th:errors="*{personType}"></div>
-                </div>
-                <div>
-                    <input type="submit" class="btn btn-primary btn-sm mx-1" name="savePerson"
-                           th:value="${editMode}?'Editar':'Guardar'"
-                           value="Guardar">
-                </div>
-            </form>
-        </div>
-        <br><br>
-        <div th:insert="generics/fragments::footer"></div>
-
+            <input type="hidden" th:field="*{id}" th:if="${editMode}">
+            <input type="hidden" th:field="*{password}" th:if="${editMode}">
+            <div class="form-group">
+                <label>Nombres (*)</label>
+                <input class="form-control" type="text" th:field="*{name}">
+                <div class="alert-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+            </div>
+            <div class="form-group">
+                <label>Apellidos (*)</label>
+                <input class="form-control" type="text" th:field="*{surname}">
+                <div class="alert-danger" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
+            </div>
+            <div class="form-group">
+                <label>Número de documento</label>
+                <input class="form-control" type="number" th:field="*{documentNumber}">
+            </div>
+            <div class="form-group">
+                <label>Nombre de calle</label>
+                <input class="form-control" type="text" th:field="*{addressName}">
+            </div>
+            <div class="form-group">
+                <label>Número de casa</label>
+                <input class="form-control" type="number" th:field="*{addressNumber}">
+            </div>
+            <div class="form-group">
+                <label>Número de piso y departamento</label>
+                <input class="form-control" type="text" th:field="*{floor}">
+            </div>
+            <div class="form-group">
+                <label>Teléfono de contacto  (*)</label>
+                <input class="form-control" type="number" th:field="*{phone}">
+                <div class='alert-danger' th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+            </div>
+            <div class="form-group">
+                <label>Nombre de usuario (*)</label>
+                <input class="form-control" type="text" th:field="*{userName}">
+                <div class="alert-danger" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></div>
+                <div class="alert-danger" th:text="${msgErrorUsernameExisting}"></div>
+            </div>
+            <div class="form-group" th:if="${editMode} == null or ${editMode} == false">
+                <label>Nombre de contraseña (*)</label>
+                <input class="form-control" type="password" th:field="*{password}">
+                <div class="alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+            </div>
+            <div class="form-group" th:objetct="${person_type}">
+                <label>Tipo de usuario (*)</label>
+                <select class="form-control" name="perType">
+                    <option value="">Selecciona una opción</option>
+                    <option th:each="temp : ${listPersonTypes}"
+                            th:value="${temp.id}"
+                            th:text="${temp.type}"
+                            th:field="*{personType}"
+                            >
+                    </option>
+                </select>
+                <div class='alert-danger' th:if="${#fields.hasErrors('personType')}" th:errors="*{personType}"></div>
+            </div>
+            <div>
+                <input type="submit" class="btn btn-primary btn-sm mx-1" name="savePerson"
+                       th:value="${editMode}?'Editar':'Guardar'"
+                       value="Guardar">
+            </div>
+        </form>
     </div>
+    <br><br>
+    <div th:insert="generics/fragments::footer"></div>
+
 </body>
 </html>
 

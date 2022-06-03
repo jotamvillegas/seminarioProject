@@ -29,5 +29,9 @@ public class EmployeeService {
         employeeRepository.delete(employee);
     }
 
+    public boolean existEmployee (Long id){
+        return employeeRepository.existsById(id);
+    }
+
 
 }

@@ -64,7 +64,7 @@ public class PersonController {
                 model.addAttribute("listPersonTypes", personTypeService.getPersonTypes());
                 return "person/add";
             }
-            if (personService.existsUsername(person.getUserName())){
+            if (personService.existUsername(person.getUserName())){
                 model.addAttribute("listPersonTypes", personTypeService.getPersonTypes());
                 model.addAttribute("msgErrorUsernameExisting",
                         "Ya existe un usuario con el mismo nombre. Por favor, ingresa un nombre de usuario distinto.");
@@ -88,9 +88,8 @@ public class PersonController {
     @GetMapping(path = "/edit/{id}")
     public String editUser (Person person, PersonType personType, Model model){
         Person personToEdit = personService.getPersonById(person.getId());
-        PersonType personTypeToEdit = personToEdit.getPersonType();
         model.addAttribute("person", personToEdit);
-        model.addAttribute("listPersonTypes", personTypeService.getPersonTypes());
+        model.addAttribute("listPersonTypes", personTypeService.getPersonTypes()); // pasar lista completa al model
         model.addAttribute("editMode","true");
         return "person/add";
     }
