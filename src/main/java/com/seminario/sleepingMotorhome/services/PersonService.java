@@ -42,4 +42,11 @@ public class PersonService {
         return personRepository.existsPersonByUserName(username);
     }
 
+    public List<Person> onlyUserList (){
+        //return personRepository.personListByPersonTypeUser();
+        return personRepository.findAllByPersonTypeEquals(3);
+    }
+
+
+
 }

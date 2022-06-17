@@ -56,11 +56,20 @@
                     >
                     </option>
                 </select>
-
+                <div class='alert-danger' th:if="${#fields.hasErrors('garage.id')}" th:errors="*{garage.id}"></div>
             </div>
-            <div class="form-group">
-                <label>Dueño</label>
-                <input class="form-control" type="text" th:field="*{user}">
+            <div class="form-group" th:objetct="${person}">
+                <label>Seleccionar Dueño (*)</label>
+                <select class="form-control" name="user">
+                    <option value="">Selecciona una opción</option>
+                    <option th:each="temp : ${userList}"
+                            th:value="${temp.id}"
+                            th:text="${temp.name + ' ' + temp.surname}"
+                            th:field="*{user}"
+                    >
+                    </option>
+                </select>
+                <!--<input class="form-control" type="text" th:field="*{user}">-->
             </div>
             <div>
                 <input type="submit" class="btn btn-primary btn-sm mx-1" name="saveMotorhome"
