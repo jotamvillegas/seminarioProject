@@ -29,8 +29,7 @@ public class MotorhomeController {
     private ZoneService zoneService;
 
     @Autowired
-    private UserService userService;
-
+    private PersonService personService;
 
 
     @GetMapping(path = "/motorhome/all")
@@ -40,9 +39,10 @@ public class MotorhomeController {
     }
 
     @GetMapping(path = "/motorhome/add")
-    public String addMotorhome(Motorhome motorhome, Garage garage, Zone zone, Model model){
+    public String addMotorhome(Motorhome motorhome, Garage garage, Person person, Model model){
         model.addAttribute("motorhomeTypeList", motorhomeTypeService.motorhomeTypeList());
         model.addAttribute("garageFreeList", garageService.garageFreeList());
+        model.addAttribute("userList", personService.listPerson());
         return "motorhome/add";
     }
 
@@ -50,6 +50,7 @@ public class MotorhomeController {
     public String saveMotorhome (@Valid Motorhome motorhome, Zone zone,
                                  @RequestParam (value = "mhType") MotorhomeType motorhomeType,
                                  @RequestParam (value = "gara") Garage garage,
+                                 @RequestParam (value = "user") Person person,
                                  Errors errors, Model model){
 
         List<Long> garageFreeList = garageService.garageFreeListOnlyId();
@@ -85,7 +86,7 @@ public class MotorhomeController {
             }
         }
 
-        // TODO: 3/6/2022  validar si el user existe y setear
+        // validar si el user existe y setear
 
         motorhome.setEnrollment(motorhome.getEnrollment().toUpperCase());
         motorhome.setGarage(garage);
@@ -95,10 +96,11 @@ public class MotorhomeController {
     }
 
     @GetMapping(path = "/motorhome/edit/{id}")
-    public String editUser (Motorhome motorhome, Garage garage, Model model){
+    public String editUser (Motorhome motorhome, Garage garage, Person person, Model model){
         Motorhome motorhomeToEdit = motorhomeService.getMotorhomeById(motorhome.getId());
         model.addAttribute("motorhome", motorhomeToEdit);
         model.addAttribute("motorhomeTypeList", motorhomeTypeService.motorhomeTypeList());
+        model.addAttribute("userList", personService.listPerson());
 
         List<Garage> garageList = garageService.garageFreeList();
         Long value = motorhomeToEdit.getGarage().getId();
