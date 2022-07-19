@@ -5,7 +5,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "employee")
-@PrimaryKeyJoinColumn(name = "employee_id")
+//@PrimaryKeyJoinColumn(name = "employee_id")
 public class Employee extends Person {
 
     // los ids heredan de person
@@ -22,7 +22,6 @@ public class Employee extends Person {
     }
 
     // setter and getters
-
 
     public String getSpecialty() {
         return specialty;

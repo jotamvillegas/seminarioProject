@@ -13,10 +13,10 @@
         <h1 class="font-weight-bold text-center py-3">Ingreso de persona</h1>
         <br>
         <div>
-            <a th:href="@{/sleepingMotorhome/all}" class="btn btn-secondary btn-sm mx-1" role="button" data-bs-toggle="button">Regresar</a>
+            <a th:href="@{/sleepingMotorhome/person/all}" class="btn btn-secondary btn-sm mx-1" role="button" data-bs-toggle="button">Regresar</a>
         </div>
         <br>
-        <form th:action="@{/sleepingMotorhome/savePerson}" method="POST" th:object="${person}">
+        <form th:action="@{/sleepingMotorhome/person/savePerson}" method="POST" th:object="${person}">
 
             <input type="hidden" th:field="*{id}" th:if="${editMode}">
             <input type="hidden" th:field="*{password}" th:if="${editMode}">

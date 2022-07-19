@@ -19,4 +19,7 @@ public interface PersonRepository extends CrudRepository <Person, Long> {
 
     List<Person> findAllByPersonTypeEquals (int personType);
 
+    @Query(value = "SELECT MAX(id)  FROM person", nativeQuery = true)
+    Long getLastRegister();
+
 }
