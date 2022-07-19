@@ -2,6 +2,8 @@ package com.seminario.sleepingMotorhome.controllers;
 
 import com.seminario.sleepingMotorhome.models.Person;
 import com.seminario.sleepingMotorhome.models.PersonType;
+import com.seminario.sleepingMotorhome.models.StatusRol;
+import com.seminario.sleepingMotorhome.models.User;
 import com.seminario.sleepingMotorhome.services.PersonService;
 import com.seminario.sleepingMotorhome.services.PersonTypeService;
 import com.seminario.sleepingMotorhome.services.UserService;
@@ -40,20 +42,20 @@ public class PersonController {
         return "home";
     }
 
-    @GetMapping(path = "/all")
+    @GetMapping(path = "/person/all")
     public String getAllUser (Model model){
         model.addAttribute("users", personService.listPerson());
         model.addAttribute("listPersonTypes", personTypeService.getPersonTypes());
         return "person/all";
     }
 
-    @GetMapping(path = "/add")
+    @GetMapping(path = "/person/add")
     public String add (Person person, PersonType personType, Model model){
         model.addAttribute("listPersonTypes", personTypeService.getPersonTypes());
         return "person/add";
     }
 
-    @PostMapping(path = "/savePerson")
+    @PostMapping(path = "/person/savePerson")
     public String savePerson (@Valid Person person,
                               Errors errors,
                               @RequestParam (value = "perType") PersonType type,
@@ -80,12 +82,14 @@ public class PersonController {
 
         person.setDateOfAdmission(new Date());
         person.setPersonType(type);
+        // TODO: 17/7/2022 verificar mas adelante cuando un user queda inactivo.
+        person.setStatusRol(personService.searchStatusRol("Active"));
         personService.savePerson(person);
-        return "redirect:/sleepingMotorhome/all";
+        return "redirect:/sleepingMotorhome/person/all";
 
     }
 
-    @GetMapping(path = "/edit/{id}")
+    @GetMapping(path = "/person/edit/{id}")
     public String editUser (Person person, PersonType personType, Model model){
         Person personToEdit = personService.getPersonById(person.getId());
         model.addAttribute("person", personToEdit);
@@ -94,10 +98,10 @@ public class PersonController {
         return "person/add";
     }
 
-    @GetMapping (path = "/delete/{id}")
+    @GetMapping (path = "/person/delete/{id}")
     public String deleteUser (@PathVariable ("id") Long id, Model model){
         personService.deletePerson(id);
-        return "redirect:/sleepingMotorhome/all";
+        return "redirect:/sleepingMotorhome/person/all";
     }
 
 

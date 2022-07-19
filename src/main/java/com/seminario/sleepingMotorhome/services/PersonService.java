@@ -1,6 +1,7 @@
 package com.seminario.sleepingMotorhome.services;
 
 import com.seminario.sleepingMotorhome.models.Person;
+import com.seminario.sleepingMotorhome.models.StatusRol;
 import com.seminario.sleepingMotorhome.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class PersonService {
 
     @Autowired
     private PersonTypeService personTypeService;
+
+    @Autowired
+    private StatusRolService statusRolService;
 
 
     public List<Person> listPerson(){
@@ -47,6 +51,12 @@ public class PersonService {
         return personRepository.findAllByPersonTypeEquals(3);
     }
 
+    public Long getLastPersonSaved (){
+        return personRepository.getLastRegister();
+    }
 
+    public StatusRol searchStatusRol (String status){
+        return statusRolService.getStatusRol(status);
+    }
 
 }

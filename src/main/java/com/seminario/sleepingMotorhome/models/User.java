@@ -5,11 +5,15 @@ import java.util.Set;
 
 @Entity
 @Table(name = "user")
-@PrimaryKeyJoinColumn(name = "user_id")
+//@PrimaryKeyJoinColumn(name = "user_id")
 public class User extends Person {
+
+    // los ids heredan de person
 
     @OneToMany(mappedBy = "id", fetch = FetchType.LAZY)
     private Set<Motorhome> motorhome;
+
+    private String sarasa;
 
     // contructors
 
@@ -18,16 +22,6 @@ public class User extends Person {
     }
 
     // setter and getters
-
-    /*@Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }*/
 
     public Set<Motorhome> getMotorhome() {
         return motorhome;
