@@ -46,7 +46,6 @@ public class PersonController {
                 return "person/add";
             }
         }
-
         personService.savePerson(person, type);
         return "redirect:/sleepingMotorhome/person/all";
 
