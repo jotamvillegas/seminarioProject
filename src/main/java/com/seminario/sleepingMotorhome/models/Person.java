@@ -58,7 +58,6 @@ public class Person {
 
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "person_type_id")
-    @JsonIgnoreProperties("person")
     private PersonType personType;
 
     @ManyToOne //(fetch = FetchType.LAZY)
@@ -69,7 +68,7 @@ public class Person {
 
     // constructors
 
-    public Person (){
+    public Person(){
         super();
     }
 

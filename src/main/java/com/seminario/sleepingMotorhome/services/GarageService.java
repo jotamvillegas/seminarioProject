@@ -1,11 +1,13 @@
 package com.seminario.sleepingMotorhome.services;
 
 import com.seminario.sleepingMotorhome.models.Garage;
+import com.seminario.sleepingMotorhome.models.Motorhome;
 import com.seminario.sleepingMotorhome.repositories.GarageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -13,6 +15,7 @@ public class GarageService {
 
     @Autowired
     private GarageRepository garageRepository;
+
 
     public List<Garage> garageList (){
         return (List<Garage>) garageRepository.findAll();

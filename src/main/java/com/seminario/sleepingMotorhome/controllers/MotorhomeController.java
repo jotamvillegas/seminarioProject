@@ -18,18 +18,14 @@ public class MotorhomeController {
 
     @Autowired
     private MotorhomeService motorhomeService;
-
     @Autowired
     private MotorhomeTypeService motorhomeTypeService;
-
     @Autowired
     private GarageService garageService;
-
     @Autowired
     private ZoneService zoneService;
-
     @Autowired
-    private PersonService personService;
+    private UserService userService;
 
 
     @GetMapping(path = "/motorhome/all")
@@ -42,7 +38,7 @@ public class MotorhomeController {
     public String addMotorhome(Motorhome motorhome, Garage garage, Person person, Model model){
         model.addAttribute("motorhomeTypeList", motorhomeTypeService.motorhomeTypeList());
         model.addAttribute("garageFreeList", garageService.garageFreeList());
-        model.addAttribute("userList", personService.listPerson());
+        model.addAttribute("userList", userService.getAll());
         return "motorhome/add";
     }
 
@@ -53,54 +49,16 @@ public class MotorhomeController {
                                  @RequestParam (value = "user") Person person,
                                  Errors errors, Model model){
 
-        List<Long> garageFreeList = garageService.garageFreeListOnlyId();
-
-        if (motorhome.getId() == null){
-            // si el id motorhome en nuevo setea el new garage en ocupado
-            if (garageFreeList.contains(garage.getId())) {
-                if (zoneService.existZone(motorhomeType.getId())){
-                    garage.setZone(zoneService.getZone(motorhomeType.getId()));
-                }
-                garage.setDateOfAdmission(new Date());
-                garage.setGarageNumber(garage.getId().intValue());
-                garage.setGarageStatus(true);
-                garageService.saveGarage(garage);
-            }
-        } else {
-            // si hay que editar el motorhome y hay cambio de garage debe setear el garage old en false y el nuevo en true
-            if (garageFreeList.contains(garage.getId())) {
-                Motorhome motorhomeToEdit = motorhomeService.getMotorhomeById(motorhome.getId());
-                if (!motorhomeToEdit.getGarage().getId().equals(garage.getId())){
-                    Garage garageOld = garageService.getGarage(motorhomeToEdit.getGarage().getId());
-                    garageOld.setDateOfEgress(new Date());
-                    garageOld.setGarageStatus(false);
-                    garageService.saveGarage(garageOld);
-                }
-                if (zoneService.existZone(motorhomeType.getId())){
-                    garage.setZone(zoneService.getZone(motorhomeType.getId()));
-                }
-                garage.setDateOfAdmission(new Date());
-                garage.setGarageNumber(garage.getId().intValue());
-                garage.setGarageStatus(true);
-                garageService.saveGarage(garage);
-            }
-        }
-
-        // validar si el user existe y setear
-
-        motorhome.setEnrollment(motorhome.getEnrollment().toUpperCase());
-        motorhome.setGarage(garage);
-        motorhome.setMotorhomeType(motorhomeType);
-        motorhomeService.saveMotorhome(motorhome);
+        motorhomeService.save(motorhome, zone, motorhomeType, garage, person);
         return "redirect:/sleepingMotorhome/motorhome/all";
     }
 
     @GetMapping(path = "/motorhome/edit/{id}")
-    public String editUser (Motorhome motorhome, Garage garage, Person person, Model model){
+    public String editMotorhome (Motorhome motorhome, Garage garage, Person person, Model model){
         Motorhome motorhomeToEdit = motorhomeService.getMotorhomeById(motorhome.getId());
         model.addAttribute("motorhome", motorhomeToEdit);
         model.addAttribute("motorhomeTypeList", motorhomeTypeService.motorhomeTypeList());
-        model.addAttribute("userList", personService.listPerson());
+        model.addAttribute("userList", userService.getAll());
 
         List<Garage> garageList = garageService.garageFreeList();
         Long value = motorhomeToEdit.getGarage().getId();
@@ -113,7 +71,7 @@ public class MotorhomeController {
     }
 
     @GetMapping (path = "/motorhome/delete/{id}")
-    public String deleteUser (@PathVariable ("id") Long id, Model model){
+    public String deleteMotorhome (@PathVariable ("id") Long id, Model model){
         Garage garageOld = garageService.getGarage(motorhomeService.getMotorhomeById(id).getGarage().getId());
         garageOld.setDateOfEgress(new Date());
         garageOld.setGarageStatus(false);

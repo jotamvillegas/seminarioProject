@@ -5,7 +5,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "employee")
-//@PrimaryKeyJoinColumn(name = "employee_id")
 public class Employee extends Person {
 
     // los ids heredan de person
