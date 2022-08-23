@@ -52,16 +52,13 @@
 
     <div class="container" th:if="${#authorization.expression('hasAuthority(''EMPLOYEE'')')}">
         <div class="row mb-3">
+            <div class="col-sm-4"></div>
             <div class="col-sm-4">
                 <a th:href="@{employee/data}">
                     <img th:src="@{/img/menu/employees.jpeg}" class="img-fluid rounded" alt="">
                 </a>
             </div>
-            <div class="col-sm-4">
-                <a href="">
-                    <img th:src="@{/img/menu/tasks.jpeg}" class="img-fluid rounded" alt="" >
-                </a>
-            </div>
+            <div class="col-sm-4"></div>
         </div>
     </div>
 
