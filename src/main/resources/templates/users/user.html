@@ -1,40 +1,43 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
     <link rel="stylesheet" href="../../static/css/commons.css" th:href="@{/css/commons.css}"/>
-    <title>Usuarios</title>
+    <title>Usuario</title>
 </head>
 <body>
+
     <div th:insert="generics/fragments::header"></div>
 
     <div class="container">
-        <h1 class="font-weight-bold text-center py-3">Ingreso de persona</h1>
         <br>
-        <div>
-            <a th:href="@{/sleepingMotorhome/person/all}" class="btn btn-secondary btn-sm mx-1" role="button" data-bs-toggle="button">Regresar</a>
-        </div>
-        <hr>
-        <form th:action="@{/sleepingMotorhome/person/savePerson}" method="POST" th:object="${person}">
+        <h2 class="font-weight-bold text-center py-3">Datos personales del usuario</h2>
 
-            <input type="hidden" th:field="*{id}" th:if="${editMode}">
-            <input type="hidden" th:field="*{password}" th:if="${editMode}">
+        <a th:href="@{/sleepingMotorhome/home}" class="btn btn-secondary btn-sm mx-1" role="button" data-bs-toggle="button">Regresar</a>
+        <br><hr>
+
+        <p>Nota: Sr. cliente recuerde que los campos deshabilitados solo pueden ser modificados por un administrador.</p>
+
+        <form th:action="@{/sleepingMotorhome/user/save}" method="POST" th:object="${user}">
+
+            <input type="hidden" th:field="*{id}">
 
             <div class="row mb-3">
                 <div class="form-group col-sm-4">
                     <label>Nombres (*)</label>
-                    <input class="form-control" type="text" th:field="*{name}">
+                    <input class="form-control" type="text" th:field="*{name}" readonly >
                     <div class="alert-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
                 </div>
                 <div class="form-group col-sm-4">
                     <label>Apellidos (*)</label>
-                    <input class="form-control" type="text" th:field="*{surname}">
+                    <input class="form-control" type="text" th:field="*{surname}" readonly >
                     <div class="alert-danger" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
                 </div>
                 <div class="form-group col-sm-4">
                     <label>Número de documento</label>
-                    <input class="form-control" type="number" th:field="*{documentNumber}">
+                    <input class="form-control" type="number" th:field="*{documentNumber}" readonly >
                 </div>
             </div>
 
@@ -53,53 +56,58 @@
                 </div>
             </div>
 
-
             <div class="row mb-3">
                 <div class="form-group col-sm-4">
                     <label>Teléfono de contacto  (*)</label>
-                    <input class="form-control" type="number" th:field="*{phone}">
+                    <input class="form-control" type="number" th:field="*{phone}" readonly >
                     <div class='alert-danger' th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
                 </div>
                 <div class="form-group col-sm-4">
                     <label>Nombre de usuario (*)</label>
-                    <input class="form-control" type="text" th:field="*{userName}">
+                    <input class="form-control" type="text" th:field="*{userName}" readonly >
                     <div class="alert-danger" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></div>
-                    <div class="alert-danger" th:text="${msgErrorUsernameExisting}"></div>
                 </div>
-                <div class="form-group col-sm-4" th:if="${editMode} == null or ${editMode} == false">
+                <div class="form-group col-sm-4">
                     <label>Contraseña (*)</label>
-                    <input class="form-control" type="password" th:field="*{password}">
+                        <input class="form-control" type="text" th:field="*{password}" readonly >
                     <div class="alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                 </div>
             </div>
 
-            <div class="row mb-3">
-                <div class="form-group col-sm-4" th:objetct="${person_type}">
-                    <label>Tipo de usuario (*)</label>
-                    <select class="form-control" name="perType">
-                        <option value="">Selecciona una opción</option>
-                        <option th:each="temp : ${listPersonTypes}"
-                                th:value="${temp.id}"
-                                th:text="${temp.type}"
-                                th:field="*{personType}"
-                        >
-                        </option>
-                    </select>
-                    <div class='alert-danger' th:if="${#fields.hasErrors('personType')}" th:errors="*{personType}"></div>
-                    <div class="alert-danger" th:text="${msgErrorPersonType}"></div>
-                </div>
-            </div>
-
             <div>
-                <input type="submit" class="btn btn-primary btn-sm mx-1" name="savePerson"
-                       th:value="${editMode}?'Editar':'Guardar'"
-                       value="Guardar">
+                <input type="submit" class="btn btn-primary btn-sm mx-1" name="save" value="Guardar">
             </div>
         </form>
+        <br>
+
+        <h2 class="font-weight-bold text-center py-3">Motorhomes del usuario</h2>
+
+        <table class="table table-hover text-center">
+            <thead>
+                <tr>
+                    <th>Patente</th>
+                    <th>Largo</th>
+                    <th>Ancho</th>
+                    <th>Tipo</th>
+                    <th>Garage</th>
+                    <th>Zona</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="temp : ${mothomes}">
+                    <td th:text="${temp.enrollment}"></td>
+                    <td th:text="${temp.lengthMotorhome + ' mtrs'}"></td>
+                    <td th:text="${temp.widthMotorhome + ' mtrs'}"></td>
+                    <td th:text="${temp.motorhomeType.motorhomeType}"></td>
+                    <td th:text="${temp.garage.getGarageNumber()}"></td>
+                    <td th:text="${temp.garage.zone.getZoneName()}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
     </div>
-    <br><br>
+
     <div th:insert="generics/fragments::footer"></div>
 
 </body>
 </html>
-

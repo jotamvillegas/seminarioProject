@@ -26,8 +26,8 @@ public class PersonTypeService {
         personTypeRepository.delete(personType);
     }
 
-    public PersonType getPersonTypeById(PersonType personType){
-        return personTypeRepository.findById(personType.getId()).orElse(null);
+    public PersonType getPersonType(String type){
+        return personTypeRepository.getByType(type);
     }
 
     public boolean existPersonType (Long id){

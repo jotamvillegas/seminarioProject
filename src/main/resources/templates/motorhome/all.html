@@ -11,14 +11,16 @@
 
 <div th:insert="generics/fragments::header"></div>
 
-<div class="container" sec:authorize="isAuthenticated()">
+<div class="container">
     <br>
     <h2 class="font-weight-bold text-center py-3">Datos de Vehículos</h2>
     <br>
 
-    <div sec:authorize="hasAuthority('ADMIN')" class="float-left">
-        <a th:href="@{add}" class="btn btn-primary btn-sm mx-1 navbar-btn" role="button" data-bs-toggle="button">Crear Vehiculo</a>
+    <div  class="float-left">
+        <a th:href="@{add}" class="btn btn-primary btn-sm mx-1 navbar-btn" role="button" data-bs-toggle="button">Crear Motorhome</a>
+        <a th:href="@{/sleepingMotorhome/home}" class="btn btn-secondary btn-sm mx-1" role="button" data-bs-toggle="button">Ir a Home</a>
     </div>
+
     <br><br>
     <table class="table table-hover text-center">
         <thead>
@@ -30,7 +32,7 @@
             <th>Dueño</th>
             <th>Garage</th>
             <th>Zona</th>
-            <th sec:authorize="hasAnyAuthority('ADMIN', 'EMPLOYEE')">Acciones</th>
+            <th>Acciones</th>
         </tr>
         </thead>
         <tbody>
@@ -45,11 +47,11 @@
             <td>
                 <div class="d-grid d-inline-flex px-3">
                     <a th:href="@{edit/{id} (id = ${temp.id})}"  class="btn btn-primary btn-sm mx-1"
-                       role="button" data-bs-toggle="button" sec:authorize="hasAnyAuthority('ADMIN')">
+                       role="button" data-bs-toggle="button">
                         Editar
                     </a>
                     <a th:href="@{delete/{id} (id = ${temp.id})}" class="btn btn-primary btn-sm mx-1" role="button"
-                       data-bs-toggle="button" sec:authorize="hasAuthority('ADMIN')">
+                       data-bs-toggle="button">
                         Eliminar
                     </a>
                 </div>
