@@ -18,4 +18,9 @@ public class MainController {
         return "home";
     }
 
+    @GetMapping (path = "/forbidden")
+    public String forbidden (){
+        return "errors/forbidden";
+    }
+
 }

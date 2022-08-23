@@ -60,7 +60,7 @@ public class Person {
     @JoinColumn(name = "person_type_id")
     private PersonType personType;
 
-    @ManyToOne //(fetch = FetchType.LAZY)
+    @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "status_rol_id")
     @JsonIgnoreProperties("person")
     private StatusRol statusRol;

@@ -15,62 +15,70 @@
         <div>
             <a th:href="@{/sleepingMotorhome/motorhome/all}" class="btn btn-secondary btn-sm mx-1" role="button" data-bs-toggle="button">Regresar</a>
         </div>
-        <br>
+        <hr>
         <form th:action="@{/sleepingMotorhome/motorhome/save}" method="POST" th:object="${motorhome}">
 
             <input type="hidden" th:field="*{id}" th:if="${editMode}">
-            <div class="form-group">
-                <label>Patente de motorhome (*)</label>
-                <input class="form-control" style="text-transform: uppercase" type="text" th:field="*{enrollment}">
-                <div class="alert-danger" th:if="${#fields.hasErrors('enrollment')}" th:errors="*{enrollment}"></div>
+
+            <div class="row mb-3">
+                <div class="form-group col-sm-4">
+                    <label>Patente de motorhome (*)</label>
+                    <input class="form-control" style="text-transform: uppercase" type="text" th:field="*{enrollment}">
+                    <div class="alert-danger" th:if="${#fields.hasErrors('enrollment')}" th:errors="*{enrollment}"></div>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label>Largo de motorhome</label>
+                    <input class="form-control" type="text" th:field="*{lengthMotorhome}">
+                </div>
+                <div class="form-group col-sm-4">
+                    <label>Ancho de motorhome</label>
+                    <input class="form-control" type="text" th:field="*{widthMotorhome}">
+                </div>
             </div>
-            <div class="form-group">
-                <label>Largo de motorhome</label>
-                <input class="form-control" type="text" th:field="*{lengthMotorhome}">
+
+
+            <div class="row mb-3">
+                <div class="form-group col-sm-4" th:objetct="${motorhome_type}">
+                    <label>Tipo de motorhome (*)</label>
+                    <select class="form-control" name="mhType">
+                        <option value="">Selecciona una opción</option>
+                        <option th:each="temp : ${motorhomeTypeList}"
+                                th:value="${temp.id}"
+                                th:text="${temp.motorhomeType}"
+                                th:field="*{motorhomeType}"
+                        >
+                        </option>
+                    </select>
+                    <div class='alert-danger' th:if="${#fields.hasErrors('motorhomeType')}" th:errors="*{motorhomeType}"></div>
+                </div>
+                <div class="form-group col-sm-4" th:objetct="${garage}">
+                    <label>Seleccionar Garage (*)</label>
+                    <select class="form-control" name="gara">
+                        <option value="">Selecciona una opción</option>
+                        <option th:each="temp : ${garageFreeList}"
+                                th:value="${temp.id}"
+                                th:text="${temp.id}"
+                                th:field="*{garage.id}"
+                        >
+                        </option>
+                    </select>
+                    <div class='alert-danger' th:if="${#fields.hasErrors('garage.id')}" th:errors="*{garage.id}"></div>
+                </div>
+                <div class="form-group col-sm-4" th:objetct="${person}">
+                    <label>Seleccionar Dueño (*)</label>
+                    <select class="form-control" name="user">
+                        <option value="">Selecciona una opción</option>
+                        <option th:each="temp : ${userList}"
+                                th:value="${temp.id}"
+                                th:text="${temp.name + ' ' + temp.surname}"
+                                th:field="*{user}"
+                        >
+                        </option>
+                    </select>
+                    <!--<input class="form-control" type="text" th:field="*{user}">-->
+                </div>
             </div>
-            <div class="form-group">
-                <label>Ancho de motorhome</label>
-                <input class="form-control" type="text" th:field="*{widthMotorhome}">
-            </div>
-            <div class="form-group" th:objetct="${motorhome_type}">
-                <label>Tipo de motorhome (*)</label>
-                <select class="form-control" name="mhType">
-                    <option value="">Selecciona una opción</option>
-                    <option th:each="temp : ${motorhomeTypeList}"
-                            th:value="${temp.id}"
-                            th:text="${temp.motorhomeType}"
-                            th:field="*{motorhomeType}"
-                    >
-                    </option>
-                </select>
-                <div class='alert-danger' th:if="${#fields.hasErrors('motorhomeType')}" th:errors="*{motorhomeType}"></div>
-            </div>
-            <div class="form-group" th:objetct="${garage}">
-                <label>Seleccionar Garage (*)</label>
-                <select class="form-control" name="gara">
-                    <option value="">Selecciona una opción</option>
-                    <option th:each="temp : ${garageFreeList}"
-                            th:value="${temp.id}"
-                            th:text="${temp.id}"
-                            th:field="*{garage.id}"
-                    >
-                    </option>
-                </select>
-                <div class='alert-danger' th:if="${#fields.hasErrors('garage.id')}" th:errors="*{garage.id}"></div>
-            </div>
-            <div class="form-group" th:objetct="${person}">
-                <label>Seleccionar Dueño (*)</label>
-                <select class="form-control" name="user">
-                    <option value="">Selecciona una opción</option>
-                    <option th:each="temp : ${userList}"
-                            th:value="${temp.id}"
-                            th:text="${temp.name + ' ' + temp.surname}"
-                            th:field="*{user}"
-                    >
-                    </option>
-                </select>
-                <!--<input class="form-control" type="text" th:field="*{user}">-->
-            </div>
+
             <div>
                 <input type="submit" class="btn btn-primary btn-sm mx-1" name="saveMotorhome"
                        th:value="${editMode}?'Editar':'Guardar'"

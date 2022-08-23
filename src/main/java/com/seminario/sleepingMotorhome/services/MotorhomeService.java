@@ -39,6 +39,10 @@ public class MotorhomeService {
         return motorhomeRepository.findById(id).orElse(null);
     }
 
+    public List<Motorhome> getMotorhomeByUserId (Long id){
+        return motorhomeRepository.findByUserId(id);
+    }
+
     public boolean existMotorhome (Long id){
         return motorhomeRepository.existsById(id);
     }

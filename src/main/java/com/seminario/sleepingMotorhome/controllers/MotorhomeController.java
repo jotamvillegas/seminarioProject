@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-@RequestMapping(path = "/sleepingMotorhome")
+@RequestMapping(path = "/sleepingMotorhome/motorhome")
 public class MotorhomeController {
 
     @Autowired
@@ -28,13 +28,13 @@ public class MotorhomeController {
     private UserService userService;
 
 
-    @GetMapping(path = "/motorhome/all")
+    @GetMapping(path = "/all")
     public String getAllMotorhomes (Model model){
         model.addAttribute("motorhomes", motorhomeService.motorhomeListWithStatusTrue());
         return "motorhome/all";
     }
 
-    @GetMapping(path = "/motorhome/add")
+    @GetMapping(path = "/add")
     public String addMotorhome(Motorhome motorhome, Garage garage, Person person, Model model){
         model.addAttribute("motorhomeTypeList", motorhomeTypeService.motorhomeTypeList());
         model.addAttribute("garageFreeList", garageService.garageFreeList());
@@ -42,7 +42,7 @@ public class MotorhomeController {
         return "motorhome/add";
     }
 
-    @PostMapping(path = "/motorhome/save")
+    @PostMapping(path = "/save")
     public String saveMotorhome (@Valid Motorhome motorhome, Zone zone,
                                  @RequestParam (value = "mhType") MotorhomeType motorhomeType,
                                  @RequestParam (value = "gara") Garage garage,
@@ -53,7 +53,7 @@ public class MotorhomeController {
         return "redirect:/sleepingMotorhome/motorhome/all";
     }
 
-    @GetMapping(path = "/motorhome/edit/{id}")
+    @GetMapping(path = "/edit/{id}")
     public String editMotorhome (Motorhome motorhome, Garage garage, Person person, Model model){
         Motorhome motorhomeToEdit = motorhomeService.getMotorhomeById(motorhome.getId());
         model.addAttribute("motorhome", motorhomeToEdit);
@@ -70,7 +70,7 @@ public class MotorhomeController {
         return "motorhome/add";
     }
 
-    @GetMapping (path = "/motorhome/delete/{id}")
+    @GetMapping (path = "/delete/{id}")
     public String deleteMotorhome (@PathVariable ("id") Long id, Model model){
         Garage garageOld = garageService.getGarage(motorhomeService.getMotorhomeById(id).getGarage().getId());
         garageOld.setDateOfEgress(new Date());

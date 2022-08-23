@@ -13,11 +13,11 @@
 
     <div class="container">
         <br>
-        <h2 class="font-weight-bold text-center py-3">Lista de usuarios</h2>
+        <h2 class="font-weight-bold text-center py-3">Lista de administradores</h2>
         <br>
 
         <div class="float-left">
-            <a th:href="@{add}" class="btn btn-primary btn-sm mx-1 navbar-btn" role="button" data-bs-toggle="button" sec:authorize="hasAuthority('ADMIN')">Crear Usuario</a>
+            <a th:href="@{add}" class="btn btn-primary btn-sm mx-1 navbar-btn" role="button" data-bs-toggle="button">Crear Administrador</a>
             <a th:href="@{/sleepingMotorhome/home}" class="btn btn-secondary btn-sm mx-1" role="button" data-bs-toggle="button">Ir a Home</a>
         </div>
 
@@ -35,29 +35,27 @@
                     <th>Teléfono</th>
                     <th>Fecha Ingreso</th>
                     <th>Fecha Egreso</th>
-                    <th>Tipo</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="user : ${users}">
-                    <td th:text="${user.name}"></td>
-                    <td th:text="${user.surname}"></td>
-                    <td th:text="${user.documentNumber}"></td>
-                    <td th:text="${user.addressName}"></td>
-                    <td th:text="${user.addressNumber}"></td>
-                    <td th:text="${user.floor}"></td>
-                    <td th:text="${user.phone}"></td>
-                    <td th:text="${user.dateOfAdmission}"></td>
-                    <td th:text="${user.dateOfEgress}"></td>
-                    <td th:text="${user.personType.type}"></td>
+                <tr th:each="adm : ${admin}">
+                    <td th:text="${adm.name}"></td>
+                    <td th:text="${adm.surname}"></td>
+                    <td th:text="${adm.documentNumber}"></td>
+                    <td th:text="${adm.addressName}"></td>
+                    <td th:text="${adm.addressNumber}"></td>
+                    <td th:text="${adm.floor}"></td>
+                    <td th:text="${adm.phone}"></td>
+                    <td th:text="${adm.dateOfAdmission}"></td>
+                    <td th:text="${adm.dateOfEgress}"></td>
                     <td>
                         <div class="d-grid d-inline-flex px-3">
-                            <a th:href="@{edit/{id} (id = ${user.id})}"  class="btn btn-primary btn-sm mx-1"
+                            <a th:href="@{edit/{id} (id = ${adm.id})}"  class="btn btn-primary btn-sm mx-1"
                                role="button" data-bs-toggle="button">
                                 Editar
                             </a>
-                            <a th:href="@{delete/{id} (id = ${user.id})}" class="btn btn-primary btn-sm mx-1" role="button"
+                            <a th:href="@{delete/{id} (id = ${adm.id})}" class="btn btn-primary btn-sm mx-1" role="button"
                                data-bs-toggle="button">
                                 Eliminar
                             </a>

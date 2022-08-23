@@ -12,15 +12,16 @@
     <div th:insert="generics/fragments::header"></div>
 
     <br><br>
-    <div class="container" sec:authorize="isAuthenticated()">
+
+    <div class="container" th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
         <div class="row mb-3">
             <div class="col-sm-4">
-                <a href="" >
+                <a th:href="@{employee/all}">
                     <img th:src="@{/img/menu/employees.jpeg}" class="img-fluid rounded" alt="">
                 </a>
             </div>
             <div class="col-sm-4">
-                <a th:href="@{person/all}">
+                <a th:href="@{user/all}">
                     <img th:src="@{/img/menu/users.jpeg}" class="img-fluid rounded" alt="">
                 </a>
             </div>
@@ -42,12 +43,40 @@
                 </a>
             </div>
             <div class="col-sm-4">
-                <a href="">
+                <a th:href="@{admin/all}">
                     <img th:src="@{/img/menu/payments.jpeg}" class="img-fluid rounded" alt="" >
                 </a>
             </div>
         </div>
     </div>
+
+    <div class="container" th:if="${#authorization.expression('hasAuthority(''EMPLOYEE'')')}">
+        <div class="row mb-3">
+            <div class="col-sm-4">
+                <a th:href="@{employee/data}">
+                    <img th:src="@{/img/menu/employees.jpeg}" class="img-fluid rounded" alt="">
+                </a>
+            </div>
+            <div class="col-sm-4">
+                <a href="">
+                    <img th:src="@{/img/menu/tasks.jpeg}" class="img-fluid rounded" alt="" >
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" th:if="${#authorization.expression('hasAuthority(''USER'')')}">
+        <div class="row mb-3">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <a th:href="@{user/data}">
+                    <img th:src="@{/img/menu/users.jpeg}" class="img-fluid rounded" alt="">
+                </a>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </div>
+
     <br>
 
     <div th:insert="generics/fragments::footer"></div>
