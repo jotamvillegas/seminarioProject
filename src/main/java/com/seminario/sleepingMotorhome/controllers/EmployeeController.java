@@ -25,26 +25,26 @@ public class EmployeeController {
     @GetMapping(path = "/data")
     public String employeeData (Authentication auth, Model model){
         Employee personToEdit = employeeService.getEmployeeByUserName(auth.getName());
-        model.addAttribute("person", personToEdit);
-        return "employee/employees";
+        model.addAttribute("employee", personToEdit);
+        return "employees/employee";
     }
 
     @GetMapping(path = "/all")
     public String getAllEmployees (Model model){
         model.addAttribute("employee", employeeService.getAll());
-        return "employee/all";
+        return "employees/all";
     }
 
     @PostMapping(path = "/save")
     public String save (@Valid Employee employee, Errors errors, Model model){
         if (errors.hasErrors()) {
-            return "employee/add";
+            return "employees/add";
         }
         if (employee.getId() == null) {
             if (employeeService.existEmployee(employee.getUserName())) {
                 model.addAttribute("msgErrorUsernameExisting",
                         "Ya existe un usuario con el mismo nombre. Por favor, ingresa un nombre de usuario distinto.");
-                return "employee/add";
+                return "employees/add";
             }
         }
         employeeService.save(employee);
@@ -53,7 +53,7 @@ public class EmployeeController {
 
     @GetMapping(path = "/add")
     public String add (Employee employee, Model model){
-        return "employee/add";
+        return "employees/add";
     }
 
     @GetMapping(path = "/edit/{id}")
@@ -61,7 +61,7 @@ public class EmployeeController {
         Employee e = employeeService.getEmployeeById(employee.getId());
         model.addAttribute("employee", e);
         model.addAttribute("editMode","true");
-        return "employee/add";
+        return "employees/add";
     }
 
     @GetMapping (path = "/delete/{id}")
