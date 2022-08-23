@@ -1,5 +1,6 @@
 package com.seminario.sleepingMotorhome.services;
 
+import com.seminario.sleepingMotorhome.models.Motorhome;
 import com.seminario.sleepingMotorhome.models.StatusRol;
 import com.seminario.sleepingMotorhome.models.User;
 import com.seminario.sleepingMotorhome.repositories.UserRepository;
@@ -22,6 +23,8 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private StatusRolService statusRolService;
+    @Autowired
+    private MotorhomeService motorhomeService;
 
 
     public List<User> getAll (){
@@ -75,6 +78,10 @@ public class UserService {
     }
 
     public void delete(Long userId){
+        List<Motorhome> motorhomeList = motorhomeService.getMotorhomeByUserId(userId) ;
+        for (Motorhome mot : motorhomeList) {
+            motorhomeService.deleteMotorhome(mot.getId());
+        }
         User user = userRepository.findById(userId).orElse(null);
         userRepository.delete(user);
     }
