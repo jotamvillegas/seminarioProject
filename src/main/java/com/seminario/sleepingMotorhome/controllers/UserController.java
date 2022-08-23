@@ -31,6 +31,7 @@ public class UserController {
         List<Motorhome> motorhomeList = motorhomeService.getMotorhomeByUserId(personToEdit.getId());
         model.addAttribute("user", personToEdit);
         model.addAttribute("mothomes", motorhomeList);
+        model.addAttribute("editMode","true");
         return "users/user";
     }
 
