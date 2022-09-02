@@ -11,41 +11,52 @@
 
     <div th:insert="generics/fragments::header"></div>
 
-    <br><br>
+    <br><br><br><br>
 
     <div class="container" th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
-        <div class="row mb-3">
-            <div class="col-sm-4">
+        <div class="row">
+            <div class="col-sm">
+                <a th:href="@{admin/all}">
+                    <img th:src="@{/img/menu/admins.jpeg}" class="img-fluid rounded" alt="" >
+                </a>
+            </div>
+            <div class="col-sm">
                 <a th:href="@{employee/all}">
                     <img th:src="@{/img/menu/employees.jpeg}" class="img-fluid rounded" alt="">
                 </a>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm">
                 <a th:href="@{user/all}">
                     <img th:src="@{/img/menu/users.jpeg}" class="img-fluid rounded" alt="">
                 </a>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm">
                 <a th:href="@{motorhome/all}">
                     <img th:src="@{/img/menu/motorhomes.jpeg}" class="img-fluid rounded" alt="">
                 </a>
             </div>
         </div>
-        <div class="row mb-3">
-            <div class="col-sm-4">
-                <a href="">
-                    <img th:src="@{/img/menu/zones.jpeg}" class="img-fluid rounded" alt="">
-                </a>
-            </div>
-            <div class="col-sm-4">
-                <a href="">
+        <br><br>
+        <div class="row">
+            <div class="col-sm">
+                <a th:href="@{task/all}">
                     <img th:src="@{/img/menu/tasks.jpeg}" class="img-fluid rounded" alt="" >
                 </a>
             </div>
-            <div class="col-sm-4">
-                <a th:href="@{admin/all}">
+            <div class="col-sm">
+                <!--<a href="">
+                    <img th:src="@{/img/menu/zones.jpeg}" class="img-fluid rounded" alt="">
+                </a>-->
+            </div>
+            <div class="col-sm">
+                <!--<a href="">
                     <img th:src="@{/img/menu/payments.jpeg}" class="img-fluid rounded" alt="" >
-                </a>
+                </a>-->
+            </div>
+            <div class="col-sm">
+                <!--<a href="">
+                    <img th:src="@{/img/menu/garage.jpeg}" class="img-fluid rounded" alt="" >
+                </a>-->
             </div>
         </div>
     </div>

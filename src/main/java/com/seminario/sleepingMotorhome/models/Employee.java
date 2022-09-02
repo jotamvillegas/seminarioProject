@@ -14,6 +14,9 @@ public class Employee extends Person {
     @ManyToMany(mappedBy = "employee")
     private Set<Zone> zones;
 
+    @ManyToMany(mappedBy = "employees")
+    private Set<Task> tasks;
+
     // contructors
 
     public Employee() {
@@ -37,4 +40,13 @@ public class Employee extends Person {
     public void setZones(Set<Zone> zones) {
         this.zones = zones;
     }
+
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
+    }
+
 }

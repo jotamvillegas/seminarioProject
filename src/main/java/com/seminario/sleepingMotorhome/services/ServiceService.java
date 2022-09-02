@@ -1,5 +1,6 @@
 package com.seminario.sleepingMotorhome.services;
 
+import com.seminario.sleepingMotorhome.models.ServiceType;
 import com.seminario.sleepingMotorhome.repositories.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,20 +17,21 @@ public class ServiceService {
         return (List<com.seminario.sleepingMotorhome.models.Service>) serviceRepository.findAll();
     }
 
-    public void saveService (com.seminario.sleepingMotorhome.models.Service service){
+    public void saveServiceType (com.seminario.sleepingMotorhome.models.Service service){
         serviceRepository.save(service);
     }
 
-    public void delete (Long id){
+    public void deleteServiceType (Long id){
         serviceRepository.deleteById(id);
     }
 
-    public com.seminario.sleepingMotorhome.models.Service getService (Long id){
+    public com.seminario.sleepingMotorhome.models.Service getServiceType (Long id){
         return serviceRepository.findById(id).orElse(null);
     }
 
-    public boolean existService (Long id){
-        return serviceRepository.existsById(id);
+    public boolean existService (String service){
+        return serviceRepository.existsServiceByDescription(service);
     }
+
 
 }

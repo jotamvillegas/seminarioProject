@@ -30,14 +30,10 @@ public class EmployeeService {
 
     @Transactional
     public void save(Employee employee) {
-        if (employee.getId() == null)
-            employeeRepository.save(createNewEmployee(employee));
-        else
-            employeeRepository.save(editEmployeeExisting(employee));
-    }
+        Employee e;
+        if (employee.getId() == null)  e = new Employee();
+        else  e = getEmployeeById(employee.getId());
 
-    private Employee createNewEmployee (Employee employee){
-        Employee e = new Employee();
         if (lessThanThirtyCharacters(employee.getPassword()))
             e.setPassword(convertToBCryptPassword(employee.getPassword()));
         e.setUserName(employee.getUserName());
@@ -52,26 +48,8 @@ public class EmployeeService {
         e.setDateOfEgress(employee.getDateOfEgress());
         e.setPersonType(personTypeService.getPersonType("EMPLOYEE"));
         e.setStatusRol(searchStatusRol("Active"));
-        return e;
-    }
 
-    private Employee editEmployeeExisting (Employee employee){
-        Employee e;
-        e = getEmployeeById(employee.getId());
-        if (lessThanThirtyCharacters(employee.getPassword()))
-            e.setPassword(convertToBCryptPassword(employee.getPassword()));
-        e.setUserName(employee.getUserName());
-        e.setName(employee.getName());
-        e.setSurname(employee.getSurname());
-        e.setDocumentNumber(employee.getDocumentNumber());
-        e.setAddressName(employee.getAddressName());
-        e.setAddressNumber(employee.getAddressNumber());
-        e.setFloor(employee.getFloor());
-        e.setPhone(employee.getPhone());
-        e.setDateOfEgress(employee.getDateOfEgress());
-        e.setPersonType(personTypeService.getPersonType("EMPLOYEE"));
-        e.setStatusRol(searchStatusRol("Active"));
-        return e;
+        employeeRepository.save(e);
     }
 
     public void delete(Long employeeId){

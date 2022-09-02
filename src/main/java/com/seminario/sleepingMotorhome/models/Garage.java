@@ -1,7 +1,6 @@
 package com.seminario.sleepingMotorhome.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -32,7 +31,7 @@ public class Garage {
     private Zone zone;
 
     @OneToMany(mappedBy = "garage")
-    private Set<Service> service;
+    private Set<Task> service;
 
     @OneToOne(mappedBy = "garage")
     private Motorhome motorhome;
@@ -92,11 +91,11 @@ public class Garage {
         this.zone = zone;
     }
 
-    public Set<Service> getService() {
+    public Set<Task> getService() {
         return service;
     }
 
-    public void setService(Set<Service> service) {
+    public void setService(Set<Task> service) {
         this.service = service;
     }
 
