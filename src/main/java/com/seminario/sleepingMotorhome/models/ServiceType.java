@@ -1,5 +1,6 @@
 package com.seminario.sleepingMotorhome.models;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.GenericGenerator;
@@ -9,8 +10,8 @@ import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 @Entity
-@Table(name = "service")
-public class Service {
+@Table(name = "service_type")
+public class ServiceType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -23,13 +24,15 @@ public class Service {
 
     // relations
 
-    @OneToMany(mappedBy = "service")
-    @JsonIgnoreProperties("service")
+    @OneToMany(mappedBy = "serviceType")
+    @JsonIgnoreProperties("serviceType")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Set<Task> tasks;
 
     // Constructors, setters and getters
 
+
+    public ServiceType (){}
 
     public Long getId() {
         return id;

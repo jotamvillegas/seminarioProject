@@ -1,16 +1,17 @@
 package com.seminario.sleepingMotorhome.repositories;
 
 import com.seminario.sleepingMotorhome.models.Employee;
+import com.seminario.sleepingMotorhome.models.Task;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface EmployeeRepository extends CrudRepository <Employee, Long> {
+public interface TaskRepository extends CrudRepository<Task, Long> {
 
-    Employee findByUserName (String username);
+    boolean existsServiceByDescription (String task);
 
-    boolean existsEmployeeByUserName (String username);
+    List<Task> findAllByEmployees (Employee employee);
 
 }

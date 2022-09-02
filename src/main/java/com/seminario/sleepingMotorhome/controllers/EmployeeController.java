@@ -1,7 +1,9 @@
 package com.seminario.sleepingMotorhome.controllers;
 
 import com.seminario.sleepingMotorhome.models.Employee;
+import com.seminario.sleepingMotorhome.models.Task;
 import com.seminario.sleepingMotorhome.services.EmployeeService;
+import com.seminario.sleepingMotorhome.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping(path = "/sleepingMotorhome/employee")
@@ -20,12 +23,17 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
+    @Autowired
+    private TaskService taskService;
 
 
     @GetMapping(path = "/data")
     public String employeeData (Authentication auth, Model model){
         Employee personToEdit = employeeService.getEmployeeByUserName(auth.getName());
+        // TODO: 27/8/2022 return list servicios por empleado con su respectivo garage
+        List<Task> taskList = taskService.getServiceByEmployee (personToEdit);
         model.addAttribute("employee", personToEdit);
+        model.addAttribute("tasks", taskList);
         model.addAttribute("editMode","true");
         return "employees/employee";
     }

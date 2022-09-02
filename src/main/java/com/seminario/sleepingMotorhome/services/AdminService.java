@@ -30,14 +30,10 @@ public class AdminService {
 
     @Transactional
     public void save(Admin admin) {
-        if (admin.getId() == null)
-            adminRepository.save(createNewAdmin(admin));
-        else
-            adminRepository.save(editAdminExisting(admin));
-    }
+        Admin a;
+        if (admin.getId() == null)  a = new Admin();
+        else a = getAdminById(admin.getId());
 
-    private Admin createNewAdmin (Admin admin){
-        Admin a = new Admin();
         if (lessThanThirtyCharacters(admin.getPassword()))
             a.setPassword(convertToBCryptPassword(admin.getPassword()));
         a.setUserName(admin.getUserName());
@@ -52,26 +48,8 @@ public class AdminService {
         a.setDateOfEgress(admin.getDateOfEgress());
         a.setPersonType(personTypeService.getPersonType("ADMIN"));
         a.setStatusRol(searchStatusRol("Active"));
-        return a;
-    }
 
-    private Admin editAdminExisting (Admin admin){
-        Admin a;
-        a = getAdminById(admin.getId());
-        if (lessThanThirtyCharacters(admin.getPassword()))
-            a.setPassword(convertToBCryptPassword(admin.getPassword()));
-        a.setUserName(admin.getUserName());
-        a.setName(admin.getName());
-        a.setSurname(admin.getSurname());
-        a.setDocumentNumber(admin.getDocumentNumber());
-        a.setAddressName(admin.getAddressName());
-        a.setAddressNumber(admin.getAddressNumber());
-        a.setFloor(admin.getFloor());
-        a.setPhone(admin.getPhone());
-        a.setDateOfEgress(admin.getDateOfEgress());
-        a.setPersonType(personTypeService.getPersonType("ADMIN"));
-        a.setStatusRol(searchStatusRol("Active"));
-        return a;
+        adminRepository.save(a);
     }
 
     public void delete(Long adminId){

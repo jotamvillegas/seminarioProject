@@ -33,14 +33,10 @@ public class UserService {
 
     @Transactional
     public void save(User user) {
-        if (user.getId() == null)
-            userRepository.save(createNewUser(user));
-        else
-            userRepository.save(editUserExisting(user));
-    }
+        User u;
+        if (user.getId() == null)  u = new User();
+        else  u = getUserById(user.getId());
 
-    private User createNewUser (User user){
-        User u = new User();
         if (lessThanThirtyCharacters(user.getPassword()))
             u.setPassword(convertToBCryptPassword(user.getPassword()));
         u.setUserName(user.getUserName());
@@ -55,26 +51,8 @@ public class UserService {
         u.setDateOfEgress(user.getDateOfEgress());
         u.setPersonType(personTypeService.getPersonType("USER"));
         u.setStatusRol(searchStatusRol("Active"));
-        return u;
-    }
 
-    private User editUserExisting (User user){
-        User u;
-        u = getUserById(user.getId());
-        if (lessThanThirtyCharacters(user.getPassword()))
-            u.setPassword(convertToBCryptPassword(user.getPassword()));
-        u.setUserName(user.getUserName());
-        u.setName(user.getName());
-        u.setSurname(user.getSurname());
-        u.setDocumentNumber(user.getDocumentNumber());
-        u.setAddressName(user.getAddressName());
-        u.setAddressNumber(user.getAddressNumber());
-        u.setFloor(user.getFloor());
-        u.setPhone(user.getPhone());
-        u.setDateOfEgress(user.getDateOfEgress());
-        u.setDateOfEgress(user.getDateOfEgress());
-        u.setPersonType(personTypeService.getPersonType("USER"));
-        return u;
+        userRepository.save(u);
     }
 
     public void delete(Long userId){
