@@ -1,7 +1,6 @@
 package com.seminario.sleepingMotorhome.controllers;
 
 import com.seminario.sleepingMotorhome.models.Motorhome;
-import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
 import com.seminario.sleepingMotorhome.models.User;
@@ -25,6 +24,7 @@ public class UserController {
     @Autowired
     private MotorhomeService motorhomeService;
 
+    @PreAuthorize("hasAuthority('USER')")
     @GetMapping(path = "/data")
     public String userData (Authentication auth, Model model){
         User personToEdit = userService.getUserByUserName(auth.getName());
@@ -35,12 +35,14 @@ public class UserController {
         return "users/user";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(path = "/all")
     public String getAllUsers (Model model){
         model.addAttribute("users", userService.getAll());
         return "users/all";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(path = "/save")
     public String save (@Valid User user, Errors errors, Model model, Authentication auth){
         String value = auth.getAuthorities().toString().replace('[',' ').replace(']',' ').trim();
@@ -62,11 +64,13 @@ public class UserController {
 
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(path = "/add")
     public String add (User user, Model model){
         return "users/add";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(path = "/edit/{id}")
     public String editUser (User user, Model model){
         User u = userService.getUserById(user.getId());
@@ -75,6 +79,7 @@ public class UserController {
         return "users/add";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping (path = "/delete/{id}")
     public String deleteUser (@PathVariable ("id") Long id, Model model){
         userService.delete(id);

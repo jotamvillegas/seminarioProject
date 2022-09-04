@@ -5,6 +5,7 @@ import com.seminario.sleepingMotorhome.models.Task;
 import com.seminario.sleepingMotorhome.services.EmployeeService;
 import com.seminario.sleepingMotorhome.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +27,7 @@ public class EmployeeController {
     @Autowired
     private TaskService taskService;
 
-
+    @PreAuthorize("hasAuthority('EMPLOYEE')")
     @GetMapping(path = "/data")
     public String employeeData (Authentication auth, Model model){
         Employee personToEdit = employeeService.getEmployeeByUserName(auth.getName());
@@ -38,12 +39,14 @@ public class EmployeeController {
         return "employees/employee";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(path = "/all")
     public String getAllEmployees (Model model){
         model.addAttribute("employee", employeeService.getAll());
         return "employees/all";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(path = "/save")
     public String save (@Valid Employee employee, Errors errors, Model model){
         if (errors.hasErrors()) {
@@ -60,11 +63,13 @@ public class EmployeeController {
         return "redirect:/sleepingMotorhome/employee/all";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(path = "/add")
     public String add (Employee employee, Model model){
         return "employees/add";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(path = "/edit/{id}")
     public String editEmployee (Employee employee, Model model){
         Employee e = employeeService.getEmployeeById(employee.getId());
@@ -73,6 +78,7 @@ public class EmployeeController {
         return "employees/add";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping (path = "/delete/{id}")
     public String deleteEmployee (@PathVariable("id") Long id, Model model){
         employeeService.delete(id);
