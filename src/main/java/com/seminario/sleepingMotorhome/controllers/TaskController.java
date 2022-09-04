@@ -3,6 +3,7 @@ package com.seminario.sleepingMotorhome.controllers;
 import com.seminario.sleepingMotorhome.models.*;
 import com.seminario.sleepingMotorhome.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@PreAuthorize("hasAuthority('ADMIN')")
 @RequestMapping(path = "/sleepingMotorhome/task")
 public class TaskController {
 

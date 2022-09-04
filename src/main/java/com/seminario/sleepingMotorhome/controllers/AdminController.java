@@ -1,11 +1,9 @@
 package com.seminario.sleepingMotorhome.controllers;
 
 import com.seminario.sleepingMotorhome.models.Admin;
-import com.seminario.sleepingMotorhome.models.Employee;
 import com.seminario.sleepingMotorhome.services.AdminService;
-import com.seminario.sleepingMotorhome.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -17,19 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 
 @Controller
+@PreAuthorize("hasAuthority('ADMIN')")
 @RequestMapping(path = "/sleepingMotorhome/admin")
 public class AdminController {
 
     @Autowired
     private AdminService adminService;
 
-    //@PreAuthorize("hasAuthority('USER')")
-    @GetMapping(path = "/data")
-    public String adminData (Authentication auth, Model model){
-        Admin personToEdit = adminService.getAdminByUserName(auth.getName());
-        model.addAttribute("person", personToEdit);
-        return "users/user";
-    }
 
     @GetMapping(path = "/all")
     public String getAllAdmin (Model model){
@@ -65,7 +57,7 @@ public class AdminController {
         model.addAttribute("editMode","true");
         return "admin/add";
     }
-
+    
     @GetMapping (path = "/delete/{id}")
     public String deleteAdmin (@PathVariable("id") Long id, Model model){
         adminService.delete(id);
