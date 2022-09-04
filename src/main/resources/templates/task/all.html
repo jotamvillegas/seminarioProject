@@ -32,7 +32,7 @@
                     <th>Horas por semana</th>
                     <th>Fecha de incio</th>
                     <th>Fecha de final</th>
-                    <!--<th>Empleado</th>-->
+                    <th>Empleado</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -44,7 +44,7 @@
                     <td th:text="${task.amountHoursWeekly}"></td>
                     <td th:text="${task.dateOfAdmission}"></td>
                     <td th:text="${task.dateOfEgress}"></td>
-                    <!--<td th:text="${task.employees}"></td>-->
+                    <td th:text="${task.employees[0].name + ' ' + task.employees[0].surname}"></td>
                     <td>
                         <div class="d-grid d-inline-flex px-3">
                             <a th:href="@{edit/{id} (id = ${task.id})}"  class="btn btn-primary btn-sm mx-1"
