@@ -21,23 +21,25 @@
             <input type="hidden" th:field="*{id}" th:if="${editMode}">
 
             <div class="row mb-3">
+                <div class="form-group col-sm-4" th:objetct="${person}">
+                    <label>Seleccionar Dueño (*)</label>
+                    <select class="form-control" name="user">
+                        <option value="">Selecciona una opción</option>
+                        <option th:each="temp : ${userList}"
+                                th:value="${temp.id}"
+                                th:text="${temp.name + ' ' + temp.surname}"
+                                th:field="*{user}"
+                        >
+                        </option>
+                    </select>
+                    <div class='alert-danger' th:if="${#fields.hasErrors('user')}" th:errors="*{user}"></div>
+                </div>
                 <div class="form-group col-sm-4">
                     <label>Patente de motorhome (*)</label>
-                    <input class="form-control" style="text-transform: uppercase" type="text" th:field="*{enrollment}">
+                    <input class="form-control" style="text-transform: uppercase" pattern="([aA-zZ]{3}[-][0-9]{3}|[aA-zZ]{2}[-][0-9]{3}[-][aA-zZ]{2})"
+                           title="Ej: ABC-123 o AB-123-CD" type="text" th:field="*{enrollment}">
                     <div class="alert-danger" th:if="${#fields.hasErrors('enrollment')}" th:errors="*{enrollment}"></div>
                 </div>
-                <div class="form-group col-sm-4">
-                    <label>Largo de motorhome</label>
-                    <input class="form-control" type="text" th:field="*{lengthMotorhome}">
-                </div>
-                <div class="form-group col-sm-4">
-                    <label>Ancho de motorhome</label>
-                    <input class="form-control" type="text" th:field="*{widthMotorhome}">
-                </div>
-            </div>
-
-
-            <div class="row mb-3">
                 <div class="form-group col-sm-4" th:objetct="${motorhome_type}">
                     <label>Tipo de motorhome (*)</label>
                     <select class="form-control" name="mhType">
@@ -51,6 +53,9 @@
                     </select>
                     <div class='alert-danger' th:if="${#fields.hasErrors('motorhomeType')}" th:errors="*{motorhomeType}"></div>
                 </div>
+            </div>
+
+            <div class="row mb-3">
                 <div class="form-group col-sm-4" th:objetct="${garage}">
                     <label>Seleccionar Garage (*)</label>
                     <select class="form-control" name="gara">
@@ -64,18 +69,13 @@
                     </select>
                     <div class='alert-danger' th:if="${#fields.hasErrors('garage.id')}" th:errors="*{garage.id}"></div>
                 </div>
-                <div class="form-group col-sm-4" th:objetct="${person}">
-                    <label>Seleccionar Dueño (*)</label>
-                    <select class="form-control" name="user">
-                        <option value="">Selecciona una opción</option>
-                        <option th:each="temp : ${userList}"
-                                th:value="${temp.id}"
-                                th:text="${temp.name + ' ' + temp.surname}"
-                                th:field="*{user}"
-                        >
-                        </option>
-                    </select>
-                    <!--<input class="form-control" type="text" th:field="*{user}">-->
+                <div class="form-group col-sm-4">
+                    <label>Largo de motorhome</label>
+                    <input class="form-control" type="text" th:field="*{lengthMotorhome}">
+                </div>
+                <div class="form-group col-sm-4">
+                    <label>Ancho de motorhome</label>
+                    <input class="form-control" type="text" th:field="*{widthMotorhome}">
                 </div>
             </div>
 
