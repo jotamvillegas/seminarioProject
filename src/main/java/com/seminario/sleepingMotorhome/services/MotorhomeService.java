@@ -5,6 +5,12 @@ import com.seminario.sleepingMotorhome.repositories.MotorhomeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,8 +29,8 @@ public class MotorhomeService {
     @Autowired
     private UserService userService;
 
-    public List<Motorhome> motorhomeListWithStatusTrue() {
-        return (List<Motorhome>) motorhomeRepository.motorhomesListWithStatusTrue(true);
+    public List<Motorhome> motorhomeListStatusActive() {
+        return motorhomeRepository.motorhomesListActived(1);
     }
 
     public void save(Motorhome motorhome, Zone zone, MotorhomeType motorhomeType, Garage garage, Person person){
@@ -33,6 +39,21 @@ public class MotorhomeService {
 
     public void deleteMotorhome (Long id){
         motorhomeRepository.deleteById(id);
+    }
+
+    public void finalizeMotorhome (Long id){
+        Date date = new Date();
+        Motorhome editMotorhome = getMotorhomeById(id);
+        editMotorhome.setGarage(null);
+        editMotorhome.setIsActive(0);
+        editMotorhome.setDateOfEgress(convertToLocalDateViaInstant(date));
+        motorhomeRepository.save(editMotorhome);
+    }
+
+    private LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
+        return dateToConvert.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
     }
 
     public Motorhome getMotorhomeById (Long id){
@@ -49,7 +70,7 @@ public class MotorhomeService {
 
     public List<Long> motorhomeListById (){
         List<Long> motorhomeListOnlyId = new ArrayList<>();
-        for (Motorhome temp : motorhomeListWithStatusTrue()) {
+        for (Motorhome temp : motorhomeListStatusActive()) {
             motorhomeListOnlyId.add(temp.getId());
         }
         return motorhomeListOnlyId;
@@ -76,6 +97,11 @@ public class MotorhomeService {
             newMotorhome.setGarage(garageService.getGarage(garage.getId()));
             newMotorhome.setMotorhomeType(motorhomeTypeService.getMotorhomeType(motorhomeType.getId()));
             newMotorhome.setUser(userService.getUserById(person.getId()));
+            newMotorhome.setDateOfAdmission(String.valueOf(motorhome.getDateOfAdmission()));
+            newMotorhome.setDateOfEgress(null);
+            newMotorhome.setRentalDays(motorhome.getRentalDays());
+            newMotorhome.setIsActive(1);
+
         } else {
             newMotorhome = getMotorhomeById(motorhome.getId());
             // si hay que editar el motorhome y hay cambio de garage debe setear el garage old en false y el nuevo en true
@@ -98,8 +124,37 @@ public class MotorhomeService {
             newMotorhome.setGarage(garageService.getGarage(garage.getId()));
             newMotorhome.setMotorhomeType(motorhomeTypeService.getMotorhomeType(motorhomeType.getId()));
             newMotorhome.setUser(userService.getUserById(person.getId()));
+            newMotorhome.setDateOfAdmission(String.valueOf(motorhome.getDateOfAdmission()));
+            newMotorhome.setDateOfEgress(null);
+            newMotorhome.setRentalDays(motorhome.getRentalDays());
+            newMotorhome.setIsActive(1);
         }
+
         return newMotorhome;
     }
+
+
+
+    /*public static void main(String[] args) {
+
+        Date value =  new Date();
+        System.out.println("new date: " + value);
+        System.out.println("-------------------------");
+
+        // fecha de ingreso
+        String dateInString = "2022-09-11"; //lo que me viene del front
+        LocalDate date = LocalDate.parse(dateInString);
+        System.out.println("localDate convert: " + date);
+        System.out.println("-------------------------");
+
+        // fecha de egreso
+        LocalDate hoy = LocalDate.now();
+        LocalTime ahora = LocalTime.now();
+        LocalDateTime fecha = LocalDateTime.of(hoy, ahora);
+        System.out.println("localDate2 convert: " + fecha);
+
+
+
+    }*/
 
 }

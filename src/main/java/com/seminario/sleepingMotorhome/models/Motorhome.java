@@ -1,9 +1,15 @@
 package com.seminario.sleepingMotorhome.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "motorhome")
@@ -23,6 +29,16 @@ public class Motorhome {
 
     @Column
     private double lengthMotorhome;
+
+    private LocalDate dateOfAdmission;
+
+    private LocalDate dateOfEgress;
+
+    @Column
+    private Integer rentalDays;
+
+    @Column
+    private Integer isActive;
 
     // relations
 
@@ -104,5 +120,38 @@ public class Motorhome {
 
     public void setGarage(Garage garage) {
         this.garage = garage;
+    }
+
+    public LocalDate getDateOfAdmission() {
+        return dateOfAdmission;
+    }
+
+    public void setDateOfAdmission(String dateOfAdmission) {
+        LocalDate date = LocalDate.parse(dateOfAdmission);
+        this.dateOfAdmission = date;
+    }
+
+    public LocalDate getDateOfEgress() {
+        return dateOfEgress;
+    }
+
+    public void setDateOfEgress(LocalDate dateOfEgress) {
+        this.dateOfEgress = dateOfEgress;
+    }
+
+    public Integer getRentalDays() {
+        return rentalDays;
+    }
+
+    public void setRentalDays(Integer rentalDays) {
+        this.rentalDays = rentalDays;
+    }
+
+    public Integer getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Integer isActive) {
+        this.isActive = isActive;
     }
 }
