@@ -45,15 +45,15 @@
             <div class="row mb-3">
                 <div class="form-group col-sm-4">
                     <label>Nombre de calle</label>
-                    <input class="form-control" type="text" th:field="*{addressName}">
+                    <input class="form-control" type="text" th:field="*{addressName}" readonly>
                 </div>
                 <div class="form-group col-sm-4">
                     <label>Número de casa</label>
-                    <input class="form-control" type="number" th:field="*{addressNumber}">
+                    <input class="form-control" type="number" th:field="*{addressNumber}" readonly>
                 </div>
                 <div class="form-group col-sm-4">
                     <label>Número de piso y departamento</label>
-                    <input class="form-control" type="text" th:field="*{floor}">
+                    <input class="form-control" type="text" th:field="*{floor}" readonly>
                 </div>
             </div>
 
@@ -74,10 +74,6 @@
                     <div class="alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                 </div>
             </div>
-
-            <div>
-                <input type="submit" class="btn btn-primary btn-sm mx-1" name="save" value="Guardar">
-            </div>
         </form>
         <br>
 
@@ -89,9 +85,11 @@
                     <th>Patente</th>
                     <th>Largo</th>
                     <th>Ancho</th>
-                    <th>Tipo</th>
-                    <th>Garage</th>
                     <th>Zona</th>
+                    <th>Garage</th>
+                    <th>Tipo</th>
+                    <th>Estadia</th>
+                    <th>Ingreso</th>
                 </tr>
             </thead>
             <tbody>
@@ -99,9 +97,11 @@
                     <td th:text="${temp.enrollment}"></td>
                     <td th:text="${temp.lengthMotorhome + ' mtrs'}"></td>
                     <td th:text="${temp.widthMotorhome + ' mtrs'}"></td>
-                    <td th:text="${temp.motorhomeType.motorhomeType}"></td>
-                    <td th:text="${temp.garage.getGarageNumber()}"></td>
                     <td th:text="${temp.garage.zone.getZoneName()}"></td>
+                    <td th:text="${temp.garage.getGarageNumber()}"></td>
+                    <td th:text="${temp.motorhomeType.motorhomeType}"></td>
+                    <td th:text="${temp.rentalDays + ' días'}"></td>
+                    <td th:text="${#strings.substring(temp.dateOfAdmission,0,10)}"></td>
                 </tr>
             </tbody>
         </table>

@@ -13,7 +13,7 @@
 
 <div class="container">
     <br>
-    <h2 class="font-weight-bold text-center py-3">Datos de Vehículos</h2>
+    <h2 class="font-weight-bold text-center py-3">Datos de Vehículos con estadío activo</h2>
     <br>
 
     <div  class="float-left">
@@ -25,34 +25,38 @@
     <table class="table table-hover text-center">
         <thead>
         <tr>
+            <th>Dueño</th>
             <th>Patente</th>
             <th>Largo</th>
             <th>Ancho</th>
             <th>Tipo</th>
-            <th>Dueño</th>
             <th>Garage</th>
             <th>Zona</th>
+            <th>Estadia</th>
+            <th>Ingreso</th>
             <th>Acciones</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="temp : ${motorhomes}">
+            <td th:text="${temp.user.name + ' ' + temp.user.surname}"></td>
             <td th:text="${temp.enrollment}"></td>
             <td th:text="${temp.lengthMotorhome + ' mtrs'}"></td>
             <td th:text="${temp.widthMotorhome + ' mtrs'}"></td>
             <td th:text="${temp.motorhomeType.motorhomeType}"></td>
-            <td th:text="${temp.user.name + ' ' + temp.user.surname}"></td>
             <td th:text="${temp.garage.getGarageNumber()}"></td>
             <td th:text="${temp.garage.zone.getZoneName()}"></td>
+            <td th:text="${temp.rentalDays + ' días'}"></td>
+            <td th:text="${#strings.substring(temp.dateOfAdmission,0,10)}"></td>
             <td>
                 <div class="d-grid d-inline-flex px-3">
                     <a th:href="@{edit/{id} (id = ${temp.id})}"  class="btn btn-primary btn-sm mx-1"
                        role="button" data-bs-toggle="button">
                         Editar
                     </a>
-                    <a th:href="@{delete/{id} (id = ${temp.id})}" class="btn btn-primary btn-sm mx-1" role="button"
+                    <a th:href="@{finalize/{id} (id = ${temp.id})}" class="btn btn-info btn-sm mx-1" role="button"
                        data-bs-toggle="button">
-                        Eliminar
+                        Finalizar
                     </a>
                 </div>
             </td>

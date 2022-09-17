@@ -1,9 +1,10 @@
 package com.seminario.sleepingMotorhome.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import java.util.Date;
 
 @Entity
 @Table(name = "motorhome")
@@ -15,7 +16,7 @@ public class Motorhome {
     private Long id;
 
     @Column
-    @NotEmpty(message = "Campo obligatorio!...Por favor, ingrese la patente del vehículo.")
+    //@NotEmpty(message = "Campo obligatorio!...Por favor, ingrese la patente del vehículo.")
     private String enrollment;
 
     @Column
@@ -24,17 +25,34 @@ public class Motorhome {
     @Column
     private double lengthMotorhome;
 
+    //@NotNull(message = "Campo obligatorio!...Por favor, ingrese una fecha.")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date dateOfAdmission;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date dateOfEgress;
+
+    //@NotNull(message = "Campo obligatorio!...Por favor, ingrese los dias de alquiler.")
+    @Column
+    private Integer rentalDays;
+
+    @Column
+    private Integer isActive;
+
     // relations
 
+    //@NotNull(message = "Campo obligatorio!...Por favor, seleccionar el tipo de vehículo.")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "motorhome_type_id")
     @JsonIgnoreProperties("motorhome")
     private MotorhomeType motorhomeType;
 
+    //@NotNull(message = "Campo obligatorio!...Por favor, seleccionar al dueño del vehículo.")
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    //@NotNull(message = "Campo obligatorio!...Por favor, seleccionar el garage para el vehículo.")
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "garage_id", referencedColumnName = "id")
     private Garage garage;
@@ -104,5 +122,37 @@ public class Motorhome {
 
     public void setGarage(Garage garage) {
         this.garage = garage;
+    }
+
+    public Date getDateOfAdmission() {
+        return dateOfAdmission;
+    }
+
+    public void setDateOfAdmission(Date dateOfAdmission) {
+        this.dateOfAdmission = dateOfAdmission;
+    }
+
+    public Date getDateOfEgress() {
+        return dateOfEgress;
+    }
+
+    public void setDateOfEgress(Date dateOfEgress) {
+        this.dateOfEgress = dateOfEgress;
+    }
+
+    public Integer getRentalDays() {
+        return rentalDays;
+    }
+
+    public void setRentalDays(Integer rentalDays) {
+        this.rentalDays = rentalDays;
+    }
+
+    public Integer getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Integer isActive) {
+        this.isActive = isActive;
     }
 }

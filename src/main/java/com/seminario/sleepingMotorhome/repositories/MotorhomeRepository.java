@@ -12,7 +12,13 @@ import java.util.List;
 public interface MotorhomeRepository extends CrudRepository <Motorhome, Long> {
 
     @Query(value = "SELECT * FROM motorhome m, garage g WHERE m.garage_id = g.id AND g.garage_status = ?1", nativeQuery = true)
-    List<Motorhome> motorhomesListWithStatusTrue(boolean garageStatus);
+    List<Motorhome> motorhomesListWithStatusTrue (boolean garageStatus);
+
+    @Query(value = "SELECT * FROM motorhome m WHERE is_active = ?1", nativeQuery = true)
+    List<Motorhome> motorhomesListActived (int statusIsActive);
 
     List<Motorhome> findByUserId (Long id);
+
+    @Query(value = "SELECT * FROM motorhome m WHERE m.is_active = 1 AND m.user_id = ?1", nativeQuery = true)
+    List<Motorhome> findMotorhomesActiveByUserId(Long id);
 }

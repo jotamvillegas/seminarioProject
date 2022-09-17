@@ -28,7 +28,7 @@ public class UserController {
     @GetMapping(path = "/data")
     public String userData (Authentication auth, Model model){
         User personToEdit = userService.getUserByUserName(auth.getName());
-        List<Motorhome> motorhomeList = motorhomeService.getMotorhomeByUserId(personToEdit.getId());
+        List<Motorhome> motorhomeList = motorhomeService.getMotorhomeActivesByUserId(personToEdit.getId());
         model.addAttribute("user", personToEdit);
         model.addAttribute("mothomes", motorhomeList);
         model.addAttribute("editMode","true");

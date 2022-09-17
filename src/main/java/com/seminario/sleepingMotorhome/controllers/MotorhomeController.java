@@ -10,6 +10,8 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -32,7 +34,7 @@ public class MotorhomeController {
 
     @GetMapping(path = "/all")
     public String getAllMotorhomes (Model model){
-        model.addAttribute("motorhomes", motorhomeService.motorhomeListWithStatusTrue());
+        model.addAttribute("motorhomes", motorhomeService.motorhomeListStatusActive());
         return "motorhome/all";
     }
 
@@ -79,6 +81,16 @@ public class MotorhomeController {
         garageOld.setGarageStatus(false);
         garageService.saveGarage(garageOld);
         motorhomeService.deleteMotorhome(id);
+        return "redirect:/sleepingMotorhome/motorhome/all";
+    }
+
+    @GetMapping (path = "/finalize/{id}")
+    public String finalizeMotorhome (@PathVariable ("id") Long id, Model model){
+        Garage garageOld = garageService.getGarage(motorhomeService.getMotorhomeById(id).getGarage().getId());
+        garageOld.setDateOfEgress(new Date());
+        garageOld.setGarageStatus(false);
+        garageService.saveGarage(garageOld);
+        motorhomeService.finalizeMotorhome(id);
         return "redirect:/sleepingMotorhome/motorhome/all";
     }
 

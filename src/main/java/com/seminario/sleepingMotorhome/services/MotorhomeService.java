@@ -5,6 +5,7 @@ import com.seminario.sleepingMotorhome.repositories.MotorhomeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,8 +24,8 @@ public class MotorhomeService {
     @Autowired
     private UserService userService;
 
-    public List<Motorhome> motorhomeListWithStatusTrue() {
-        return (List<Motorhome>) motorhomeRepository.motorhomesListWithStatusTrue(true);
+    public List<Motorhome> motorhomeListStatusActive() {
+        return motorhomeRepository.motorhomesListActived(1);
     }
 
     public void save(Motorhome motorhome, Zone zone, MotorhomeType motorhomeType, Garage garage, Person person){
@@ -35,6 +36,21 @@ public class MotorhomeService {
         motorhomeRepository.deleteById(id);
     }
 
+    public void finalizeMotorhome (Long id){
+        Motorhome editMotorhome = getMotorhomeById(id);
+        editMotorhome.setGarage(null);
+        editMotorhome.setIsActive(0);
+        Date date = new Date();
+        editMotorhome.setDateOfEgress(date);
+        motorhomeRepository.save(editMotorhome);
+    }
+
+    private LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
+        return dateToConvert.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+    }
+
     public Motorhome getMotorhomeById (Long id){
         return motorhomeRepository.findById(id).orElse(null);
     }
@@ -43,13 +59,17 @@ public class MotorhomeService {
         return motorhomeRepository.findByUserId(id);
     }
 
+    public List<Motorhome> getMotorhomeActivesByUserId (Long id){
+        return motorhomeRepository.findMotorhomesActiveByUserId(id);
+    }
+
     public boolean existMotorhome (Long id){
         return motorhomeRepository.existsById(id);
     }
 
     public List<Long> motorhomeListById (){
         List<Long> motorhomeListOnlyId = new ArrayList<>();
-        for (Motorhome temp : motorhomeListWithStatusTrue()) {
+        for (Motorhome temp : motorhomeListStatusActive()) {
             motorhomeListOnlyId.add(temp.getId());
         }
         return motorhomeListOnlyId;
@@ -58,6 +78,7 @@ public class MotorhomeService {
     private Motorhome createMotorhome (Motorhome motorhome, Zone zone, MotorhomeType motorhomeType, Garage garage, Person person){
         Motorhome newMotorhome = null;
         List<Long> garageFreeList = garageService.garageFreeListOnlyId();
+
         if (motorhome.getId() == null){
             // si el id motorhome en nuevo setea el new garage en ocupado
             if (garageFreeList.contains(garage.getId())) {
@@ -70,12 +91,7 @@ public class MotorhomeService {
                 garageService.saveGarage(garage);
             }
             newMotorhome = new Motorhome();
-            newMotorhome.setEnrollment(motorhome.getEnrollment().toUpperCase());
-            newMotorhome.setLengthMotorhome(motorhome.getLengthMotorhome());
-            newMotorhome.setWidthMotorhome(motorhome.getWidthMotorhome());
-            newMotorhome.setGarage(garageService.getGarage(garage.getId()));
-            newMotorhome.setMotorhomeType(motorhomeTypeService.getMotorhomeType(motorhomeType.getId()));
-            newMotorhome.setUser(userService.getUserById(person.getId()));
+
         } else {
             newMotorhome = getMotorhomeById(motorhome.getId());
             // si hay que editar el motorhome y hay cambio de garage debe setear el garage old en false y el nuevo en true
@@ -92,13 +108,19 @@ public class MotorhomeService {
             garage.setGarageStatus(true);
             garageService.saveGarage(garage);
 
-            newMotorhome.setEnrollment(motorhome.getEnrollment().toUpperCase());
-            newMotorhome.setLengthMotorhome(motorhome.getLengthMotorhome());
-            newMotorhome.setWidthMotorhome(motorhome.getWidthMotorhome());
-            newMotorhome.setGarage(garageService.getGarage(garage.getId()));
-            newMotorhome.setMotorhomeType(motorhomeTypeService.getMotorhomeType(motorhomeType.getId()));
-            newMotorhome.setUser(userService.getUserById(person.getId()));
         }
+
+        newMotorhome.setEnrollment(motorhome.getEnrollment().toUpperCase());
+        newMotorhome.setLengthMotorhome(motorhome.getLengthMotorhome());
+        newMotorhome.setWidthMotorhome(motorhome.getWidthMotorhome());
+        newMotorhome.setGarage(garageService.getGarage(garage.getId()));
+        newMotorhome.setMotorhomeType(motorhomeTypeService.getMotorhomeType(motorhomeType.getId()));
+        newMotorhome.setUser(userService.getUserById(person.getId()));
+        newMotorhome.setDateOfAdmission(motorhome.getDateOfAdmission());
+        newMotorhome.setDateOfEgress(null);
+        newMotorhome.setRentalDays(motorhome.getRentalDays());
+        newMotorhome.setIsActive(1);
+
         return newMotorhome;
     }
 
