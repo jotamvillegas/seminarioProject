@@ -5,13 +5,6 @@
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
     <link rel="stylesheet" href="../../static/css/commons.css" th:href="@{/css/commons.css}"/>
     <title>Motorhomes</title>
-
-    <!--<link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>-->
-    <!--<link th:rel="stylesheet" th:href="@{/assets/bootstrap-datepicker/css/bootstrap-datepicker.css}"/>
-    <link th:rel="stylesheet" th:href="@{/assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.css}"/>-->
-    <!--<link th:rel="stylesheet" th:href="@{webjars/font-awesome/5.11.2/css/all.css} "/>-->
-
-
 </head>
 <body>
     <div th:insert="generics/fragments::header"></div>
@@ -88,14 +81,14 @@
             </div>
             <div class="row mb-3">
                 <div class="form-group col-sm-4">
-                    <!-- DATEPICKER  input-group date-->
                     <label>Fecha de ingreso (*)</label>
-                    <input class="form-control" type="date" th:field="*{dateOfAdmission}" id="dateOfAdmision"/>
+                    <input class="form-control" type="date" th:field="*{dateOfAdmission}"/>
+                    <div class="alert-danger" th:if="${#fields.hasErrors('dateOfAdmission')}" th:errors="*{dateOfAdmission}"></div>
                 </div>
                 <div class="form-group col-sm-4">
-                    <!-- DIAS DE ALQUILER -->
                     <label>Cantidad de días de alquiler (*)</label>
                     <input class="form-control" type="text" th:field="*{rentalDays}">
+                    <div class="alert-danger" th:if="${#fields.hasErrors('rentalDays')}" th:errors="*{rentalDays}"></div>
                 </div>
                 <div class="form-group col-sm-4"></div>
             </div>
@@ -109,18 +102,6 @@
     </div>
     <br><br>
     <div th:insert="generics/fragments::footer"></div>
-
-    <!--<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-    <script th:src="@{assets/bootstrap-datepicker/js/bootstrap-datepicker.js}"></script>-->
-
-    <!--<script>
-        $('.input-group.date').datepicker({
-            autoclose: true,
-            todayHighlight: true
-        });
-    </script>-->
 
 </body>
 </html>

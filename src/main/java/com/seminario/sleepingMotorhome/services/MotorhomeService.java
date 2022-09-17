@@ -5,12 +5,7 @@ import com.seminario.sleepingMotorhome.repositories.MotorhomeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,11 +37,11 @@ public class MotorhomeService {
     }
 
     public void finalizeMotorhome (Long id){
-        Date date = new Date();
         Motorhome editMotorhome = getMotorhomeById(id);
         editMotorhome.setGarage(null);
         editMotorhome.setIsActive(0);
-        editMotorhome.setDateOfEgress(convertToLocalDateViaInstant(date));
+        Date date = new Date();
+        editMotorhome.setDateOfEgress(date);
         motorhomeRepository.save(editMotorhome);
     }
 
@@ -64,6 +59,10 @@ public class MotorhomeService {
         return motorhomeRepository.findByUserId(id);
     }
 
+    public List<Motorhome> getMotorhomeActivesByUserId (Long id){
+        return motorhomeRepository.findMotorhomesActiveByUserId(id);
+    }
+
     public boolean existMotorhome (Long id){
         return motorhomeRepository.existsById(id);
     }
@@ -79,6 +78,7 @@ public class MotorhomeService {
     private Motorhome createMotorhome (Motorhome motorhome, Zone zone, MotorhomeType motorhomeType, Garage garage, Person person){
         Motorhome newMotorhome = null;
         List<Long> garageFreeList = garageService.garageFreeListOnlyId();
+
         if (motorhome.getId() == null){
             // si el id motorhome en nuevo setea el new garage en ocupado
             if (garageFreeList.contains(garage.getId())) {
@@ -91,16 +91,6 @@ public class MotorhomeService {
                 garageService.saveGarage(garage);
             }
             newMotorhome = new Motorhome();
-            newMotorhome.setEnrollment(motorhome.getEnrollment().toUpperCase());
-            newMotorhome.setLengthMotorhome(motorhome.getLengthMotorhome());
-            newMotorhome.setWidthMotorhome(motorhome.getWidthMotorhome());
-            newMotorhome.setGarage(garageService.getGarage(garage.getId()));
-            newMotorhome.setMotorhomeType(motorhomeTypeService.getMotorhomeType(motorhomeType.getId()));
-            newMotorhome.setUser(userService.getUserById(person.getId()));
-            newMotorhome.setDateOfAdmission(String.valueOf(motorhome.getDateOfAdmission()));
-            newMotorhome.setDateOfEgress(null);
-            newMotorhome.setRentalDays(motorhome.getRentalDays());
-            newMotorhome.setIsActive(1);
 
         } else {
             newMotorhome = getMotorhomeById(motorhome.getId());
@@ -118,43 +108,20 @@ public class MotorhomeService {
             garage.setGarageStatus(true);
             garageService.saveGarage(garage);
 
-            newMotorhome.setEnrollment(motorhome.getEnrollment().toUpperCase());
-            newMotorhome.setLengthMotorhome(motorhome.getLengthMotorhome());
-            newMotorhome.setWidthMotorhome(motorhome.getWidthMotorhome());
-            newMotorhome.setGarage(garageService.getGarage(garage.getId()));
-            newMotorhome.setMotorhomeType(motorhomeTypeService.getMotorhomeType(motorhomeType.getId()));
-            newMotorhome.setUser(userService.getUserById(person.getId()));
-            newMotorhome.setDateOfAdmission(String.valueOf(motorhome.getDateOfAdmission()));
-            newMotorhome.setDateOfEgress(null);
-            newMotorhome.setRentalDays(motorhome.getRentalDays());
-            newMotorhome.setIsActive(1);
         }
+
+        newMotorhome.setEnrollment(motorhome.getEnrollment().toUpperCase());
+        newMotorhome.setLengthMotorhome(motorhome.getLengthMotorhome());
+        newMotorhome.setWidthMotorhome(motorhome.getWidthMotorhome());
+        newMotorhome.setGarage(garageService.getGarage(garage.getId()));
+        newMotorhome.setMotorhomeType(motorhomeTypeService.getMotorhomeType(motorhomeType.getId()));
+        newMotorhome.setUser(userService.getUserById(person.getId()));
+        newMotorhome.setDateOfAdmission(motorhome.getDateOfAdmission());
+        newMotorhome.setDateOfEgress(null);
+        newMotorhome.setRentalDays(motorhome.getRentalDays());
+        newMotorhome.setIsActive(1);
 
         return newMotorhome;
     }
-
-
-
-    /*public static void main(String[] args) {
-
-        Date value =  new Date();
-        System.out.println("new date: " + value);
-        System.out.println("-------------------------");
-
-        // fecha de ingreso
-        String dateInString = "2022-09-11"; //lo que me viene del front
-        LocalDate date = LocalDate.parse(dateInString);
-        System.out.println("localDate convert: " + date);
-        System.out.println("-------------------------");
-
-        // fecha de egreso
-        LocalDate hoy = LocalDate.now();
-        LocalTime ahora = LocalTime.now();
-        LocalDateTime fecha = LocalDateTime.of(hoy, ahora);
-        System.out.println("localDate2 convert: " + fecha);
-
-
-
-    }*/
 
 }

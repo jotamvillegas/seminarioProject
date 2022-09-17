@@ -1,14 +1,9 @@
 package com.seminario.sleepingMotorhome.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -21,7 +16,7 @@ public class Motorhome {
     private Long id;
 
     @Column
-    @NotEmpty(message = "Campo obligatorio!...Por favor, ingrese la patente del vehículo.")
+    //@NotEmpty(message = "Campo obligatorio!...Por favor, ingrese la patente del vehículo.")
     private String enrollment;
 
     @Column
@@ -30,10 +25,14 @@ public class Motorhome {
     @Column
     private double lengthMotorhome;
 
-    private LocalDate dateOfAdmission;
+    //@NotNull(message = "Campo obligatorio!...Por favor, ingrese una fecha.")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date dateOfAdmission;
 
-    private LocalDate dateOfEgress;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date dateOfEgress;
 
+    //@NotNull(message = "Campo obligatorio!...Por favor, ingrese los dias de alquiler.")
     @Column
     private Integer rentalDays;
 
@@ -42,15 +41,18 @@ public class Motorhome {
 
     // relations
 
+    //@NotNull(message = "Campo obligatorio!...Por favor, seleccionar el tipo de vehículo.")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "motorhome_type_id")
     @JsonIgnoreProperties("motorhome")
     private MotorhomeType motorhomeType;
 
+    //@NotNull(message = "Campo obligatorio!...Por favor, seleccionar al dueño del vehículo.")
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    //@NotNull(message = "Campo obligatorio!...Por favor, seleccionar el garage para el vehículo.")
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "garage_id", referencedColumnName = "id")
     private Garage garage;
@@ -122,20 +124,19 @@ public class Motorhome {
         this.garage = garage;
     }
 
-    public LocalDate getDateOfAdmission() {
+    public Date getDateOfAdmission() {
         return dateOfAdmission;
     }
 
-    public void setDateOfAdmission(String dateOfAdmission) {
-        LocalDate date = LocalDate.parse(dateOfAdmission);
-        this.dateOfAdmission = date;
+    public void setDateOfAdmission(Date dateOfAdmission) {
+        this.dateOfAdmission = dateOfAdmission;
     }
 
-    public LocalDate getDateOfEgress() {
+    public Date getDateOfEgress() {
         return dateOfEgress;
     }
 
-    public void setDateOfEgress(LocalDate dateOfEgress) {
+    public void setDateOfEgress(Date dateOfEgress) {
         this.dateOfEgress = dateOfEgress;
     }
 

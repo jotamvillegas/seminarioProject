@@ -18,4 +18,7 @@ public interface MotorhomeRepository extends CrudRepository <Motorhome, Long> {
     List<Motorhome> motorhomesListActived (int statusIsActive);
 
     List<Motorhome> findByUserId (Long id);
+
+    @Query(value = "SELECT * FROM motorhome m WHERE m.is_active = 1 AND m.user_id = ?1", nativeQuery = true)
+    List<Motorhome> findMotorhomesActiveByUserId(Long id);
 }
