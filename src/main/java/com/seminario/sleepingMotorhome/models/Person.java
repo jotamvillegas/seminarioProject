@@ -1,6 +1,7 @@
 package com.seminario.sleepingMotorhome.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -55,11 +56,12 @@ public class Person {
     private Date dateOfEgress;
 
     //relations
-
+    @JsonIgnore
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "person_type_id")
     private PersonType personType;
 
+    @JsonIgnore
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "status_rol_id")
     @JsonIgnoreProperties("person")

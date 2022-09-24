@@ -1,5 +1,7 @@
 package com.seminario.sleepingMotorhome.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -9,6 +11,7 @@ public class User extends Person {
 
     // los ids heredan de person
 
+    @JsonIgnore
     @OneToMany(mappedBy = "id", fetch = FetchType.LAZY)
     private Set<Motorhome> motorhome;
 

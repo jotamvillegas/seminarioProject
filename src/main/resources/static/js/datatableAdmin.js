@@ -11,29 +11,31 @@ $(document).ready( function () {
             dataSrc: ''
         },
         columns: [
-            {"data": "name"},
-            {"data": "surname"},
-            {"data": "documentNumber"},
-            {"data": "addressName"},
-            {"data": "addressNumber"},
-            {"data": "floor"},
-            {"data": "phone"},
+            {data: "name", className: "text-center"},
+            {data: "surname", className: "text-center"},
+            {data: "documentNumber", className: "text-center"},
+            {data: "addressName", className: "text-center"},
+            {data: "addressNumber", className: "text-center"},
+            {data: "floor", className: "text-center"},
+            {data: "phone", className: "text-center"},
             {
-                "data": "dateOfAdmission",
+                data: "dateOfAdmission",
+                className: "text-center",
                 render: function (data){
                     return data.substring(0, 10);
                 }
             },
-            {"data": "dateOfEgress"},
+            {data: "dateOfEgress", className: "text-center"},
             {
-                "data": null,
-                "defaultContent": '<div class="d-grid d-inline-flex px-3">'+
+                data: null,
+                className: "text-center",
+                defaultContent: '<div class="d-grid d-inline-flex px-3">'+
                     '<a class="btn-edit btn btn-primary btn-sm mx-1" style="color:white"'+
                     'role="button" data-bs-toggle="button">Editar</a>'+
-                    '<a class="btn-delete btn btn-danger btn-sm mx-1" style="color:white"'+
+                    '<a class="btn-delete btn btn-info btn-sm mx-1" style="color:white"'+
                     'role="button" data-bs-toggle="button">Eliminar</a>'+
                     '</div>',
-                "orderable": false
+                orderable: false
             }
         ]
     });

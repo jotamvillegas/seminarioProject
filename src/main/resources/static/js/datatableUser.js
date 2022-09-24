@@ -4,7 +4,7 @@ var tableData;
 $(document).ready( function () {
 
     // Loading table
-    tableData = $('#employeeTable').DataTable({
+    tableData = $('#userTable').DataTable({
         order: [ [7, 'desc'] ],
         ajax: {
             url: "rest-all",
@@ -41,20 +41,20 @@ $(document).ready( function () {
     });
 
     // Function Edit en evento click para redirección
-    $('#employeeTable').on('click', '.btn-edit', function (e) {
+    $('#userTable').on('click', '.btn-edit', function (e) {
         e.preventDefault();
         var temp = $(this).parent().parent()[0];
         var data = tableData.row(temp).data();
-        var url = "http://localhost:8080/sleepingMotorhome/employee/edit/" + data.id;
+        var url = "http://localhost:8080/sleepingMotorhome/user/edit/" + data.id;
         $(location).attr('href', url);
     });
 
     // Function Delete en evento click para redirección
-    $('#employeeTable').on('click', '.btn-delete', function (e) {
+    $('#userTable').on('click', '.btn-delete', function (e) {
         e.preventDefault();
         var temp = $(this).parent().parent()[0];
         var data = tableData.row(temp).data();
-        var url = "http://localhost:8080/sleepingMotorhome/employee/delete/" + data.id;
+        var url = "http://localhost:8080/sleepingMotorhome/user/delete/" + data.id;
         $(location).attr('href', url);
     } );
 
