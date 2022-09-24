@@ -1,5 +1,7 @@
 package com.seminario.sleepingMotorhome.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -11,9 +13,11 @@ public class Employee extends Person {
 
     private String specialty;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "employee")
     private Set<Zone> zones;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "employees")
     private Set<Task> tasks;
 

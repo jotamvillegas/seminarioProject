@@ -31,8 +31,13 @@ public class AdminService {
     @Transactional
     public void save(Admin admin) {
         Admin a;
-        if (admin.getId() == null)  a = new Admin();
-        else a = getAdminById(admin.getId());
+        if (admin.getId() == null) {
+            a = new Admin();
+            a.setDateOfAdmission(new Date());
+        }
+        else {
+            a = getAdminById(admin.getId());
+        }
 
         if (lessThanThirtyCharacters(admin.getPassword()))
             a.setPassword(convertToBCryptPassword(admin.getPassword()));
@@ -44,7 +49,6 @@ public class AdminService {
         a.setAddressNumber(admin.getAddressNumber());
         a.setFloor(admin.getFloor());
         a.setPhone(admin.getPhone());
-        a.setDateOfAdmission(new Date());
         a.setDateOfEgress(admin.getDateOfEgress());
         a.setPersonType(personTypeService.getPersonType("ADMIN"));
         a.setStatusRol(searchStatusRol("Active"));

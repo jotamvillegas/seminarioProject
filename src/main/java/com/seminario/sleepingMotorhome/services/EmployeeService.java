@@ -31,8 +31,13 @@ public class EmployeeService {
     @Transactional
     public void save(Employee employee) {
         Employee e;
-        if (employee.getId() == null)  e = new Employee();
-        else  e = getEmployeeById(employee.getId());
+        if (employee.getId() == null) {
+            e = new Employee();
+            e.setDateOfAdmission(new Date());
+        }
+        else {
+            e = getEmployeeById(employee.getId());
+        }
 
         if (lessThanThirtyCharacters(employee.getPassword()))
             e.setPassword(convertToBCryptPassword(employee.getPassword()));
@@ -44,7 +49,6 @@ public class EmployeeService {
         e.setAddressNumber(employee.getAddressNumber());
         e.setFloor(employee.getFloor());
         e.setPhone(employee.getPhone());
-        e.setDateOfAdmission(new Date());
         e.setDateOfEgress(employee.getDateOfEgress());
         e.setPersonType(personTypeService.getPersonType("EMPLOYEE"));
         e.setStatusRol(searchStatusRol("Active"));
