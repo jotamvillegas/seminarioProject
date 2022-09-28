@@ -1,4 +1,4 @@
-package com.seminario.sleepingMotorhome.controllers;
+package com.seminario.sleepingMotorhome.restControllers;
 
 import com.seminario.sleepingMotorhome.models.Motorhome;
 import com.seminario.sleepingMotorhome.services.MotorhomeService;

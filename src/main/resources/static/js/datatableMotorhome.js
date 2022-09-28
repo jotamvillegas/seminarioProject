@@ -11,8 +11,13 @@ $(document).ready( function () {
             dataSrc: ''
         },
         columns: [
-            {data: "user.name", className: "text-center"},
-            {data: "user.surname", className: "text-center"},
+            {
+                data: null,
+                className: "text-center",
+                render: function (data){
+                    return data.user.name + ' '+ data.user.surname;
+                }
+            },
             {data: "enrollment", className: "text-center"},
             {
                 data: "lengthMotorhome",

@@ -28,13 +28,15 @@ public class TaskService {
         Set<Employee> employeeSet = new HashSet<>();
         employeeSet.add((Employee) person);
 
-        if (task.getId() == null)
+        if (task.getId() == null) {
             t = new Task();
-        else
+            t.setDateOfAdmission(new Date());
+        }
+        else {
             t = getTaskById(task.getId());
+        }
 
         t.setAmountHoursWeekly(task.getAmountHoursWeekly());
-        t.setDateOfAdmission(new Date());
         t.setDateOfEgress(null);
         t.setDescription(null);
         t.setGarage(garage);

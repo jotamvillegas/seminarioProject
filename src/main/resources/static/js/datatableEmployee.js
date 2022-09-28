@@ -25,7 +25,6 @@ $(document).ready( function () {
                     return data.substring(0, 10);
                 }
             },
-            {data: "dateOfEgress", className: "text-center"},
             {
                 data: null,
                 className: "text-center",
