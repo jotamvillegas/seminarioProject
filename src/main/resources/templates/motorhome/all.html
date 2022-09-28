@@ -2,71 +2,59 @@
 <html xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
+    <!-- CSS CUTOMIZED -->
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
     <link rel="stylesheet" href="../../static/css/commons.css" th:href="@{/css/commons.css}"/>
+
+    <!-- CSS FOR DATATABLE -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+
+    <!-- META AND UTF -->
+    <meta charset="UTF-8">
     <title>Motorhomes</title>
 </head>
 <body>
 
-<div th:insert="generics/fragments::header"></div>
+    <div th:insert="generics/fragments::header"></div>
 
-<div class="container">
-    <br>
-    <h2 class="font-weight-bold text-center py-3">Datos de Vehículos con estadío activo</h2>
-    <br>
+    <div class="container">
+        <h2 class="font-weight-bold text-center py-3">Datos de Vehículos con estadío activo</h2>
+        <div  class="float-left">
+            <a th:href="@{add}" class="btn btn-primary btn-sm mx-1 navbar-btn" role="button" data-bs-toggle="button">Crear Motorhome</a>
+            <a th:href="@{/sleepingMotorhome/home}" class="btn btn-secondary btn-sm mx-1" role="button" data-bs-toggle="button">Ir a Home</a>
+        </div>
 
-    <div  class="float-left">
-        <a th:href="@{add}" class="btn btn-primary btn-sm mx-1 navbar-btn" role="button" data-bs-toggle="button">Crear Motorhome</a>
-        <a th:href="@{/sleepingMotorhome/home}" class="btn btn-secondary btn-sm mx-1" role="button" data-bs-toggle="button">Ir a Home</a>
+        <br>
+        <hr>
+
+        <table id="motorhomeTable" class="table table-striped compact display" style="width: 100%">
+            <thead>
+            <tr>
+                <th style="text-align: center">Dueño</th>
+                <th style="text-align: center">Patente</th>
+                <th style="text-align: center">Largo</th>
+                <th style="text-align: center">Ancho</th>
+                <th style="text-align: center">Tipo</th>
+                <th style="text-align: center">Garage</th>
+                <th style="text-align: center">Zona</th>
+                <th style="text-align: center">Estadia</th>
+                <th style="text-align: center">Ingreso</th>
+                <th style="text-align: center">Acciones</th>
+            </tr>
+            </thead>
+        </table>
+        <br>
     </div>
 
-    <br><br>
-    <table class="table table-hover text-center">
-        <thead>
-        <tr>
-            <th>Dueño</th>
-            <th>Patente</th>
-            <th>Largo</th>
-            <th>Ancho</th>
-            <th>Tipo</th>
-            <th>Garage</th>
-            <th>Zona</th>
-            <th>Estadia</th>
-            <th>Ingreso</th>
-            <th>Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="temp : ${motorhomes}">
-            <td th:text="${temp.user.name + ' ' + temp.user.surname}"></td>
-            <td th:text="${temp.enrollment}"></td>
-            <td th:text="${temp.lengthMotorhome + ' mtrs'}"></td>
-            <td th:text="${temp.widthMotorhome + ' mtrs'}"></td>
-            <td th:text="${temp.motorhomeType.motorhomeType}"></td>
-            <td th:text="${temp.garage.getGarageNumber()}"></td>
-            <td th:text="${temp.garage.zone.getZoneName()}"></td>
-            <td th:text="${temp.rentalDays + ' días'}"></td>
-            <td th:text="${#strings.substring(temp.dateOfAdmission,0,10)}"></td>
-            <td>
-                <div class="d-grid d-inline-flex px-3">
-                    <a th:href="@{edit/{id} (id = ${temp.id})}"  class="btn btn-primary btn-sm mx-1"
-                       role="button" data-bs-toggle="button">
-                        Editar
-                    </a>
-                    <a th:href="@{finalize/{id} (id = ${temp.id})}" class="btn btn-info btn-sm mx-1" role="button"
-                       data-bs-toggle="button">
-                        Finalizar
-                    </a>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <br>
-</div>
+    <div th:insert="generics/fragments::footer"></div>
 
-<div th:insert="generics/fragments::footer"></div>
+    <!-- JS FOR DATATABLE -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+    <script src="https://editor.datatables.net/extensions/Editor/js/dataTables.editor.min.js"></script>
+
+    <!-- JS CUSTOMIZED -->
+    <script th:src="@{/js/datatableMotorhome.js}"></script>
 
 </body>
 </html>

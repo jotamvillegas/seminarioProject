@@ -1,5 +1,6 @@
 package com.seminario.sleepingMotorhome.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.GenericGenerator;
@@ -22,7 +23,7 @@ public class MotorhomeType {
     private String motorhomeType;
 
     //relations
-
+    @JsonIgnore
     @OneToMany(mappedBy = "motorhomeType")
     @JsonIgnoreProperties("motorhomeType")
     @JsonInclude(JsonInclude.Include.NON_NULL)

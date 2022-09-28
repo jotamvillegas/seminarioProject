@@ -1,5 +1,6 @@
 package com.seminario.sleepingMotorhome.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -30,9 +31,11 @@ public class Garage {
     @JsonIgnoreProperties("zone")
     private Zone zone;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "garage")
     private Set<Task> service;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "garage")
     private Motorhome motorhome;
 

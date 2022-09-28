@@ -24,6 +24,10 @@ public class MotorhomeService {
     @Autowired
     private UserService userService;
 
+    public List<Motorhome> getAll() {
+        return (List<Motorhome>) motorhomeRepository.findAll();
+    }
+
     public List<Motorhome> motorhomeListStatusActive() {
         return motorhomeRepository.motorhomesListActived(1);
     }

@@ -34,8 +34,13 @@ public class UserService {
     @Transactional
     public void save(User user) {
         User u;
-        if (user.getId() == null)  u = new User();
-        else  u = getUserById(user.getId());
+        if (user.getId() == null) {
+            u = new User();
+            u.setDateOfAdmission(new Date());
+        }
+        else {
+            u = getUserById(user.getId());
+        }
 
         if (lessThanThirtyCharacters(user.getPassword()))
             u.setPassword(convertToBCryptPassword(user.getPassword()));
@@ -47,7 +52,6 @@ public class UserService {
         u.setAddressNumber(user.getAddressNumber());
         u.setFloor(user.getFloor());
         u.setPhone(user.getPhone());
-        u.setDateOfAdmission(new Date());
         u.setDateOfEgress(user.getDateOfEgress());
         u.setPersonType(personTypeService.getPersonType("USER"));
         u.setStatusRol(searchStatusRol("Active"));

@@ -1,6 +1,7 @@
 package com.seminario.sleepingMotorhome.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -26,7 +27,6 @@ public class Task {
     private Date dateOfEgress;
 
     // relations
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "garage")
     private Garage garage;

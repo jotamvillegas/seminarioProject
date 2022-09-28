@@ -1,5 +1,6 @@
 package com.seminario.sleepingMotorhome.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -12,7 +13,6 @@ public class Motorhome {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    //@GenericGenerator(name = "native", strategy = "native")
     private Long id;
 
     @Column
