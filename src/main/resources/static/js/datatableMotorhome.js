@@ -80,6 +80,6 @@ $(document).ready( function () {
         var data = tableData.row(temp).data();
         var url = "http://localhost:8080/sleepingMotorhome/motorhome/delete/" + data.id;
         $(location).attr('href', url);
-    } );
+    });
 
 });

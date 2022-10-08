@@ -21,4 +21,16 @@ public interface MotorhomeRepository extends CrudRepository <Motorhome, Long> {
 
     @Query(value = "SELECT * FROM motorhome m WHERE m.is_active = 1 AND m.user_id = ?1", nativeQuery = true)
     List<Motorhome> findMotorhomesActiveByUserId(Long id);
+
+
+    // DATA OF CHARTS
+
+    @Query(value = "SELECT COUNT(*) FROM motorhome m WHERE m.date_of_admission >= ?1 AND m.date_of_admission <= ?2", nativeQuery = true)
+    Integer motorhomeListInAMonth (String dateFrom, String dateTo);
+
+    @Query(value = "SELECT COUNT(*) FROM motorhome m WHERE m.motorhome_type_id = ?3\n" +
+                   "AND m.date_of_admission >= ?1 AND m.date_of_admission <= ?2"
+            , nativeQuery = true)
+    Integer motorhomesByMonthAndType (String dataFrom, String dateTo, int typeId);
+
 }
