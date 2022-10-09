@@ -1,11 +1,15 @@
 package com.seminario.sleepingMotorhome.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -17,17 +21,17 @@ public class Zone {
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
 
+    @NotBlank(message = "Campo obligatorio!... Por favor, ingrese un nombre o identificador para la zona.")
     private String zoneName;
 
     private String motorhomeType;
 
-    private Integer motorhomeAmount;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss Z", timezone="UTC")
+    private Date dateOfCreation;
 
+    @NotNull(message = "Campo obligatorio!... Por favor, ingrese una cantidad de garages para la zona.")
     private Integer garageAmount;
 
-    private double garageWidth;
-
-    private double garageDeep;
 
     // Relations
 
@@ -50,11 +54,11 @@ public class Zone {
         super();
     }
 
+    // Getters and Setters
+
     public Long getId() {
         return id;
     }
-
-    // Getters and Setters
 
     public void setId(Long id) {
         this.id = id;
@@ -76,12 +80,12 @@ public class Zone {
         this.motorhomeType = motorhomeType;
     }
 
-    public Integer getMotorhomeAmount() {
-        return motorhomeAmount;
+    public Date getDateOfCreation() {
+        return dateOfCreation;
     }
 
-    public void setMotorhomeAmount(Integer motorhomeAmount) {
-        this.motorhomeAmount = motorhomeAmount;
+    public void setDateOfCreation(Date dateOfCreation) {
+        this.dateOfCreation = dateOfCreation;
     }
 
     public Integer getGarageAmount() {
@@ -90,22 +94,6 @@ public class Zone {
 
     public void setGarageAmount(Integer garageAmount) {
         this.garageAmount = garageAmount;
-    }
-
-    public double getGarageWidth() {
-        return garageWidth;
-    }
-
-    public void setGarageWidth(double garageWidth) {
-        this.garageWidth = garageWidth;
-    }
-
-    public double getGarageDeep() {
-        return garageDeep;
-    }
-
-    public void setGarageDeep(double garageDeep) {
-        this.garageDeep = garageDeep;
     }
 
     public Set<Employee> getEmployee() {

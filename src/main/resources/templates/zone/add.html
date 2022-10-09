@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link rel="stylesheet" href="../../static/css/commons.css" th:href="@{/css/commons.css}"/>
+    <title>Zonas</title>
+</head>
+<body>
+<div th:insert="generics/fragments::header"></div>
+
+<div class="container">
+    <h2 class="font-weight-bold text-center py-3">Ingreso de nueva zona</h2>
+    <br>
+    <div>
+        <a th:href="@{/sleepingMotorhome/zone/all}" class="btn btn-secondary btn-sm mx-1" role="button" data-bs-toggle="button">Regresar</a>
+    </div>
+    <hr>
+    <form th:action="@{/sleepingMotorhome/zone/save}" method="POST" th:object="${zone}">
+
+        <input type="hidden" th:field="*{id}" th:if="${editMode}">
+
+        <div class="row mb-3">
+            <div class="form-group col-sm-4">
+                <label>Nombre o identificador de Zona (*)</label>
+                <input class="form-control" type="text" th:field="*{zoneName}" placeholder="A, B, C,...">
+                <div class="alert-danger" th:if="${#fields.hasErrors('zoneName')}" th:errors="*{zoneName}"></div>
+            </div>
+            <div class="form-group col-sm-4">
+                <label>Tipo de motorhome para la zona</label>
+                <input class="form-control" type="text" th:field="*{motorhomeType}" placeholder="Small, Medium, Large,...">
+            </div>
+            <div class="form-group col-sm-4">
+                <label>Cantidad de garage por zona (*)</label>
+                <input class="form-control" type="text" th:field="*{garageAmount}" placeholder="20, 30,...">
+                <div class="alert-danger" th:if="${#fields.hasErrors('garageAmount')}" th:errors="*{garageAmount}"></div>
+            </div>
+        </div>
+        <br>
+        <div>
+            <input type="submit" class="btn btn-primary btn-sm mx-1" name="save"
+                   th:value="${editMode}?'Editar':'Guardar'"
+                   value="Guardar">
+        </div>
+    </form>
+</div>
+<br><br>
+<div th:insert="generics/fragments::footer"></div>
+
+</body>
+</html>
+
