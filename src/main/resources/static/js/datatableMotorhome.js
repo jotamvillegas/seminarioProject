@@ -57,7 +57,7 @@ $(document).ready( function () {
                     '<a class="btn-edit btn btn-primary btn-sm mx-1" style="color:white"'+
                     'role="button" data-bs-toggle="button">Editar</a>'+
                     '<a class="btn-delete btn btn-info btn-sm mx-1" style="color:white"'+
-                    'role="button" data-bs-toggle="button">Eliminar</a>'+
+                    'role="button" data-bs-toggle="button">Finalizar</a>'+
                     '</div>',
                 orderable: false
             }
@@ -78,8 +78,8 @@ $(document).ready( function () {
         e.preventDefault();
         var temp = $(this).parent().parent()[0];
         var data = tableData.row(temp).data();
-        var url = "http://localhost:8080/sleepingMotorhome/motorhome/delete/" + data.id;
+        var url = "http://localhost:8080/sleepingMotorhome/motorhome/finalize/" + data.id;
         $(location).attr('href', url);
-    } );
+    });
 
 });
