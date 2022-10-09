@@ -22,9 +22,22 @@ new Chart( ctxBar, {
     data: {
         labels: xValuesBar,
         datasets: [{
+            data: yValuesBar,
             fill: true,
-            backgroundColor: "rgba(255, 87, 51, 1)",
-            data: yValuesBar
+            backgroundColor: [
+                'rgba(255, 87, 51, 2)',
+                'rgba(255, 26, 104, 2)',
+                'rgba(54, 162, 235, 2)',
+                'rgba(255, 206, 86, 2)',
+                'rgba(75, 192, 192, 2)',
+                'rgba(153, 102, 255, 2)',
+                'rgba(185, 239, 108, 2)',
+                'rgba(243, 124, 240, 2)',
+                'rgba(124, 243, 225, 2)',
+                'rgba(247, 28, 28, 2)',
+                'rgba(53, 115, 247, 2)',
+                'rgba(250, 177, 83, 2)'
+            ]
         }]
     },
     options: {
@@ -51,27 +64,38 @@ new Chart( ctxBar, {
     data: {
         labels: xValuesBar,
         datasets: [{
+            label: "Small",
             fill: true,
-            backgroundColor: "rgba(255, 195, 15, 1)",
+            backgroundColor: "rgba(175, 122, 197, 2)",
             data: yValuesBarSmall
         }, {
+            label: "Medium",
             fill: true,
-            backgroundColor: "rgba(255, 87, 51, 1)",
+            backgroundColor: "rgba(84, 153, 199, 2)",
             data: yValuesBarMedium
         },{
+            label: "Large",
             fill: true,
-            backgroundColor: "rgba(199, 0, 57, 1)",
+            backgroundColor: "rgba(72, 201, 176, 2)",
             data: yValuesBarLarge
         }]
     },
     options: {
         legend: {
-            display: false
+            display: true,
+            labels: {
+                color: 'rgb(255, 99, 132)'
+            }
         },
-        title:{
+        /*plugins: {
+            legend: {
+                position: 'right',
+            }
+        },*/
+        /*title:{
             display: true,
             text: ""
-        },
+        },*/
         scales: {
             yAxes: [{ticks: {min: 0, max: 35}}],
         }
