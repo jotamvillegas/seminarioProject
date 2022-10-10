@@ -1,10 +1,11 @@
 package com.seminario.sleepingMotorhome.services;
 
-import com.seminario.sleepingMotorhome.models.ServiceType;
 import com.seminario.sleepingMotorhome.repositories.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,11 +18,21 @@ public class ServiceService {
         return (List<com.seminario.sleepingMotorhome.models.Service>) serviceRepository.findAll();
     }
 
-    public void saveServiceType (com.seminario.sleepingMotorhome.models.Service service){
-        serviceRepository.save(service);
+    @Transactional
+    public void save (com.seminario.sleepingMotorhome.models.Service service){
+        com.seminario.sleepingMotorhome.models.Service s;
+        if (service.getId() == null) {
+            s = new com.seminario.sleepingMotorhome.models.Service();
+            s.setDateOfCreation(new Date());
+        }
+        else {
+            s = getServiceType(service.getId());
+        }
+        s.setDescription(service.getDescription());
+        serviceRepository.save(s);
     }
 
-    public void deleteServiceType (Long id){
+    public void delete (Long id){
         serviceRepository.deleteById(id);
     }
 
