@@ -1,5 +1,6 @@
 package com.seminario.sleepingMotorhome.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -7,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -18,9 +20,11 @@ public class Service {
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
 
-    @Column
-    @NotBlank
+    @NotBlank(message = "Campo obligatorio!... Por favor, ingrese un nombre para el nuevo servicio.")
     private String description;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss Z", timezone="UTC")
+    private Date dateOfCreation;
 
     // relations
 
@@ -30,8 +34,13 @@ public class Service {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Set<Task> tasks;
 
-    // Constructors, setters and getters
+    // Constructors
 
+    public Service() {
+        super();
+    }
+
+    // Getters and Setters
 
     public Long getId() {
         return id;
@@ -56,4 +65,13 @@ public class Service {
     public void setTasks(Set<Task> tasks) {
         this.tasks = tasks;
     }
+
+    public Date getDateOfCreation() {
+        return dateOfCreation;
+    }
+
+    public void setDateOfCreation(Date dateOfCreation) {
+        this.dateOfCreation = dateOfCreation;
+    }
+
 }

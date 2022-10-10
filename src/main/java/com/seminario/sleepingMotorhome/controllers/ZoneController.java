@@ -20,9 +20,8 @@ public class ZoneController {
     private ZoneService zoneService;
 
 
-
     @GetMapping(path = "/all")
-    public String getAllServices (Model model){
+    public String getAll (Model model){
         model.addAttribute("tasks", zoneService.getAll());
         return "zone/all";
     }
