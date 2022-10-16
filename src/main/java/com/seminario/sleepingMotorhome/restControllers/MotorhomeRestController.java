@@ -17,7 +17,7 @@ public class MotorhomeRestController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(path = "/rest-all")
-    public @ResponseBody List<Motorhome> getAllEmployee(){
+    public @ResponseBody List<Motorhome> getAllMotorhome(){
         return motorhomeService.motorhomeListStatusActive();
     }
 

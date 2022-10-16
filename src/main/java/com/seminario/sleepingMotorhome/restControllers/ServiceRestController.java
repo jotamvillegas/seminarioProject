@@ -18,7 +18,7 @@ public class ServiceRestController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(path = "/rest-all")
     public @ResponseBody
-    List<Service> getAllZone(){
+    List<Service> getAllService(){
         return serviceService.serviceList();
     }
 

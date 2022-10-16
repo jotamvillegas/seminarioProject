@@ -24,8 +24,6 @@ public class Zone {
     @NotBlank(message = "Campo obligatorio!... Por favor, ingrese un nombre o identificador para la zona.")
     private String zoneName;
 
-    private String motorhomeType;
-
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss Z", timezone="UTC")
     private Date dateOfCreation;
 
@@ -34,6 +32,12 @@ public class Zone {
 
 
     // Relations
+
+    // un tipo de motorhome puede tener varias zonas (Small => [A, D], Medium => [B, E])
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "motorhome_type_id")
+    @JsonIgnoreProperties("zones")
+    private MotorhomeType motorhomeType;
 
     @JsonIgnore
     @ManyToMany
@@ -72,11 +76,19 @@ public class Zone {
         this.zoneName = zoneName;
     }
 
-    public String getMotorhomeType() {
+    /*public String getMotorhomeType() {
         return motorhomeType;
     }
 
     public void setMotorhomeType(String motorhomeType) {
+        this.motorhomeType = motorhomeType;
+    }*/
+
+    public MotorhomeType getMotorhomeType() {
+        return motorhomeType;
+    }
+
+    public void setMotorhomeType(MotorhomeType motorhomeType) {
         this.motorhomeType = motorhomeType;
     }
 

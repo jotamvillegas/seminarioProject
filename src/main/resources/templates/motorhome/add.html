@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
     <link rel="stylesheet" href="../../static/css/commons.css" th:href="@{/css/commons.css}"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <title>Motorhomes</title>
 </head>
 <body>
@@ -43,7 +44,7 @@
                 </div>
                 <div class="form-group col-sm-4" th:objetct="${motorhome_type}">
                     <label>Tipo de motorhome (*)</label>
-                    <select class="form-control" name="mhType">
+                    <select class="form-control" name="mhType" id="mhType">
                         <option value="">Selecciona una opción</option>
                         <option th:each="temp : ${motorhomeTypeList}"
                                 th:value="${temp.id}"
@@ -59,14 +60,14 @@
             <div class="row mb-3">
                 <div class="form-group col-sm-4" th:objetct="${garage}">
                     <label>Seleccionar Garage (*)</label>
-                    <select class="form-control" name="gara">
+                    <select class="form-control" name="gara" id="gara">
                         <option value="">Selecciona una opción</option>
-                        <option th:each="temp : ${garageFreeList}"
+                        <!--<option th:each="temp : ${garageFreeList}"
                                 th:value="${temp.id}"
-                                th:text="${temp.id}"
+                                th:text="${'Zone ' + temp.zone.zoneName + ' - '  + 'Garage ' + temp.id}"
                                 th:field="*{garage.id}"
                         >
-                        </option>
+                        </option>-->
                     </select>
                     <div class='alert-danger' th:if="${#fields.hasErrors('garage.id')}" th:errors="*{garage.id}"></div>
                 </div>
@@ -101,7 +102,28 @@
         </form>
     </div>
     <br><br>
+
     <div th:insert="generics/fragments::footer"></div>
 
+    <script th:inline="javascript">
+
+        $(document).ready(function() {
+            $("#mhType").change(function() {
+                sendAjaxRequest();
+            });
+        });
+
+        function sendAjaxRequest() {
+            var val = $("#mhType").val();
+            $.get( "http://localhost:8080/sleepingMotorhome/garage/rest-allFreeByZone/" + val, function( data ) {
+                $("#gara").empty();
+                data.forEach(function(item, i) {
+                    var option = "<option value = " + item.id + ">" + 'Garage ' + item.garageNumber +  "</option>";
+                    $("#gara").append(option);
+                });
+            });
+        };
+
+    </script>
 </body>
 </html>
