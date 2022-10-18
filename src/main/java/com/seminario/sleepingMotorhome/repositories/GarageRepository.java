@@ -28,8 +28,8 @@ public interface GarageRepository extends CrudRepository <Garage, Long> {
     @Query(value = "SELECT * FROM garage g, `zone` z WHERE g.zone_id = z.id AND g.garage_status = 0 AND z.motorhome_type_id = ?1", nativeQuery = true)
     List<Garage> getAllGarageByStatusFreeAndZone(Long zone);
 
-
-    @Query(value = "SELECT COUNT(*)  FROM garage g, `zone` z WHERE g.zone_id = z.id AND g.garage_status = 0 AND z.motorhome_type_id = ?1", nativeQuery = true)
-    int countGarages (Long motorhomeTypeId);
+    //
+    @Query(value = "SELECT g.garage_status FROM garage g WHERE g.id = ?1", nativeQuery = true)
+    boolean getGarageStatus (Long garageId);
 
 }

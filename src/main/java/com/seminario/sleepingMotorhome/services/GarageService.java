@@ -1,6 +1,7 @@
 package com.seminario.sleepingMotorhome.services;
 
 import com.seminario.sleepingMotorhome.models.Garage;
+import com.seminario.sleepingMotorhome.models.Task;
 import com.seminario.sleepingMotorhome.models.Zone;
 import com.seminario.sleepingMotorhome.repositories.GarageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class GarageService {
 
     @Autowired
     private GarageRepository garageRepository;
+    @Autowired
+    private TaskService taskService;
 
 
     public List<Garage> garageList (){
@@ -50,8 +53,14 @@ public class GarageService {
         garageRepository.save(g);
     }
 
-    public void deleteGarage (Long id){
-        garageRepository.deleteById(id);
+    public boolean deleteGarage (Long id){
+        boolean hasFree = garageRepository.getGarageStatus(id);
+        List<Task> hasTask = taskService.getTasksByGarage(id);
+        if (hasFree == false && hasTask.size() == 0){
+            garageRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
     public Garage getGarage (Long id){

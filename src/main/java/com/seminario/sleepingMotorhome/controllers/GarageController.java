@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -76,8 +77,14 @@ public class GarageController {
  */
 
     @GetMapping (path = "/delete/{id}")
-    public String delete (@PathVariable("id") Long id, Model model){
-        garageService.deleteGarage(id);
+    public String delete (@PathVariable("id") Long id, Model model, RedirectAttributes redirAttrs){
+        if (garageService.deleteGarage(id)){
+            redirAttrs. addFlashAttribute ( "success" , "Se eliminó correctamente el garage.") ;
+            return "redirect:/sleepingMotorhome/garage/all";
+        }
+        redirAttrs.addFlashAttribute ( "error" , "No se puede eliminar el garage porque se encuentra ocupado o tiene tareas pendientes. " +
+                "Por favor, libere el garage del motorhome o finalice las tareas y luego eliminelo.");
+        //garageService.deleteGarage(id);
         return "redirect:/sleepingMotorhome/garage/all";
     }
 
