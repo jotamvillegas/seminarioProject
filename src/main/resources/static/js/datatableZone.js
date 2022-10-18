@@ -13,7 +13,7 @@ $(document).ready( function () {
         columns: [
             {data: "id", className: "text-center"},
             {data: "zoneName", className: "text-center"},
-            {data: "motorhomeType", className: "text-center"},
+            {data: "motorhomeType.motorhomeType", className: "text-center"},
             {data: "garageAmount", className: "text-center"},
             {
                 data: null,

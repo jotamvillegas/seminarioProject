@@ -18,6 +18,10 @@
 
     <div class="container">
         <h2 class="font-weight-bold text-center py-3">Lista de zonas</h2>
+
+        <div class="alert alert-success" role="alert" th:text="${success}" th:if="${success}"></div>
+        <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+
         <div class="float-left">
             <a th:href="@{add}" class="btn btn-primary btn-sm mx-1 navbar-btn" role="button" data-bs-toggle="button">Crear zona</a>
             <a th:href="@{/sleepingMotorhome/home}" class="btn btn-secondary btn-sm mx-1" role="button" data-bs-toggle="button">Ir a Home</a>

@@ -29,6 +29,12 @@ public class MotorhomeType {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Set<Motorhome> motorhome;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "motorhomeType", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("motorhomeType")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Set<Zone> zones;
+
     // constructors
     public MotorhomeType() {
         super();
@@ -58,5 +64,13 @@ public class MotorhomeType {
 
     public void setMotorhome(Set<Motorhome> motorhome) {
         this.motorhome = motorhome;
+    }
+
+    public Set<Zone> getZones() {
+        return zones;
+    }
+
+    public void setZones(Set<Zone> zones) {
+        this.zones = zones;
     }
 }

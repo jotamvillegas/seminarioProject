@@ -24,7 +24,8 @@ new Chart( ctxBar, {
         datasets: [{
             data: yValuesBar,
             fill: true,
-            backgroundColor: [
+            backgroundColor: 'rgba(185, 239, 108, 2)'
+                /*[
                 'rgba(255, 87, 51, 2)',
                 'rgba(255, 26, 104, 2)',
                 'rgba(54, 162, 235, 2)',
@@ -37,7 +38,7 @@ new Chart( ctxBar, {
                 'rgba(247, 28, 28, 2)',
                 'rgba(53, 115, 247, 2)',
                 'rgba(250, 177, 83, 2)'
-            ]
+            ]*/
         }]
     },
     options: {

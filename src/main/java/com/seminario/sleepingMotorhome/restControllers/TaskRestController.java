@@ -17,7 +17,7 @@ public class TaskRestController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping(path = "/rest-all")
-    public @ResponseBody List<Task> getAllEmployee(){
+    public @ResponseBody List<Task> getAllTask(){
         return taskService.getAll();
     }
 

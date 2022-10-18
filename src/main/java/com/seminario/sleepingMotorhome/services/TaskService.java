@@ -63,5 +63,8 @@ public class TaskService {
         return taskRepository.findAllByEmployees(employee);
     }
 
+    public List<Task> getTasksByGarage (Long garageId){
+        return taskRepository.getListTaskByGarage(garageId);
+    }
 
 }

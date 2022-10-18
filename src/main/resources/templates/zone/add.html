@@ -23,16 +23,26 @@
         <div class="row mb-3">
             <div class="form-group col-sm-4">
                 <label>Nombre o identificador de Zona (*)</label>
-                <input class="form-control" type="text" th:field="*{zoneName}" placeholder="A, B, C,...">
+                <input class="form-control" type="text" th:field="*{zoneName}" placeholder="A, B, C,..." required>
                 <div class="alert-danger" th:if="${#fields.hasErrors('zoneName')}" th:errors="*{zoneName}"></div>
             </div>
             <div class="form-group col-sm-4">
-                <label>Tipo de motorhome para la zona</label>
-                <input class="form-control" type="text" th:field="*{motorhomeType}" placeholder="Small, Medium, Large,...">
+                <label>Tipo de motorhome para la zona (*)</label>
+                <!--<input class="form-control" type="text" th:field="*{motorhomeType}" placeholder="Small, Medium, Large,...">-->
+                <select class="form-control" name="mhType" id="mhType" required>
+                    <option value="">Selecciona una opción</option>
+                    <option th:each="temp : ${motorhomeTypeList}"
+                            th:value="${temp.id}"
+                            th:text="${temp.motorhomeType}"
+                            th:field="*{motorhomeType}"
+                    >
+                    </option>
+                </select>
+                <div class='alert-danger' th:if="${#fields.hasErrors('motorhomeType')}" th:errors="*{motorhomeType}"></div>
             </div>
             <div class="form-group col-sm-4">
                 <label>Cantidad de garage por zona (*)</label>
-                <input class="form-control" type="text" th:field="*{garageAmount}" placeholder="20, 30,...">
+                <input class="form-control" type="text" th:field="*{garageAmount}" placeholder="20, 30,..." required>
                 <div class="alert-danger" th:if="${#fields.hasErrors('garageAmount')}" th:errors="*{garageAmount}"></div>
             </div>
         </div>

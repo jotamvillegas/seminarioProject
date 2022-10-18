@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,8 +41,10 @@ public class MotorhomeController {
 
     @GetMapping(path = "/add")
     public String addMotorhome(Motorhome motorhome, Garage garage, Person person, Model model){
+        List<MotorhomeType> motorhomeList = motorhomeTypeService.motorhomeTypeList();
+        //List<Garage> garageList = garageService.garageFreeList();
         model.addAttribute("motorhomeTypeList", motorhomeTypeService.motorhomeTypeList());
-        model.addAttribute("garageFreeList", garageService.garageFreeList());
+        //model.addAttribute("garageFreeList", garageService.garageFreeList());
         model.addAttribute("userList", userService.getAll());
         return "motorhome/add";
     }
