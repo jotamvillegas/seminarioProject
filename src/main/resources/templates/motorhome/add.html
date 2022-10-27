@@ -56,31 +56,16 @@
                     <div class='alert-danger' th:if="${#fields.hasErrors('motorhomeType')}" th:errors="*{motorhomeType}"></div>
                 </div>
             </div>
-
             <div class="row mb-3">
-                <div class="form-group col-sm-4" th:objetct="${garage}">
+
+                <div class="form-group col-sm-4">
                     <label>Seleccionar Garage (*)</label>
                     <select class="form-control" name="gara" id="gara">
                         <option value="">Selecciona una opción</option>
-                        <!--<option th:each="temp : ${garageFreeList}"
-                                th:value="${temp.id}"
-                                th:text="${'Zone ' + temp.zone.zoneName + ' - '  + 'Garage ' + temp.id}"
-                                th:field="*{garage.id}"
-                        >
-                        </option>-->
                     </select>
                     <div class='alert-danger' th:if="${#fields.hasErrors('garage.id')}" th:errors="*{garage.id}"></div>
                 </div>
-                <div class="form-group col-sm-4">
-                    <label>Largo de motorhome</label>
-                    <input class="form-control" type="text" th:field="*{lengthMotorhome}">
-                </div>
-                <div class="form-group col-sm-4">
-                    <label>Ancho de motorhome</label>
-                    <input class="form-control" type="text" th:field="*{widthMotorhome}">
-                </div>
-            </div>
-            <div class="row mb-3">
+
                 <div class="form-group col-sm-4">
                     <label>Fecha de ingreso (*)</label>
                     <input class="form-control" type="date" th:field="*{dateOfAdmission}"/>
@@ -91,7 +76,22 @@
                     <input class="form-control" type="text" th:field="*{rentalDays}">
                     <div class="alert-danger" th:if="${#fields.hasErrors('rentalDays')}" th:errors="*{rentalDays}"></div>
                 </div>
-                <div class="form-group col-sm-4"></div>
+            </div>
+            <div class="row mb-3">
+                <div class="form-group col-sm-4">
+                    <label>Primer pago (*)</label>
+                    <input class="form-control" type="text" name="payment" th:field="*{payment}" pattern="(^[0-9]*$|^[0-9]*\.[0-9]*$)"
+                           title="Ej: 5000, 3000 ..." required>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label>Segundo pago</label>
+                    <input class="form-control" type="text" name="balance" th:field="*{balance}" pattern="(^[0-9]*$|^[0-9]*\.[0-9]*$)"
+                           title="Ej: 5000, 3000 ...">
+                </div>
+                <div class="form-group col-sm-4">
+                    <label>Precio de estadía</label>
+                    <input class="form-control" type="text" name="total" id="priceTotal" th:field="*{total}" readonly>
+                </div>
             </div>
 
             <div>
@@ -108,12 +108,28 @@
     <script th:inline="javascript">
 
         $(document).ready(function() {
+
+            getGarageSetInDB();
+
             $("#mhType").change(function() {
-                sendAjaxRequest();
+                getGarageFreeByZone();
+                getPrices();
             });
+
         });
 
-        function sendAjaxRequest() {
+        function getGarageSetInDB() {
+            var location = window.location.href;
+            var id = location.substr(55, location.length);
+            $.get("http://localhost:8080/sleepingMotorhome/motorhome/rest-edit/" + id, function( data ) {
+                $("#gara").empty();
+                console.log('id: ' + data.garage.id + ' - gNumber: ' + data.garage.garageNumber);
+                var option = "<option value = " + data.garage.id + ">" + 'Garage ' + data.garage.garageNumber +  "</option>";
+                $("#gara").append(option);
+            });
+        }
+
+        function getGarageFreeByZone() {
             var val = $("#mhType").val();
             $.get( "http://localhost:8080/sleepingMotorhome/garage/rest-allFreeByZone/" + val, function( data ) {
                 $("#gara").empty();
@@ -122,7 +138,15 @@
                     $("#gara").append(option);
                 });
             });
-        };
+        }
+
+        function getPrices() {
+            var val = $("#mhType").val();
+            $.get( "http://localhost:8080/sleepingMotorhome/price/rest-priceById/" + val, function( data ) {
+                $("#priceTotal").empty();
+                document.getElementById('priceTotal').value = data.amount;
+            });
+        }
 
     </script>
 </body>

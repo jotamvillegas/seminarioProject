@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -28,8 +29,6 @@ public class MotorhomeController {
     @Autowired
     private GarageService garageService;
     @Autowired
-    private ZoneService zoneService;
-    @Autowired
     private UserService userService;
 
 
@@ -41,10 +40,7 @@ public class MotorhomeController {
 
     @GetMapping(path = "/add")
     public String addMotorhome(Motorhome motorhome, Garage garage, Person person, Model model){
-        List<MotorhomeType> motorhomeList = motorhomeTypeService.motorhomeTypeList();
-        //List<Garage> garageList = garageService.garageFreeList();
         model.addAttribute("motorhomeTypeList", motorhomeTypeService.motorhomeTypeList());
-        //model.addAttribute("garageFreeList", garageService.garageFreeList());
         model.addAttribute("userList", userService.getAll());
         return "motorhome/add";
     }
@@ -54,9 +50,9 @@ public class MotorhomeController {
                                  @RequestParam (value = "mhType") MotorhomeType motorhomeType,
                                  @RequestParam (value = "gara") Garage garage,
                                  @RequestParam (value = "user") Person person,
+                                 String payment, String balance, String total,
                                  Errors errors, Model model){
-
-        motorhomeService.save(motorhome, zone, motorhomeType, garage, person);
+        motorhomeService.save(motorhome, zone, motorhomeType, garage, person, payment, balance, total);
         return "redirect:/sleepingMotorhome/motorhome/all";
     }
 
@@ -67,11 +63,9 @@ public class MotorhomeController {
         model.addAttribute("motorhomeTypeList", motorhomeTypeService.motorhomeTypeList());
         model.addAttribute("userList", userService.getAll());
 
-        List<Garage> garageList = garageService.garageFreeList();
         Long value = motorhomeToEdit.getGarage().getId();
         Garage garageToEdit = garageService.getGarage(value);
-        garageList.add(garageToEdit);
-        model.addAttribute("garageFreeList", garageList);
+        model.addAttribute("gara", garageToEdit);
 
         model.addAttribute("editMode","true");
         return "motorhome/add";
@@ -88,12 +82,24 @@ public class MotorhomeController {
     }
 
     @GetMapping (path = "/finalize/{id}")
-    public String finalizeMotorhome (@PathVariable ("id") Long id, Model model){
-        Garage garageOld = garageService.getGarage(motorhomeService.getMotorhomeById(id).getGarage().getId());
-        garageOld.setDateOfEgress(new Date());
-        garageOld.setGarageStatus(false);
-        garageService.saveGarage(garageOld);
-        motorhomeService.finalizeMotorhome(id);
+    public String finalizeMotorhome (@PathVariable ("id") Long id, Model model, RedirectAttributes redirAttrs){
+        Motorhome m = motorhomeService.getMotorhomeById(id);
+
+        if (m.getBalance() != null) {
+            if (m.getTotal() == m.getPayment() + m.getBalance()) {
+                Garage garageOld = garageService.getGarage(motorhomeService.getMotorhomeById(id).getGarage().getId());
+                garageOld.setDateOfEgress(new Date());
+                garageOld.setGarageStatus(false);
+                garageService.saveGarage(garageOld);
+                motorhomeService.finalizeMotorhome(id);
+                redirAttrs.addFlashAttribute("success", "El proceso de estadía finalizó correctamente");
+                return "redirect:/sleepingMotorhome/motorhome/all";
+            }
+        }
+
+
+        redirAttrs. addFlashAttribute ( "error" , "No se puede finalizar el proceso hasta que el usuario " +
+                "cancele por completo su estadía");
         return "redirect:/sleepingMotorhome/motorhome/all";
     }
 
