@@ -19,6 +19,10 @@
 
     <div class="container">
         <h2 class="font-weight-bold text-center py-3">Datos de Vehículos con estadío activo</h2>
+
+        <div class="alert alert-success" role="alert" th:text="${success}" th:if="${success}"></div>
+        <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+
         <div  class="float-left">
             <a th:href="@{add}" class="btn btn-primary btn-sm mx-1 navbar-btn" role="button" data-bs-toggle="button">Crear Motorhome</a>
             <a th:href="@{/sleepingMotorhome/home}" class="btn btn-secondary btn-sm mx-1" role="button" data-bs-toggle="button">Ir a Home</a>
@@ -32,8 +36,8 @@
             <tr>
                 <th style="text-align: center">Dueño</th>
                 <th style="text-align: center">Patente</th>
-                <th style="text-align: center">Largo</th>
-                <th style="text-align: center">Ancho</th>
+                <!--<th style="text-align: center">Largo</th>
+                <th style="text-align: center">Ancho</th>-->
                 <th style="text-align: center">Tipo</th>
                 <th style="text-align: center">Garage</th>
                 <th style="text-align: center">Zona</th>

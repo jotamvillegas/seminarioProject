@@ -5,7 +5,7 @@ $(document).ready( function () {
 
     // Loading table
     tableData = $('#motorhomeTable').DataTable({
-        order: [ [8, 'desc'] ],
+        order: [ [6, 'desc'] ],
         ajax: {
             url: "rest-all",
             dataSrc: ''
@@ -19,7 +19,7 @@ $(document).ready( function () {
                 }
             },
             {data: "enrollment", className: "text-center"},
-            {
+            /*{
                 data: "lengthMotorhome",
                 className: "text-center",
                 render: function (data, type){
@@ -32,7 +32,7 @@ $(document).ready( function () {
                 render: function (data, type){
                     return type === 'display' && data === 0 ? "" : data + ' mts';
                 }
-            },
+            },*/
             {data: "motorhomeType.motorhomeType", className: "text-center"},
             {data: "garage.garageNumber", className: "text-center"},
             {data: "garage.zone.zoneName", className: "text-center"},

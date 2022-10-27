@@ -23,6 +23,8 @@ public class MotorhomeService {
     private ZoneService zoneService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private PriceService priceService;
 
     public List<Motorhome> getAll() {
         return (List<Motorhome>) motorhomeRepository.findAll();
@@ -32,8 +34,10 @@ public class MotorhomeService {
         return motorhomeRepository.motorhomesListActived(1);
     }
 
-    public void save(Motorhome motorhome, Zone zone, MotorhomeType motorhomeType, Garage garage, Person person){
-        motorhomeRepository.save(createMotorhome(motorhome, zone, motorhomeType, garage, person));
+    public void save(Motorhome motorhome, Zone zone, MotorhomeType motorhomeType, Garage garage, Person person,
+                     String payment, String balance, String total){
+        Motorhome m = createMotorhome(motorhome, zone, motorhomeType, garage, person, payment, balance, total);
+        motorhomeRepository.save(m);
     }
 
     public void deleteMotorhome (Long id){
@@ -79,22 +83,25 @@ public class MotorhomeService {
         return motorhomeListOnlyId;
     }
 
-    private Motorhome createMotorhome (Motorhome motorhome, Zone zone, MotorhomeType motorhomeType, Garage garage, Person person){
+    private Motorhome createMotorhome (Motorhome motorhome, Zone zone, MotorhomeType motorhomeType, Garage garage,
+                                       Person person, String payment, String balance, String total){
         Motorhome newMotorhome = null;
         List<Long> garageFreeList = garageService.garageFreeListOnlyId();
 
         if (motorhome.getId() == null){
-            // si el id motorhome en nuevo setea el new garage en ocupado
+            // si el id motorhome es nuevo setea el new garage en ocupado
             if (garageFreeList.contains(garage.getId())) {
                 if (zoneService.existZone(motorhomeType.getId())){
                     garage.setZone(zoneService.getZone(motorhomeType.getId()));
                 }
                 garage.setDateOfAdmission(new Date());
-                garage.setGarageNumber(garage.getId().intValue());
+                garage.setGarageNumber(garage.getGarageNumber());
                 garage.setGarageStatus(true);
                 garageService.saveGarage(garage);
             }
             newMotorhome = new Motorhome();
+            int totalToSave = motorhome.getRentalDays() * Integer.parseInt(total);
+            newMotorhome.setTotal((double) totalToSave);
 
         } else {
             newMotorhome = getMotorhomeById(motorhome.getId());
@@ -108,9 +115,19 @@ public class MotorhomeService {
             if (zoneService.existZone(motorhomeType.getId())){
                 garage.setZone(zoneService.getZone(motorhomeType.getId()));
             }
-            garage.setGarageNumber(garage.getId().intValue());
+            garage.setGarageNumber(garage.getGarageNumber());
             garage.setGarageStatus(true);
             garageService.saveGarage(garage);
+
+
+            if (newMotorhome.getRentalDays() != motorhome.getRentalDays()){
+                Price priceDefault = priceService.getPrice(motorhomeType.getId());
+                String cast = String.valueOf(priceDefault.getAmount());
+                int totalToSave = motorhome.getRentalDays() * Integer.parseInt(cast.substring(0, cast.length() -2));
+                newMotorhome.setTotal((double) totalToSave);
+            }
+            if (!balance.isEmpty()) newMotorhome.setBalance(Double.parseDouble(balance));
+            else newMotorhome.setBalance(null);
 
         }
 
@@ -124,6 +141,7 @@ public class MotorhomeService {
         newMotorhome.setDateOfEgress(null);
         newMotorhome.setRentalDays(motorhome.getRentalDays());
         newMotorhome.setIsActive(1);
+        newMotorhome.setPayment(Double.parseDouble(payment));
 
         return newMotorhome;
     }

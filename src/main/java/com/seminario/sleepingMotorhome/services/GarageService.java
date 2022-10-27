@@ -35,7 +35,7 @@ public class GarageService {
             Garage g = new Garage();
             String val = garageRepository.getMaxValueGarageNumber(zone.getId());
             if (val == null) val = "0";
-            g.setGarageNumber(Integer.valueOf(val) + 1);
+            //g.setGarageNumber(Integer.valueOf(val) + 1);
             g.setGarageStatus(false);
             g.setZone(zone);
             g.setDateOfCreation(new Date());

@@ -16,47 +16,49 @@ public class Motorhome {
     private Long id;
 
     @Column
-    //@NotEmpty(message = "Campo obligatorio!...Por favor, ingrese la patente del vehículo.")
     private String enrollment;
 
     @Column
-    private double widthMotorhome;
+    private Double widthMotorhome;
 
     @Column
-    private double lengthMotorhome;
+    private Double lengthMotorhome;
 
-    //@NotNull(message = "Campo obligatorio!...Por favor, ingrese una fecha.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateOfAdmission;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateOfEgress;
 
-    //@NotNull(message = "Campo obligatorio!...Por favor, ingrese los dias de alquiler.")
     @Column
     private Integer rentalDays;
 
     @Column
     private Integer isActive;
 
+    @Column
+    private Double payment;
+
+    @Column
+    private Double balance;
+
+    @Column
+    private Double total;
+
     // relations
 
-    //@NotNull(message = "Campo obligatorio!...Por favor, seleccionar el tipo de vehículo.")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "motorhome_type_id")
     @JsonIgnoreProperties("motorhome")
     private MotorhomeType motorhomeType;
 
-    //@NotNull(message = "Campo obligatorio!...Por favor, seleccionar al dueño del vehículo.")
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    //@NotNull(message = "Campo obligatorio!...Por favor, seleccionar el garage para el vehículo.")
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "garage_id", referencedColumnName = "id")
+    @JoinColumn(name = "garage_id")//, referencedColumnName = "id")
     private Garage garage;
-
 
     // constructors
 
@@ -84,19 +86,19 @@ public class Motorhome {
         this.enrollment = enrollment;
     }
 
-    public double getWidthMotorhome() {
+    public Double getWidthMotorhome() {
         return widthMotorhome;
     }
 
-    public void setWidthMotorhome(double widthMotorhome) {
+    public void setWidthMotorhome(Double widthMotorhome) {
         this.widthMotorhome = widthMotorhome;
     }
 
-    public double getLengthMotorhome() {
+    public Double getLengthMotorhome() {
         return lengthMotorhome;
     }
 
-    public void setLengthMotorhome(double lengthMotorhome) {
+    public void setLengthMotorhome(Double lengthMotorhome) {
         this.lengthMotorhome = lengthMotorhome;
     }
 
@@ -154,5 +156,29 @@ public class Motorhome {
 
     public void setIsActive(Integer isActive) {
         this.isActive = isActive;
+    }
+
+    public Double getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Double payment) {
+        this.payment = payment;
+    }
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
     }
 }

@@ -29,5 +29,12 @@ public class GarageRestController {
         return garageService.getGaragesByStatusFreeAndZone(id);
     }
 
+    @GetMapping(path = "/rest-getGarage/{id}")
+    public @ResponseBody
+    Garage getGarage(@PathVariable("id") Long id){
+        return garageService.getGarage(id);
+    }
+
+
 
 }
