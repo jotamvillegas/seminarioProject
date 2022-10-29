@@ -96,8 +96,6 @@ public class MotorhomeController {
                 return "redirect:/sleepingMotorhome/motorhome/all";
             }
         }
-
-
         redirAttrs. addFlashAttribute ( "error" , "No se puede finalizar el proceso hasta que el usuario " +
                 "cancele por completo su estadía");
         return "redirect:/sleepingMotorhome/motorhome/all";

@@ -56,9 +56,13 @@ public class EmployeeService {
         employeeRepository.save(e);
     }
 
-    public void delete(Long employeeId){
-        Employee employee = employeeRepository.findById(employeeId).orElse(null);
-        employeeRepository.delete(employee);
+    public boolean delete(Long employeeId){
+        if (employeeRepository.getCantTaskByEmployee(employeeId) == 0) {
+            Employee employee = employeeRepository.findById(employeeId).orElse(null);
+            employeeRepository.delete(employee);
+            return true;
+        }
+        return false;
     }
 
     public Employee getEmployeeById(Long id){

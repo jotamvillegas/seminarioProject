@@ -5,7 +5,7 @@ $(document).ready( function () {
 
     // Loading table
     tableData = $('#taskTable').DataTable({
-        order: [ [4, 'desc'] ],
+        order: [ [5, 'desc'] ],
         ajax: {
             url: "rest-all",
             dataSrc: ''
@@ -33,6 +33,13 @@ $(document).ready( function () {
                 className: "text-center",
                 render: function (data){
                     return data.substring(0, 10);
+                }
+            },
+            {
+                data: "isActive",
+                className: "text-center",
+                render: function (data){
+                    return data === 1 ? "En progreso" : 'Terminada';
                 }
             },
             {

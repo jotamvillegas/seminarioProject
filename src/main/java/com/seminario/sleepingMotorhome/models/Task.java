@@ -16,7 +16,8 @@ public class Task {
     @GeneratedValue
     private Long id;
 
-    private String description;
+    @Column
+    private Integer isActive;
 
     private Integer amountHoursWeekly;
 
@@ -62,14 +63,6 @@ public class Task {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Integer getAmountHoursWeekly() {
@@ -126,5 +119,13 @@ public class Task {
 
     public void setEmployees(Set<Employee> employees) {
         this.employees = employees;
+    }
+
+    public Integer getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Integer isActive) {
+        this.isActive = isActive;
     }
 }

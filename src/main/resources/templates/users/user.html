@@ -18,7 +18,8 @@
         <a th:href="@{/sleepingMotorhome/home}" class="btn btn-secondary btn-sm mx-1" role="button" data-bs-toggle="button">Regresar</a>
         <br><hr>
 
-        <p>Nota: Sr. cliente recuerde que los campos deshabilitados solo pueden ser modificados por un administrador.</p>
+        <p class="alert alert-primary">Sr. cliente, <br> recuerde que los campos deshabilitados solo pueden ser modificados por un
+            administrador. Por favor, contáctese con administración.</p>
 
         <form th:action="@{/sleepingMotorhome/user/save}" method="POST" th:object="${user}">
 
@@ -75,6 +76,8 @@
                 </div>
             </div>
         </form>
+
+        <hr>
         <br>
 
         <h2 class="font-weight-bold text-center py-3">Motorhomes del usuario</h2>
@@ -83,25 +86,25 @@
             <thead>
                 <tr>
                     <th>Patente</th>
+                    <th>Tipo</th>
                     <th>Largo</th>
                     <th>Ancho</th>
                     <th>Zona</th>
                     <th>Garage</th>
-                    <th>Tipo</th>
-                    <th>Estadia</th>
                     <th>Ingreso</th>
+                    <th>Estadia</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="temp : ${mothomes}">
                     <td th:text="${temp.enrollment}"></td>
-                    <td th:text="${temp.lengthMotorhome + ' mtrs'}"></td>
-                    <td th:text="${temp.widthMotorhome + ' mtrs'}"></td>
+                    <td th:text="${temp.motorhomeType.motorhomeType}"></td>
+                    <td th:text="${(temp.lengthMotorhome == null || temp.lengthMotorhome == 0.0) ? '-' : temp.lengthMotorhome + ' mtrs'}"></td>
+                    <td th:text="${(temp.widthMotorhome == null || temp.lengthMotorhome == 0.0) ? '-' : temp.widthMotorhome + ' mtrs'}"></td>
                     <td th:text="${temp.garage.zone.getZoneName()}"></td>
                     <td th:text="${temp.garage.getGarageNumber()}"></td>
-                    <td th:text="${temp.motorhomeType.motorhomeType}"></td>
-                    <td th:text="${temp.rentalDays + ' días'}"></td>
                     <td th:text="${#strings.substring(temp.dateOfAdmission,0,10)}"></td>
+                    <td th:text="${temp.rentalDays + ' días'}"></td>
                 </tr>
             </tbody>
         </table>
