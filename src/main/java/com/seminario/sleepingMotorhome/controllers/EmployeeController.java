@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -31,10 +32,10 @@ public class EmployeeController {
     @GetMapping(path = "/data")
     public String employeeData (Authentication auth, Model model){
         Employee personToEdit = employeeService.getEmployeeByUserName(auth.getName());
-        // TODO: 27/8/2022 return list servicios por empleado con su respectivo garage
-        List<Task> taskList = taskService.getServiceByEmployee (personToEdit);
+        //List<Task> taskList = taskService.getServiceByEmployee (personToEdit);
+        List<Task> activeTaskList = taskService.getListTaskByEmployee (personToEdit.getId());
         model.addAttribute("employee", personToEdit);
-        model.addAttribute("tasks", taskList);
+        model.addAttribute("tasks", activeTaskList);
         model.addAttribute("editMode","true");
         return "employees/employee";
     }
@@ -80,10 +81,30 @@ public class EmployeeController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping (path = "/delete/{id}")
-    public String deleteEmployee (@PathVariable("id") Long id, Model model){
-        employeeService.delete(id);
+    public String deleteEmployee (@PathVariable("id") Long id, Model model, RedirectAttributes redirAttrs){
+        if (employeeService.delete(id)){
+            redirAttrs.addFlashAttribute("success", "Se eliminó el empleado correctamente.");
+            return "redirect:/sleepingMotorhome/employee/all";
+        }
+        redirAttrs. addFlashAttribute ( "error" , "No se puede eliminar un empleado por tener tareas activas. " +
+                "Por favor, finalice las tareas asignadas y luego elimine el empleado.");
         return "redirect:/sleepingMotorhome/employee/all";
     }
 
+    @PreAuthorize("hasAuthority('EMPLOYEE')")
+    @GetMapping (path = "/finalize/{id}")
+    public String finalizeTask (@PathVariable ("id") Long id, Model model, RedirectAttributes redirAttrs){
+
+        Task m = taskService.getTaskById(id);
+        if (m.getIsActive() == 1) {
+            taskService.finalizeTask(id);
+            redirAttrs.addFlashAttribute("success", "El proceso finalizó correctamente");
+            return "redirect:/sleepingMotorhome/employee/data";
+
+        }
+        redirAttrs. addFlashAttribute ( "error" , "No se puede finalizar el proceso hasta que el empleado " +
+                "finalice su tarea");
+        return "redirect:/sleepingMotorhome/employee/data";
+    }
 
 }

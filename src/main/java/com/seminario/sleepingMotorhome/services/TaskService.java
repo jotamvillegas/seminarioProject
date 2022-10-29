@@ -31,6 +31,7 @@ public class TaskService {
         if (task.getId() == null) {
             t = new Task();
             t.setDateOfAdmission(new Date());
+            t.setIsActive(1);
         }
         else {
             t = getTaskById(task.getId());
@@ -38,7 +39,6 @@ public class TaskService {
 
         t.setAmountHoursWeekly(task.getAmountHoursWeekly());
         t.setDateOfEgress(null);
-        t.setDescription(null);
         t.setGarage(garage);
         t.setServiceType(serviceType);
         t.setService(service);
@@ -63,8 +63,17 @@ public class TaskService {
         return taskRepository.findAllByEmployees(employee);
     }
 
+    public List<Task> getListTaskByEmployee (Long employeeId){
+        return taskRepository.getListTaskByEmployeeId(employeeId);
+    }
+
     public List<Task> getTasksByGarage (Long garageId){
         return taskRepository.getListTaskByGarage(garageId);
     }
 
+    public void finalizeTask (Long id) {
+        Task t = getTaskById(id);
+        t.setIsActive(0);
+        taskRepository.save(t);
+    }
 }

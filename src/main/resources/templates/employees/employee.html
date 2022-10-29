@@ -15,8 +15,14 @@
         <br>
         <h2 class="font-weight-bold text-center py-3">Datos personales del empleado</h2>
 
+        <div class="alert alert-success" role="alert" th:text="${success}" th:if="${success}"></div>
+        <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+
         <a th:href="@{/sleepingMotorhome/home}" class="btn btn-secondary btn-sm mx-1" role="button" data-bs-toggle="button">Regresar</a>
         <br><hr>
+
+        <p class="alert alert-primary">Recuerde que los campos deshabilitados solo pueden ser modificados por un
+            administrador.</p>
 
         <form th:action="@{/sleepingMotorhome/employee/save}" method="POST" th:object="${employee}">
 
@@ -74,19 +80,20 @@
             </div>
 
         </form>
+        <hr>
         <br>
 
         <h2 class="font-weight-bold text-center py-3">Tareas del empleado</h2>
 
-        <table class="table table-hover text-center">
-            <thead>
+        <table class="table table-hover text-center table-bordered">
+            <thead class="thead-light">
             <tr>
                 <th>Servicio</th>
                 <th>Tipo de servicio</th>
                 <th>Número de garage</th>
                 <th>Horas por semana</th>
                 <th>Fecha de incio</th>
-                <th>Fecha de final</th>
+                <th>Acciones</th>
             </tr>
             </thead>
             <tbody>
@@ -95,8 +102,11 @@
                 <td th:text="${task.serviceType.description}"></td>
                 <td th:text="${task.garage.garageNumber}"></td>
                 <td th:text="${task.amountHoursWeekly}"></td>
-                <td th:text="${task.dateOfAdmission}"></td>
-                <td th:text="${task.dateOfEgress}"></td>
+                <td th:text="${#strings.substring(task.dateOfAdmission, 0, 10)}"></td>
+                <td>
+                    <a th:href="@{finalize/{id} (id = ${task.id})}" class="btn-delete btn btn-info btn-sm mx-1"
+                       style="color:white" role="button" data-bs-toggle="button">Finalizar tarea</a>
+                </td>
             </tr>
             </tbody>
         </table>
