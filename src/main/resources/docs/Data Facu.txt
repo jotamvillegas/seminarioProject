@@ -1,0 +1,156 @@
+
+***********************************************************
+REQUERIMIENTOS PROYECTO FINAL ESTACIONAMIENTO DE MOTORHOMES
+***********************************************************
+
+El sistema de gestión para el estacionamiento tiene como punto principal los tipos de motorhome, también estará referida a sus instalaciones, empleados y clientes.
+
+********** REQUERIMIENTOS PARA LOS MOTORHOMES ************
+1. Los motorhomes estarán definidos por:
+	- Matricula del motorhome.
+	- Tipo de motorhome (clase A, B, C y D).
+	- Dimensiones del motorhome (ancho, largo).
+2. Tener en cuenta que, un motorhome pertenece a un cliente, aunque un cliente puede tener varios motorhomes. 
+
+********** REQUERIMIENTOS PARA LAS ZONAS ************
+3. La guarderia estará dividida en varias zonas definidas por:
+	- Una letra para cada zona (A,B,C,D).
+	- El tipo de motorhome que tiene.
+	- El número de motorhomes que contiene.
+	- La profundidad de los garage.
+	- El ancho de los garage.
+
+	Ej:
+	- Zona A, cuenta con 20 estacionamientos cerrados para el tipo 'CLASE A'
+	- Zona B, cuenta con 15 estacionamientos cerrados para el tipo 'CLASE B'
+	- Zona C, cuenta con 10 estacionamientos cerrados para el tipo 'CLASE C'
+
+4. Una zona tendrá varios garages y un garage pertenecerá a una sola zona.
+5. Los garages tendrán como datos:
+	- Número de garage.
+	- Si tienen servicios de mantenimiento contratados (limpieza, lavado).
+6. Cada garage estará ocupado por un solo motorhome. 
+7. Es importante:
+	- La fecha de asignación de un motorhome a un garage.
+	- La fecha de finalización de un motorhome a un garage.
+
+********** REQUERIMIENTOS PARA LAS PERSONAS ************
+8. Los clientes estarán definidos por:
+	- Nombre completo.
+	- Número de documento (DNI).
+	- Dirección completa.
+	- Teléfono o celular de contacto.
+	- Fecha de ingreso a la guardería. 	(mostrar solo para clientes)
+9. Los empleados estarán definidos por:
+	- Nombre completo.
+	- Número de documento (DNI).
+	- Dirección completa.
+	- Teléfono o celular de contacto.
+	- Fecha de ingreso a la guardería. 	(mostrar solo para admin)
+	- Especialidad.				(mostrar solo para admin)
+10. Un empleado está asignado a varias zonas y en una zona puede haber más de un empleado. 
+11. Los usuarios podrán acceder al sistema mediante 3 tipos de usuarios:
+	- Administradores: Pueden administrar todo.
+	- Empleados: Solo podrán consultar al sistema.
+	- clientes: Solo podrán consultar al sistema.
+
+
+***************************************************************************************************************************************************
+								REQUERIMIENTOS VERSION 2
+***************************************************************************************************************************************************
+
+PROYECTO FINAL SEMINARIO
+“SLEEPING-MOTORHOME”
+
+
+
+OBJETIVO:
+
+Realizar un sistemas de gestión (WEB) para motorhomes como punto principal, el estacionamiento y/o guarderia de los distintos tipos y 
+también estará referida a sus instalaciones, empleados y clientes.
+
+A continuación se detallan los requerimientos: 
+
+PARA LA PAGINA WEB:
+
+1. En nombre del sistema de gestión será SLEEPING-MOTORHOME. Tendrá como detalles fundamentales:
+
+    • Logo: Que diferencie a los demás estacionamientos.
+    • Colores: Debe contemplar colores pasteles de tonalidad AZUL.
+    • Header: Incluyendo logo y barra de navegación para las distintas secciones.
+    • Footer: Alusivo al sistema, con teléfonos y mail de contacto.
+
+PARA LOS MOTORHOMES:
+
+2. Los motorhomes estarán definidos por:
+    • Matricula del motorhome.
+    • Tipo de motorhome (clase A, B, C y D).
+    • Dimensiones del motorhome (ancho, largo).		
+
+3. Tener en cuenta que, un motorhome pertenece aun cliente, aunque un cliente puede tener varios motorhomes.
+
+PARA LAS ZONAS:
+
+4. La guarderia estará dividida en varias zonas definidas por:
+    • Una letra para cada zona (A,B,C,D).
+    • El tipo de motorhome que tiene.
+    • El número de motorhomes que contiene.
+    • La profundidad de los garage.
+    • El ancho de los garage.
+
+	Ej:
+	- Zona A, cuenta con 20 estacionamientos cerrados para el tipo 'CLASE A'
+	- Zona B, cuenta con 15 estacionamientos cerrados para el tipo 'CLASE B'
+	- Zona C, cuenta con 10 estacionamientos cerrados para el tipo 'CLASE C'
+
+5. Una zona tendrá varios garages y un garage pertenecerá a una sola zona.
+
+6. Cada garage estará ocupado por un solo motorhome.
+
+7. Los garages tendrán como datos:
+    • Número de garage.
+    • Si tienen servicios de mantenimiento contratados (limpieza, lavado).
+
+8. Es importante:
+    • La fecha de asignación de un motorhome a un garage.
+    • La fecha de finalización de un motorhome a un garage.	
+
+PARA LAS PERSONAS:
+
+9. Los clientes estarán definidos por:
+    • Nombre completo.
+    • Número de documento (DNI).
+    • Dirección completa.
+    • Teléfono o celular de contacto.
+    • Fecha de ingreso a la guardería.		(mostrar solo para clientes)
+
+10. Los empleados estarán definidos por:
+    • Nombre completo.
+    • Número de documento (DNI).
+    • Dirección completa.
+    • Teléfono o celular de contacto.
+    • Fecha de ingreso a la guardería.		(mostrar solo para admin)
+    • Especialidad.				(mostrar solo para admin)
+
+11. Un empleado está asignado a varias zonas y en una zona puede haber más de un empleado.
+
+12. Los usuarios podrán acceder al sistema mediante 3 tipos de usuarios:
+    • Administradores: Pueden administrar todo.
+    • Empleados: Solo podrán consultar al sistema.	(ver secciones de empleados)
+    • clientes: Solo podrán consultar al sistema.	(ver secciones de usuario)
+
+
+
+LENGUAJES Y FRAMEWORKS DE DESARROLLO:
+
+Los lenguajes y frameworks a utilizar serán:
+    • Java: Lenguaje principal de desarrollo.
+    • Springboot: Framework para la página web.
+    • Hibernete: Framework ORM para mapeo a la base de datos.
+    • MySQL: Base de datos relacional.
+
+NOTAS:
+
+    • Luego de que los requerimientos esten aceptados por el cliente, se procederá al desarrollo de proyecto.
+
+

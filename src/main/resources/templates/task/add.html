@@ -68,7 +68,7 @@
                     <option value="">Selecciona una opción</option>
                     <option th:each="temp : ${garageList}"
                             th:value="${temp.id}"
-                            th:text="${temp.id}"
+                            th:text="${temp.garageNumber}"
                             th:field="*{garage.id}"
                     >
                     </option>

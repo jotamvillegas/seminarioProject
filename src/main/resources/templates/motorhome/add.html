@@ -123,7 +123,6 @@
             var id = location.substr(55, location.length);
             $.get("http://localhost:8080/sleepingMotorhome/motorhome/rest-edit/" + id, function( data ) {
                 $("#gara").empty();
-                console.log('id: ' + data.garage.id + ' - gNumber: ' + data.garage.garageNumber);
                 var option = "<option value = " + data.garage.id + ">" + 'Garage ' + data.garage.garageNumber +  "</option>";
                 $("#gara").append(option);
             });

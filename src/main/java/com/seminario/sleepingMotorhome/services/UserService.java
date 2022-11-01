@@ -9,8 +9,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class UserService {
@@ -89,6 +91,19 @@ public class UserService {
 
     private String convertToBCryptPassword (String pass){
         return bCryptPasswordEncoder.encode(pass);
+    }
+
+
+    public List<String> giveUsername(String name, String surname) {
+        List<String> listUsernames = new ArrayList<>();
+        Random r = new Random();
+
+        for (int i = 0; i < 5; i++){
+            int randomInt = r.nextInt(900) + 100;
+            listUsernames.add(name.toLowerCase() + '.' + surname.substring(0,1).toLowerCase() + randomInt);
+        }
+
+        return listUsernames;
     }
 
 
