@@ -21,8 +21,10 @@ public class StatisticsServices {
             else mes = String.valueOf(i);
             if (mes.equals("02"))
                 totalByMonth.add( motorhomeRepository.motorhomeListInAMonth("2022-" + mes + "-01", "2022-" + mes + "-28") );
-            else
+            else if (getListMesFor30Days(mes))
                 totalByMonth.add( motorhomeRepository.motorhomeListInAMonth("2022-" + mes + "-01", "2022-" + mes + "-30") );
+            else if (getListMesFor31Days(mes))
+                totalByMonth.add( motorhomeRepository.motorhomeListInAMonth("2022-" + mes + "-01", "2022-" + mes + "-31") );
         }
         return totalByMonth;
     }
@@ -35,10 +37,22 @@ public class StatisticsServices {
             else mes = String.valueOf(i);
             if (mes.equals("02"))
                 totalByMonth.add( motorhomeRepository.motorhomesByMonthAndType("2022-" + mes + "-01", "2022-" + mes + "-28", typeId) );
-            else
+            else if (getListMesFor30Days(mes))
                 totalByMonth.add( motorhomeRepository.motorhomesByMonthAndType("2022-" + mes + "-01", "2022-" + mes + "-30", typeId) );
+            else if (getListMesFor31Days(mes))
+                totalByMonth.add( motorhomeRepository.motorhomesByMonthAndType("2022-" + mes + "-01", "2022-" + mes + "-31", typeId) );
         }
         return totalByMonth;
+    }
+
+    private boolean getListMesFor30Days (String mes){
+        List<String> mesWith30Days = new ArrayList<String>(List.of("04","06","09","11"));
+        return mesWith30Days.contains(mes);
+    }
+
+    private boolean getListMesFor31Days (String mes){
+        List<String> mesWith31Days = new ArrayList<String>(List.of("01","03","05","07","08","10","12"));
+        return mesWith31Days.contains(mes);
     }
 
 

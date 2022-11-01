@@ -1,0 +1,207 @@
+
+-- NOTA: UNA VEZ CORRIDO ESTOS SCRIPTS CAMBIAR EL CREATE POR UPDATE EN LAS PROPERTIES DE SPRING BOOT
+-- ROLES
+INSERT INTO person_type (`type`) VALUES ('ADMIN');
+INSERT INTO person_type (`type`) VALUES ('EMPLOYEE');
+INSERT INTO person_type (`type`) VALUES ('USER');
+
+-- STATUS ROL
+INSERT INTO status_rol (status) VALUES ('Active');
+INSERT INTO status_rol (status) VALUES ('Inactive');
+
+-- CREAR ADMIN
+INSERT INTO admin (sueldo,id) VALUES (null, 1);
+INSERT INTO person (address_name,address_number,date_of_admission,date_of_egress,document_number,floor,name,password,phone,surname,user_name,person_type_id,status_rol_id)
+VALUES ('Tarapaca',54,'2022-03-19 17:10:44.117000000',null,54653265,'8d','Paco','$2a$04$gwjKYXvYqSHHheFI3iPNxui.h0dMWiubIwwcWckAMyWI1gWW02AVC',1165546532,'Rabane','paco',1,1);
+
+-- TIPOS DE MOTORHOMES
+INSERT INTO motorhome_type (`motorhome_type`) VALUES ('Clase A - Small');
+INSERT INTO motorhome_type (`motorhome_type`) VALUES ('Clase B - Medium');
+INSERT INTO motorhome_type (`motorhome_type`) VALUES ('Clase C - Large');
+
+-- CREAR ZONAS
+INSERT INTO `zone` (id,garage_amount,garage_deep,garage_width,motorhome_amount,motorhome_type,zone_name) VALUES (1,20,30,5,null,null,'A');
+INSERT INTO `zone` (id,garage_amount,garage_deep,garage_width,motorhome_amount,motorhome_type,zone_name) VALUES (2,15,40,6,null,null,'B');
+INSERT INTO `zone` (id,garage_amount,garage_deep,garage_width,motorhome_amount,motorhome_type,zone_name) VALUES (3,10,50,7,null,null,'C');
+
+-- CREAR GARAGES PARA ZONA 1
+INSERT INTO garage (id, date_of_admission, date_of_egress, garage_number, garage_status, zone_id) VALUES (1,null,null,1,0,1);
+INSERT INTO garage (id, date_of_admission, date_of_egress, garage_number, garage_status, zone_id) VALUES (2,null,null,2,0,1);
+INSERT INTO garage (id, date_of_admission, date_of_egress, garage_number, garage_status, zone_id) VALUES (3,null,null,2,0,1);
+INSERT INTO garage (id, date_of_admission, date_of_egress, garage_number, garage_status, zone_id) VALUES (4,null,null,2,0,1);
+INSERT INTO garage (id, date_of_admission, date_of_egress, garage_number, garage_status, zone_id) VALUES (5,null,null,2,0,1);
+INSERT INTO garage (id, date_of_admission, date_of_egress, garage_number, garage_status, zone_id) VALUES (6,null,null,2,0,1);
+INSERT INTO garage (id, date_of_admission, date_of_egress, garage_number, garage_status, zone_id) VALUES (7,null,null,2,0,1);
+INSERT INTO garage (id, date_of_admission, date_of_egress, garage_number, garage_status, zone_id) VALUES (8,null,null,2,0,1);
+INSERT INTO garage (id, date_of_admission, date_of_egress, garage_number, garage_status, zone_id) VALUES (9,null,null,2,0,1);
+INSERT INTO garage (id, date_of_admission, date_of_egress, garage_number, garage_status, zone_id) VALUES (10,null,null,2,0,1);
+
+-- CREAR TIPOS DE TAREAS
+INSERT INTO service_type (description) VALUES ('Completo');
+INSERT INTO service_type (description) VALUES ('Medio tiempo');
+
+-- CREAR TIPOS DE SERVICIOS
+INSERT INTO service (description) VALUES ('Limpieza');
+INSERT INTO service (description) VALUES ('Lavado');
+INSERT INTO service (description) VALUES ('Electricidad');
+INSERT INTO service (description) VALUES ('Mecanica');
+
+INSERT INTO service (id, description) VALUES (5,'Cualquiera');
+
+
+
+-- CUANDO NECESITO CAMBIAR LA COLUMN ID PARA QUE SE AUTOINCREMENTABLE
+SET FOREIGN_KEY_CHECKS = 0;
+ALTER TABLE demo.service MODIFY COLUMN id bigint NOT NULL AUTO_INCREMENT;
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- QUERYS CUSTOMIZED 
+
+
+SELECT * FROM motorhome m, garage g WHERE m.garage_id = g.id AND g.garage_status = 1; 
+
+SELECT * FROM motorhome m WHERE m.is_active = 1 AND m.user_id = 32;
+
+SELECT p.name FROM `user` u, person p WHERE u.id = p.id;
+
+SELECT MAX(id) FROM person;
+
+SELECT * FROM `user` u, motorhome m WHERE u.id = m.user_id AND u.id IN (13,32,51,57);
+
+SELECT * FROM employee e, person p WHERE e.id = p.id AND p.id = 30;
+
+-- ESTADISTICAS MOTORHOME POR MES
+
+SELECT COUNT(*)  FROM motorhome m WHERE m.date_of_admission >= '2022-09-01' AND m.date_of_egress <= '2022-09-30';
+
+select count(*) from motorhome where year('2022-02-01') = year(curdate()) group by MonthName('2022-02-01');
+
+select count(*) from motorhome where MONTHNAME(Septiembre);  
+
+SELECT COUNT(*) FROM motorhome WHERE YEAR('2018-09-01')='2020' GROUP BY MONTH('2018-09-01');
+
+SELECT COUNT(*)  FROM motorhome m WHERE m.date_of_admission >= '2022-01-01' AND m.date_of_egress <= CURDATE();
+
+SELECT COUNT(*)  FROM motorhome m WHERE m.date_of_admission >= CURDATE() AND m.date_of_egress <= '2022-12-31';
+
+-- graficos por mes de motorhome type small
+SELECT COUNT(*)  FROM motorhome m WHERE m.date_of_admission >= '2022-09-01' 
+AND (SELECT COUNT(*)  FROM motorhome m WHERE m.date_of_egress <= '2022-09-30' OR m.date_of_egress = NULL) 
+AND m.motorhome_type_id = 1;
+
+-- graficos por mes de motorhome type medium
+SELECT COUNT(*)  FROM motorhome m WHERE m.date_of_admission >= '2022-04-01'
+AND (SELECT COUNT(*)  FROM motorhome m WHERE m.date_of_egress <= '2022-09-30' OR m.date_of_egress = NULL)
+AND m.motorhome_type_id = 2;
+
+-- graficos por mes de motorhome type large
+SELECT COUNT(*)  FROM motorhome m WHERE m.date_of_admission >= '2022-09-01' 
+AND (SELECT COUNT(*)  FROM motorhome m WHERE m.date_of_egress <= '2022-09-30' OR m.date_of_egress = NULL)
+AND m.motorhome_type_id = 3;
+
+
+-- backup
+SELECT (
+	SELECT COUNT(*)  FROM motorhome m WHERE (m.date_of_egress <= '2022-09-30' OR m.date_of_egress IS NULL)
+	) AS 'total'
+FROM motorhome m WHERE m.date_of_admission >= '2022-05-01' AND m.date_of_egress <= '2022-09-30'
+AND m.motorhome_type_id = 2
+;
+
+-- SELECT m.date_of_admission, m.date_of_egress, m.motorhome_type_id
+SELECT * FROM motorhome m 
+WHERE m.date_of_admission >= '2022-09-01' AND m.date_of_egress <= '2022-09-30';
+
+SELECT * FROM motorhome m 
+WHERE m.date_of_admission >= '2022-09-01' AND m.date_of_egress IS NULL;
+
+SELECT * FROM motorhome m WHERE m.motorhome_type_id = 2
+AND (m.date_of_admission >= '2022-01-01' AND m.date_of_egress <= '2022-01-31'
+OR m.date_of_admission >= '2022-01-01' AND m.date_of_egress IS NULL);
+
+SELECT COUNT(*) FROM motorhome m WHERE m.motorhome_type_id in (1,2,3)
+AND m.date_of_admission >= '2022-10-01' AND m.date_of_admission <= '2022-10-31';
+
+-- todos 25
+-- 1 - 10
+-- 2 - 14
+-- 3 - 1
+
+
+
+-- **********************************
+-- 			QUERYS GARAGE 
+-- **********************************
+
+-- BUSCAR GARAGES POR ZONAS
+SELECT * FROM garage g WHERE g.zone_id = 1;
+SELECT * FROM garage g WHERE g.zone_id = 2;
+SELECT * FROM garage g WHERE g.zone_id = 3;
+
+-- MAXIMO NUMERO DE GARAGE
+SELECT MAX(g.garage_number) FROM garage g WHERE g.zone_id = 1;
+
+-- BUSCAR GARAGES LIBRES POR ZONAS
+SELECT * FROM garage g, `zone` z WHERE g.zone_id = z.id AND g.garage_status = 0 AND z.motorhome_type_id = 3;
+
+-- VERIFICAR GARAGE QUE NO TENGAN RELACIONES CON MOTORHOME
+SELECT g.garage_status FROM garage g WHERE g.id = 4;
+
+-- VERIFICAR GARAGE QUE NO TENGAN RELACIONES CON TAREAS
+SELECT * FROM task t WHERE t.garage = 4;
+
+
+
+-- **********************************
+-- 			QUERYS MOTORHOME 
+-- **********************************
+
+-- MOTORHOME POR PATENTE
+SELECT * FROM motorhome m WHERE m.enrollment = 'AS-654-DF';
+
+-- ZONA POR ID
+SELECT z.*  FROM `zone` z WHERE z.id = 16;
+
+-- MOTORHOME QUE TIENE GARAGE ID DISTINTO DE NULL     garage 10 type 2 dias 10 price 7000 - garage 59 type 1 dias 10 price 5000
+SELECT * FROM motorhome m WHERE m.garage_id IS NOT NULL;  
+
+
+-- **********************************
+-- 			QUERYS EMPLOYEE
+-- **********************************
+
+-- BUSCAR TODOS LOS EMPLEADOS
+SELECT e.id as idTableEmployee
+	,p.name as nameEmployee
+	,p.surname as surnameemployee
+FROM employee e, person p WHERE e.id = p.id;
+
+-- BUSCAR EMPLEADO ESPECIFICO
+SELECT p.* FROM employee e, person p WHERE e.id = p.id AND e.id = 30;
+
+-- BUSCAR TAREAS POR EMPLEADO
+SELECT t.* FROM task t , rel_task_employee rte, employee e WHERE t.id = rte.task_id AND rte.employee_id = e.id AND t.is_active = 1 AND e.id = 30;
+
+
+-- **********************************
+-- 			QUERYS TASKS
+-- **********************************
+
+
+
+
+
+
+
+-- ELIMINAR COLUMNAS DE UNA TABLA O FOREN_EY
+ALTER TABLE demo.motorhome DROP FOREIGN KEY FKfjifkqty018s0y3iu3uneifh5;
+ALTER TABLE demo.motorhome DROP COLUMN motorhome;
+ALTER TABLE demo.garage DROP COLUMN motorhome_id;
+
+
+
+
+
+
+
+
