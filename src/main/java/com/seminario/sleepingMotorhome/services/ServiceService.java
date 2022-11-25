@@ -40,8 +40,12 @@ public class ServiceService {
         return serviceRepository.findById(id).orElse(null);
     }
 
-    public boolean existService (String service){
-        return serviceRepository.existsServiceByDescription(service);
+    public Integer numberOfTask (Long id){
+        return serviceRepository.numberOfTask(id);
+    }
+
+    public Integer numberTaskFinalized (Long id){
+        return serviceRepository.getTasksInFinishedState(id);
     }
 
 

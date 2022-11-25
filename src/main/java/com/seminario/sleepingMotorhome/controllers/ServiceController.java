@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @PreAuthorize("hasAuthority('ADMIN')")
@@ -54,8 +56,24 @@ public class ServiceController {
     }
 
     @GetMapping (path = "/delete/{id}")
-    public String delete (@PathVariable("id") Long id, Model model){
-        serviceService.delete(id);
+    public String delete (@PathVariable("id") Long id, Model model, RedirectAttributes redirAttrs){
+        Service service = serviceService.getServiceType(id);
+        if (service.getId() != null){
+            try {
+                if (serviceService.numberOfTask(id) == 0) {
+                    serviceService.delete(id);
+                    redirAttrs.addFlashAttribute("success", "El servicio se eliminó correctamente");
+                    return "redirect:/sleepingMotorhome/service/all";
+                }
+            } catch (Exception e){
+                System.out.println("entro en el catch");
+                redirAttrs.addFlashAttribute("error", "No se puede eliminar el servicio porque tiene tareas relacionadas. " +
+                        "Complete las tareas, elimine todas las tareas relacionadas con este servicio y luego elimine el servicio");
+                return "redirect:/sleepingMotorhome/service/all";
+            }
+        }
+        redirAttrs. addFlashAttribute ( "error" , "No se puede eliminar el servicio porque tiene tareas relacionadas. " +
+                "Complete las tareas, elimine todas las tareas relacionadas con este servicio y luego elimine el servicio");
         return "redirect:/sleepingMotorhome/service/all";
     }
 
